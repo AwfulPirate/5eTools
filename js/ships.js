@@ -22,8 +22,9 @@ async function onJsonLoad (data) {
 		sourceFilter
 	);
 
+	const $outVisibleResults = $(`.lst__wrp-search-visible`);
 	list.on("updated", () => {
-		filterBox.setCount(list.visibleItems.length, list.items.length);
+		$outVisibleResults.html(`${list.visibleItems.length}/${list.items.length}`);
 	});
 
 	// filtering function
@@ -43,7 +44,7 @@ async function onJsonLoad (data) {
 	BrewUtil.pAddBrewData()
 		.then(handleBrew)
 		.then(() => BrewUtil.bind({list}))
-		.then(BrewUtil.pAddLocalBrewData)
+		.then(() => BrewUtil.pAddLocalBrewData())
 		.catch(BrewUtil.pPurgeBrew)
 		.then(async () => {
 			BrewUtil.makeBrewButton("manage-brew");
@@ -87,13 +88,10 @@ function addShips (data) {
 		`;
 
 		// populate filters
-		sourceFilter.addIfAbsent(it.source);
+		sourceFilter.addItem(it.source);
 	}
 	const lastSearch = ListUtil.getSearchTermAndReset(list);
 	$(`#shipList`).append(tempString);
-
-	// sort filters
-	sourceFilter.items.sort(SortUtil.ascSort);
 
 	list.reIndex();
 	if (lastSearch) list.search(lastSearch);
@@ -107,7 +105,7 @@ function addShips (data) {
 		primaryLists: [list]
 	});
 	ListUtil.bindPinButton();
-	EntryRenderer.hover.bindPopoutButton(shipList);
+	Renderer.hover.bindPopoutButton(shipList);
 	UrlUtil.bindLinkExportButton(filterBox);
 	ListUtil.bindDownloadButton();
 	ListUtil.bindUploadButton();
@@ -123,7 +121,7 @@ function handleFilterChange () {
 			it.source
 		);
 	});
-	FilterBox.nextIfHidden(shipList);
+	FilterBox.selectFirstVisible(shipList);
 }
 
 function getSublistItem (it, pinId) {
@@ -138,9 +136,47 @@ function getSublistItem (it, pinId) {
 }
 
 function loadhash (jsonIndex) {
-	EntryRenderer.getDefaultRenderer().setFirstSection(true);
-	const it = shipList[jsonIndex];
+	Renderer.get().setFirstSection(true);
+	const ship = shipList[jsonIndex];
 	const $content = $(`#pagecontent`).empty();
-	$content.append(EntryRenderer.ship.getRenderedString(it));
+
+	function buildStatsTab () {
+		$content.append(Renderer.ship.getRenderedString(ship));
+	}
+
+	function buildFluffTab (isImageTab) {
+		return Renderer.utils.buildFluffTab(
+			isImageTab,
+			$content,
+			ship,
+			(fluffJson) => ship.fluff || fluffJson.ship.find(it => it.name === ship.name && it.source === ship.source),
+			`data/fluff-ships.json`,
+			() => true
+		);
+	}
+
+	const statTab = Renderer.utils.tabButton(
+		"Item",
+		() => {},
+		buildStatsTab
+	);
+	const infoTab = Renderer.utils.tabButton(
+		"Info",
+		() => {},
+		buildFluffTab
+	);
+	const picTab = Renderer.utils.tabButton(
+		"Images",
+		() => {},
+		() => buildFluffTab(true)
+	);
+
+	Renderer.utils.bindTabButtons(statTab, infoTab, picTab);
+
 	ListUtil.updateSelected();
+}
+
+function loadsub (sub) {
+	sub = filterBox.setFromSubHashes(sub);
+	ListUtil.setFromSubHashes(sub);
 }

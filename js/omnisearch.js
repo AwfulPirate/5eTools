@@ -3,25 +3,26 @@
 const Omnisearch = {
 	_PLACEHOLDER_TEXT: "Search everywhere...",
 	_searchIndex: null,
-	_onFirstLoad: null,
-	_loadingSearch: false,
+	_pLoadSearch: null,
 	_CATEGORY_COUNTS: {},
 	highestId: -1,
 
 	init: function () {
+		if (IS_ROLL20) return;
+
 		const $nav = $(`#navbar`);
 
-		const $searchIn = $(`<input class="form-control search omni__input" placeholder="${Omnisearch._PLACEHOLDER_TEXT}" title="Disclaimer: unlikely to search everywhere. Use with caution.">`);
+		const $searchIn = $(`<input class="form-control search omni__input" placeholder="${Omnisearch._PLACEHOLDER_TEXT}" title="Disclaimer: unlikely to search everywhere. Use with caution.">`).disableSpellcheck();
 		const $searchSubmit = $(`<button class="btn btn-default omni__submit" tabindex="-1"><span class="glyphicon glyphicon-search"></span></button>`);
 
-		const $searchInputWrapper = $(`
+		const $searchInputWrapper = $$`
 			<div class="input-group omni__wrp-input">
-				<div data-r="$searchIn"/>
+				${$searchIn}
 				<div class="input-group-btn">
-					<div data-r="$searchSubmit"/>
+					${$searchSubmit}
 				</div>
 			</div>
-		`).swap({$searchIn, $searchSubmit}).appendTo($nav);
+		`.appendTo($nav);
 
 		const $searchOutWrapper = $(`<div class="omni__wrp-output"/>`).insertAfter($nav);
 		const $searchOut = $(`<div class="omni__output"/>`).appendTo($searchOutWrapper);
@@ -29,13 +30,8 @@ const Omnisearch = {
 		let clickFirst = false;
 
 		const $body = $(`body`);
-		$body.on("click", () => {
-			$searchOutWrapper.hide();
-		});
-
-		$searchOut.on("click", (e) => {
-			e.stopPropagation();
-		});
+		$body.on("click", () => $searchOutWrapper.hide());
+		$searchOut.on("click", (e) => e.stopPropagation());
 
 		$searchIn.on("keydown", (e) => {
 			switch (e.which) {
@@ -61,15 +57,12 @@ const Omnisearch = {
 		const TYPE_TIMEOUT_MS = 100;
 		let typeTimer;
 		$searchIn.on("keyup", (e) => {
+			clickFirst = false;
 			if (e.which >= 37 && e.which <= 40) return;
 			clearTimeout(typeTimer);
-			typeTimer = setTimeout(() => {
-				$searchSubmit.click()
-			}, TYPE_TIMEOUT_MS);
+			typeTimer = setTimeout(() => $searchSubmit.click(), TYPE_TIMEOUT_MS);
 		});
-		$searchIn.on("keydown", () => {
-			clearTimeout(typeTimer);
-		});
+		$searchIn.on("keydown", () => clearTimeout(typeTimer));
 		$searchIn.on("click", (e) => {
 			if ($searchIn.val() && $searchIn.val().trim().length) $searchSubmit.click();
 			e.stopPropagation();
@@ -77,18 +70,14 @@ const Omnisearch = {
 
 		$searchSubmit.on("click", (e) => {
 			e.stopPropagation();
-			doSearch();
+			pDoSearch();
 		});
 
 		initScrollHandler();
 
 		const MAX_RESULTS = 15;
-		function doSearch () {
-			if (!Omnisearch._searchIndex) {
-				Omnisearch.doSearchLoad();
-				Omnisearch._onFirstLoad = doSearch;
-				return;
-			}
+		async function pDoSearch () {
+			await Omnisearch.pInit();
 
 			const srch = $searchIn.val();
 
@@ -134,8 +123,8 @@ const Omnisearch = {
 			if (!doHideBlacklisted() && ExcludeUtil.getList().length) {
 				results = results.filter(r => {
 					if (r.doc.c === Parser.CAT_ID_QUICKREF) return true;
-					let bCat = Parser.pageCategoryToProp(r.doc.c);
-					let bName = bCat !== "variantrule" ? r.doc.n : r.doc.n.split(";")[0];
+					const bCat = Parser.pageCategoryToProp(r.doc.c);
+					const bName = bCat !== "variantrule" ? r.doc.n : r.doc.n.split(";")[0];
 					return !ExcludeUtil.isExcluded(bName, bCat, r.doc.s);
 				});
 			}
@@ -149,22 +138,22 @@ const Omnisearch = {
 
 			function renderLinks () {
 				function getHoverStr (category, url, src) {
-					return `onmouseover="EntryRenderer.hover.mouseOver(event, this, '${UrlUtil.categoryToPage(category)}', '${src}', '${url.replace(/'/g, "\\'")}')"`;
+					return `onmouseover="Renderer.hover.mouseOver(event, this, '${UrlUtil.categoryToPage(category)}', '${src}', '${url.replace(/'/g, "\\'")}')" ${Renderer.hover._getPreventTouchString()}`;
 				}
 
 				$searchOut.empty();
 				const showUa = doShowUaEtc();
-				const $btnUaEtc = $(`<button class="btn btn-default btn-xs btn-file" title="Filter Unearthed Arcana and other unofficial source results" tabindex="-1">${showUa ? "Exclude" : "Include"} UA, etc</button>`)
+				const $btnUaEtc = $(`<button class="btn btn-default btn-xs btn-file ${showUa ? "active" : ""}" title="Filter Unearthed Arcana and other unofficial source results" tabindex="-1">Include UA, etc</button>`)
 					.on("click", () => {
 						setShowUaEtc(!showUa);
-						doSearch();
+						pDoSearch();
 					});
 
 				const hideBlacklisted = doHideBlacklisted();
-				const $btnBlacklist = $(`<button class="btn btn-default btn-xs btn-file" style="margin-left: 6px;" title="Filter blacklisted content results" tabindex="-1">${hideBlacklisted ? "Exclude" : "Include"} Blacklisted</button>`)
+				const $btnBlacklist = $(`<button class="btn btn-default btn-xs btn-file ${hideBlacklisted ? "active" : ""}" style="margin-left: 6px;" title="Filter blacklisted content results" tabindex="-1">Include Blacklisted</button>`)
 					.on("click", () => {
 						setShowBlacklisted(!hideBlacklisted);
-						doSearch();
+						pDoSearch();
 					});
 
 				$searchOut.append($(`<div class="text-align-right"/>`).append([$btnUaEtc, $btnBlacklist]));
@@ -173,10 +162,10 @@ const Omnisearch = {
 					const r = results[i].doc;
 					const $link = $(`<a href="${UrlUtil.categoryToPage(r.c)}#${r.u}" ${r.h ? getHoverStr(r.c, r.u, r.s) : ""}>${r.cf}: ${r.n}</a>`)
 						.keydown(evt => Omnisearch.handleLinkKeyDown(evt, $link, $searchOut));
-					$(`<p>
-						<span data-r="$link"/>
+					$$`<p>
+						${$link}
 						${r.s ? `<i title="${Parser.sourceJsonToFull(r.s)}">${Parser.sourceJsonToAbv(r.s)}${r.p ? ` p${r.p}` : ""}</i>` : ""}
-					</p>`).swap({$link}).appendTo($searchOut);
+					</p>`.appendTo($searchOut);
 				}
 				$searchOutWrapper.css("display", "flex");
 
@@ -259,24 +248,23 @@ const Omnisearch = {
 			if (e.key === "f" || e.key === "F") {
 				const toSel = e.key === "F" ? $searchIn : $(`#${ID_SEARCH_BAR}`).find(`.search`);
 				// defer, otherwise the "f" will be input into the search field
-				setTimeout(() => {
-					toSel.select().focus();
-				}, 0);
+				setTimeout(() => toSel.select().focus(), 0);
 			}
 		});
 	},
 
-	doSearchLoad: function () {
-		if (Omnisearch._loadingSearch) return;
-		Omnisearch._loadingSearch = true;
-		DataUtil.loadJSON("search/index.json").then((data) => {
-			Omnisearch.onSearchLoad(data);
-			Omnisearch._onFirstLoad();
-			Omnisearch._loadingSearch = false;
-		});
+	async pInit () {
+		if (!Omnisearch._searchIndex) {
+			Omnisearch._pLoadSearch = Omnisearch._pDoSearchLoad();
+			await Omnisearch._pLoadSearch;
+			Omnisearch._pLoadSearch = null;
+		}
 	},
 
-	onSearchLoad: function (data) {
+	_pDoSearchLoad: async function () {
+		if (Omnisearch._pLoadSearch) return;
+		const data = Omnidexer.decompressIndex(await DataUtil.loadJSON("search/index.json"));
+
 		elasticlunr.clearStopWords();
 		Omnisearch._searchIndex = elasticlunr(function () {
 			this.addField("n");
@@ -285,22 +273,44 @@ const Omnisearch = {
 			this.setRef("id");
 		});
 		SearchUtil.removeStemmer(Omnisearch._searchIndex);
-		const addToIndex = (d) => {
-			d.cf = Parser.pageCategoryToFull(d.c);
-			if (!Omnisearch._CATEGORY_COUNTS[d.cf]) Omnisearch._CATEGORY_COUNTS[d.cf] = 1;
-			else Omnisearch._CATEGORY_COUNTS[d.cf]++;
-			Omnisearch._searchIndex.addDoc(d);
-		};
-		data.forEach(addToIndex);
-		Omnisearch.highestId = data[data.length - 1].id;
-		BrewUtil.pGetSearchIndex().then(index => {
-			index.forEach(addToIndex); // this doesn't update if the 'Brew changes later, but so be it.
-		})
+
+		data.forEach(Omnisearch._addToIndex);
+		Omnisearch.highestId = data.last().id;
+
+		// this doesn't update if the 'Brew changes later, but so be it.
+		const brewIndex = await BrewUtil.pGetSearchIndex();
+		brewIndex.forEach(Omnisearch._addToIndex);
+		if (brewIndex.length) Omnisearch.highestId = brewIndex.last().id
+	},
+
+	async pAddToIndex (prop, ...entries) {
+		if (!entries.length) return;
+
+		await Omnisearch.pInit();
+		const indexer = new Omnidexer(Omnisearch.highestId + 1);
+
+		const toIndex = {[prop]: entries};
+
+		Omnidexer.TO_INDEX__FROM_INDEX_JSON.filter(it => it.listProp === prop)
+			.forEach(it => indexer.addToIndex(it, toIndex));
+		Omnidexer.TO_INDEX.filter(it => it.listProp === prop)
+			.forEach(it => indexer.addToIndex(it, toIndex));
+
+		const toAdd = Omnidexer.decompressIndex(indexer.getIndex());
+		toAdd.forEach(Omnisearch._addToIndex);
+		if (toAdd.length) Omnisearch.highestId = toAdd.last().id
+	},
+
+	_addToIndex (d) {
+		d.cf = Parser.pageCategoryToFull(d.c);
+		if (!Omnisearch._CATEGORY_COUNTS[d.cf]) Omnisearch._CATEGORY_COUNTS[d.cf] = 1;
+		else Omnisearch._CATEGORY_COUNTS[d.cf]++;
+		Omnisearch._searchIndex.addDoc(d);
 	},
 
 	handleLinkKeyDown (e, $ele, $searchOut) {
 		switch (e.which) {
-			case 37: // left
+			case 37: { // left
 				e.preventDefault();
 				if ($(`.has-results-left`).length) {
 					const ix = $ele.parent().index() - 1; // offset as the control bar is at position 0
@@ -309,7 +319,8 @@ const Omnisearch = {
 					$($psNext[ix] || $psNext[$psNext.length - 1]).find(`a`).focus();
 				}
 				break;
-			case 38: // up
+			}
+			case 38: { // up
 				e.preventDefault();
 				if ($ele.parent().prev().find(`a`).length) {
 					$ele.parent().prev().find(`a`).focus();
@@ -318,7 +329,8 @@ const Omnisearch = {
 					$searchOut.find(`a`).last().focus();
 				}
 				break;
-			case 39: // right
+			}
+			case 39: { // right
 				e.preventDefault();
 				if ($(`.has-results-right`).length) {
 					const ix = $ele.parent().index() - 1; // offset as the control bar is at position 0
@@ -327,7 +339,8 @@ const Omnisearch = {
 					$($psNext[ix] || $psNext[$psNext.length - 1]).find(`a`).focus();
 				}
 				break;
-			case 40: // down
+			}
+			case 40: { // down
 				e.preventDefault();
 				if ($ele.parent().next().find(`a`).length) {
 					$ele.parent().next().find(`a`).focus();
@@ -336,6 +349,7 @@ const Omnisearch = {
 					$searchOut.find(`a`).first().focus();
 				}
 				break;
+			}
 		}
 	},
 

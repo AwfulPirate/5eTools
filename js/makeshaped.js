@@ -202,11 +202,17 @@ class ShapedConverter {
 	}
 
 	static processLeveledSpells (spellObj) {
-		return Object.keys(spellObj).map(levelString => {
-			const level = parseInt(levelString, 10);
-			const levelInfo = spellObj[level];
-			return `${Parser.spLevelToFullLevelText(level)} (${this.slotString(levelInfo.slots)}): ${this.makeSpellList(levelInfo.spells)}`;
-		});
+		return Object.keys(spellObj)
+			.map(levelString => {
+				if (levelString === "hidden") return null;
+				else if (levelString === "will") {
+					return `At-will: ${this.makeSpellList(spellObj[levelString])}`;
+				} else {
+					const level = parseInt(levelString, 10);
+					const levelInfo = spellObj[level];
+					return `${Parser.spLevelToFullLevelText(level)} (${this.slotString(levelInfo.slots)}): ${this.makeSpellList(levelInfo.spells)}`;
+				}
+			}).filter(Boolean);
 	}
 
 	static normalSpellProc (spellcasting) {
@@ -244,8 +250,9 @@ class ShapedConverter {
 			.replace(/{@hit (\d+)}/g, '+$1')
 			.replace(/{@chance (\d+)[^}]+}/g, '$1 percent')
 			.replace(/{@recharge(?: (\d))?}/g, (m, lower) => `(Recharge ${lower ? `${Number(lower)}\u2013` : ""}6)`)
-			.replace(/{(@atk [A-Za-z,]+})/g, (m, p1) => EntryRenderer.attackTagToFull(p1))
+			.replace(/{(@atk [A-Za-z,]+})/g, (m, p1) => Renderer.attackTagToFull(p1))
 			.replace(/{@h}/g, "Hit: ")
+			.replace(/{@dc (\d+)}/g, "DC $1")
 			.replace(/{@\w+ ((?:[^|}]+\|?){0,3})}/g, (m, p1) => {
 				const parts = p1.split('|');
 				return parts.length === 3 ? parts[2] : parts[0];
@@ -434,8 +441,8 @@ class ShapedConverter {
 		if (monster.conditionImmune) {
 			output.conditionImmunities = Parser.monCondImmToFull(monster.conditionImmune);
 		}
-		output.senses = monster.senses;
-		output.languages = monster.languages;
+		output.senses = (monster.senses || []).join(", ");
+		output.languages = (monster.languages || []).join(", ");
 		output.challenge = this.processChallenge(monster.cr.cr || monster.cr);
 
 		const traits = [];
@@ -485,7 +492,7 @@ class ShapedConverter {
 			if (isString(entry)) {
 				return entry;
 			}
-			const entryText = `${entry.entries.map(subEntry => entryStringifier(subEntry)).join('\n')}`;
+			const entryText = `${(entry.entries || entry.headerEntries).map(subEntry => entryStringifier(subEntry)).join('\n')}`;
 			return omitName ? entryText : `${entry.name}. ${entryText}`;
 		};
 
@@ -496,7 +503,14 @@ class ShapedConverter {
 					const text = variant.entries.map(entry => {
 						if (isString(entry)) return entry;
 						else if (entry.type === "table") return this.processTable(entry);
-						else return entry.items.map(item => `${item.name} ${item.entry}`).join('\n');
+						else if (entry.type === "list") return entry.items.map(item => `${item.name} ${item.entry}`).join('\n');
+						else {
+							const recursiveFlatten = (ent) => {
+								if (ent.entries) return `${ent.name ? `${ent.name}. ` : ""}${ent.entries.map(it => recursiveFlatten(it)).join("\n")}`;
+								else if (isString(ent)) return ent;
+								else return JSON.stringify(ent);
+							};
+						}
 					}).join('\n');
 					addVariant(baseName, text, output);
 				} else if (variant.entries.find(entry => entry.type === 'entries')) {

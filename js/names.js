@@ -3,7 +3,7 @@
 const JSON_URL = "data/names.json";
 
 let nameList;
-const renderer = EntryRenderer.getDefaultRenderer();
+const renderer = Renderer.get();
 
 function makeContentsBlock (i, loc) {
 	let out =
@@ -13,7 +13,7 @@ function makeContentsBlock (i, loc) {
 		const tableName = getTableName(loc, t);
 		out +=
 			`<li>
-				<a id="${i},${j}" href="#${UrlUtil.encodeForHash([loc.race, loc.source, t.option])}" title="${tableName}">${tableName}</a>
+				<a id="${i},${j}" href="#${UrlUtil.encodeForHash([loc.name, loc.source, t.option])}" title="${tableName}">${tableName}</a>
 			</li>`;
 	});
 
@@ -23,7 +23,7 @@ function makeContentsBlock (i, loc) {
 }
 
 function getTableName (loc, table) {
-	return `${loc.race} - ${table.option}`;
+	return `${loc.name} - ${table.option}`;
 }
 
 window.onload = function load () {
@@ -41,7 +41,7 @@ function onJsonLoad (data) {
 
 		tempString +=
 			`<li>
-				<span class="name" onclick="showHideList(this)" title="Source: ${Parser.sourceJsonToFull(loc.source)}">${loc.race}</span>
+				<span class="name" onclick="showHideList(this)" title="Source: ${Parser.sourceJsonToFull(loc.source)}">${loc.name}</span>
 				${makeContentsBlock(i, loc)}
 			</li>`;
 	}
@@ -85,7 +85,7 @@ function loadhash (id) {
 
 	for (let i = 0; i < table.length; i++) {
 		const range = table[i].min === table[i].max ? pad(table[i].min) : `${pad(table[i].min)}-${pad(table[i].max)}`;
-		htmlText += `<tr><td class="text-align-center">${range}</td><td>${getRenderedText(table[i].enc)}</td></tr>`;
+		htmlText += `<tr><td class="text-align-center">${range}</td><td>${getRenderedText(table[i].result)}</td></tr>`;
 	}
 
 	htmlText += `
@@ -102,7 +102,7 @@ function pad (number) {
 function getRenderedText (rawText) {
 	if (rawText.indexOf("{@") !== -1) {
 		const stack = [];
-		renderer.recursiveEntryRender(rawText, stack);
+		renderer.recursiveRender(rawText, stack);
 		return stack.join("");
 	} else return rawText;
 }
@@ -125,22 +125,22 @@ function rollAgainstTable (iLoad, jLoad) {
 		const trueMin = row.max != null && row.max < row.min ? row.max : row.min;
 		const trueMax = row.max != null && row.max > row.min ? row.max : row.min;
 		if (roll >= trueMin && roll <= trueMax) {
-			result = getRenderedText(row.enc);
+			result = getRenderedText(row.result);
 			break;
 		}
 	}
 
 	// add dice results
 	result = result.replace(RollerUtil.DICE_REGEX, function (match) {
-		const r = EntryRenderer.dice.parseRandomise2(match);
+		const r = Renderer.dice.parseRandomise2(match);
 		return `<span class="roller" onmousedown="event.preventDefault()" onclick="reroll(this)">${match}</span> (<span class="result">${r}</span>)`
 	});
 
-	EntryRenderer.dice.addRoll({name: `${race.race} - ${table.option}`}, `<span><strong>${pad(roll)}</strong> ${result}</span>`);
+	Renderer.dice.addRoll({name: `${race.name} - ${table.option}`}, `<span><strong>${pad(roll)}</strong> ${result}</span>`);
 }
 
 function reroll (ele) {
 	const $ele = $(ele);
-	const resultRoll = EntryRenderer.dice.parseRandomise2($ele.html());
+	const resultRoll = Renderer.dice.parseRandomise2($ele.html());
 	$ele.next(".result").html(resultRoll);
 }

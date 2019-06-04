@@ -183,7 +183,7 @@
 														],
 														[
 															"Lords' Alliance",
-															"Jewelers tools, {@item Mason's tools|phb}, {@item Navigator's tools|phb}, Painters supplies, Gaming Set, Any Standard Language"
+															"{@item Jeweler's tools|phb}, {@item Mason's tools|phb}, {@item Navigator's tools|phb}, {@item Painter's supplies|phb}, Gaming Set, Any Standard Language"
 														],
 														[
 															"Zhentarim",
@@ -225,7 +225,7 @@
 											"type": "entries",
 											"name": "Faction Philanthropist",
 											"entries": [
-												"As a Mentor of your faction, you may choose to pay for or cast raise dead, resurrection, or true resurrection spells for a member of your faction after an adventure is completed\u2014even if you were not adventurogether. In doing so, assuming you aren't casting the spell yourself, you must pay the full cost of the spellcasting service plus 25 downtime days (to deliver the body and find a cleric)."
+												"As a Mentor of your faction, you may choose to pay for or cast raise dead, resurrection, or true resurrection spells for a member of your faction after an adventure is completed\u2014even if you were not adventuring together. In doing so, assuming you aren't casting the spell yourself, you must pay the full cost of the spellcasting service plus 25 downtime days (to deliver the body and find a cleric)."
 											]
 										}
 									]
@@ -488,7 +488,7 @@
 											"items": [
 												"Restore and preserve the natural order.",
 												"Destroy all that is unnatural.",
-												"the elemental forces of the world in check.",
+												"Keep the elemental forces of the world in check.",
 												"Keep civilization and the wilderness from destroying each other."
 											]
 										}

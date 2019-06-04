@@ -2,7 +2,7 @@
 
 if (typeof require !== "undefined") {
 	require('../js/utils.js');
-	require('../js/entryrender.js');
+	require('../js/render.js');
 }
 
 class Omnidexer {
@@ -19,21 +19,52 @@ class Omnidexer {
 		 *   id: 123 // index ID
 		 * }
 		 */
-		this.index = [];
+		this._index = [];
 		this.id = id;
+		this._metaMap = {};
+		this._metaIndices = {};
 	}
 
 	getIndex () {
-		return this.index;
+		return {
+			x: this._index,
+			m: this._metaMap
+		};
+	}
+
+	static decompressIndex (indexGroup) {
+		const {x, m} = indexGroup;
+
+		const props = new Set();
+		// de-invert the metadata
+		const lookup = {};
+		Object.keys(m).forEach(k => {
+			props.add(k);
+			Object.entries(m[k]).forEach(([kk, vv]) => (lookup[k] = lookup[k] || {})[vv] = kk);
+		});
+
+		x.forEach(it => Object.keys(it).filter(k => props.has(k))
+			.forEach(k => it[k] = lookup[k][it[k]] || it[k]));
+		return x;
 	}
 
 	static getProperty (obj, withDots) {
 		return withDots.split(".").reduce((o, i) => o[i], obj);
 	}
 
-	addToIndex (arbiter, json, idOffset, isTestMode) {
-		if (idOffset) this.id += idOffset;
-		const index = this.index;
+	/**
+	 * Compute and add an index item.
+	 * @param arbiter The indexer arbiter.
+	 * @param json A raw JSON object of a file, typically containing an array to be indexed.
+	 * @param options Options object.
+	 * @param options.idOffset An offset for the ID.
+	 * @param options.isNoFilter If filtering rules are to be ignored (e.g. for tests).
+	 * @param options.alt Sub-options for alternate indices.
+	 */
+	addToIndex (arbiter, json, options) {
+		options = options || {};
+		if (options.idOffset) this.id += options.idOffset;
+		const index = this._index;
 		let id = this.id;
 
 		const getToAdd = (it, toMerge, i) => {
@@ -43,32 +74,33 @@ class Omnidexer {
 				: UrlUtil.URL_TO_HASH_BUILDER[arbiter.baseUrl](it);
 			const toAdd = {
 				c: arbiter.category,
-				s: src,
+				s: this.getMetaId("s", src),
 				id: id++,
 				u: hash,
 				p: Omnidexer.getProperty(it, arbiter.page || "page")
 			};
-			if (arbiter.hover) {
-				toAdd.h = 1;
+			if (arbiter.hover) toAdd.h = 1;
+			if (options.alt) {
+				if (options.alt.additionalProperties) Object.entries(options.alt.additionalProperties).forEach(([k, getV]) => toAdd[k] = getV(it));
 			}
 			Object.assign(toAdd, toMerge);
 			return toAdd;
 		};
 
-		function handleItem (it, i, name) {
+		const handleItem = (it, i, name) => {
 			if (!it.noDisplay) {
 				const toAdd = getToAdd(it, {n: name}, i);
-				if ((isTestMode || (!arbiter.include && !(arbiter.filter && arbiter.filter(it))) || (!arbiter.filter && (!arbiter.include || arbiter.include(it)))) && !arbiter.onlyDeep) index.push(toAdd);
+				if ((options.isNoFilter || (!arbiter.include && !(arbiter.filter && arbiter.filter(it))) || (!arbiter.filter && (!arbiter.include || arbiter.include(it)))) && !arbiter.onlyDeep) index.push(toAdd);
 				if (arbiter.deepIndex) {
 					const primary = {it: it, i: i, parentName: name};
-					const deepItems = arbiter.deepIndex(primary, it);
+					const deepItems = arbiter.deepIndex(this, primary, it);
 					deepItems.forEach(item => {
 						const toAdd = getToAdd(it, item);
 						if (!arbiter.filter || !arbiter.filter(it)) index.push(toAdd);
 					})
 				}
 			}
-		}
+		};
 
 		Omnidexer.getProperty(json, arbiter.listProp).forEach((it, i) => {
 			const name = Omnidexer.getProperty(it, arbiter.primary || "name");
@@ -80,8 +112,30 @@ class Omnidexer {
 		this.id = id;
 	}
 
+	/**
+	 * Directly add a pre-computed index item.
+	 * @param item
+	 */
+	pushToIndex (item) {
+		item.id = this.id++;
+		this._index.push(item);
+	}
+
 	static arrIncludesOrEquals (checkAgainst, item) {
 		return checkAgainst instanceof Array ? checkAgainst.includes(item) : checkAgainst === item;
+	}
+
+	getMetaId (k, v) {
+		this._metaMap[k] = this._metaMap[k] || {};
+		// store the index in "inverted" format to prevent extra quote characters around numbers
+		if (this._metaMap[k][v] != null) return this._metaMap[k][v];
+		else {
+			this._metaIndices[k] = this._metaIndices[k] || 0;
+			this._metaMap[k][v] = this._metaIndices[k];
+			const out = this._metaIndices[k];
+			this._metaIndices[k]++;
+			return out;
+		}
 	}
 }
 /**
@@ -105,7 +159,14 @@ Omnidexer.TO_INDEX__FROM_INDEX_JSON = [
 		source: "source",
 		listProp: "spell",
 		baseUrl: "spells.html",
-		hover: true
+		hover: true,
+		alternateIndexes: {
+			spell: {
+				additionalProperties: {
+					lvl: spell => spell.level
+				}
+			}
+		}
 	},
 	{
 		category: Parser.CAT_ID_CLASS,
@@ -114,11 +175,11 @@ Omnidexer.TO_INDEX__FROM_INDEX_JSON = [
 		source: "source",
 		listProp: "class",
 		baseUrl: "classes.html",
-		deepIndex: (primary, it) => {
+		deepIndex: (indexer, primary, it) => {
 			if (!it.subclasses) return [];
 			return it.subclasses.map(sc => ({
 				n: `${primary.parentName}; ${sc.name}`,
-				s: sc.source,
+				s: indexer.getMetaId("s", sc.source),
 				u: `${UrlUtil.URL_TO_HASH_BUILDER[UrlUtil.PG_CLASSES](it)}${HASH_PART_SEP}${HASH_SUBCLASS}${UrlUtil.encodeForHash(sc.name)}${HASH_SUB_LIST_SEP}${UrlUtil.encodeForHash(sc.source)}`
 			}))
 		}
@@ -131,43 +192,28 @@ Omnidexer.TO_INDEX__FROM_INDEX_JSON = [
 		listProp: "class",
 		baseUrl: "classes.html",
 		onlyDeep: true,
-		deepIndex: (primary, it) => {
+		hover: true,
+		deepIndex: (indexer, primary, it) => {
 			const out = [];
-			let scFeatureI = 0;
-			it.classFeatures.forEach((lvlFeatureList, i) => {
-				// class features
-				lvlFeatureList
-					.filter(feature => !feature.gainSubclassFeature && feature.name !== "Ability Score Improvement") // don't add "you gain a subclass feature" or ASI's
-					.forEach(feature => {
-						const name = EntryRenderer.findName(feature);
-						if (!name) throw new Error("No name!");
+			const entriesIxd = UrlUtil.class.getIndexedEntries(it);
+			entriesIxd.forEach(it => {
+				switch (it._type) {
+					case "classFeature":
 						out.push({
-							n: `${primary.parentName} ${i + 1}; ${name}`,
+							n: `${primary.parentName} ${it.level}; ${it.name}`,
 							s: it.source,
-							u: `${UrlUtil.URL_TO_HASH_BUILDER[UrlUtil.PG_CLASSES](it)}${HASH_PART_SEP}${HASH_SUBCLASS}${UrlUtil.encodeForHash(it.name)}${HASH_PART_SEP}${CLSS_HASH_FEATURE}${UrlUtil.encodeForHash(`${feature.name} ${i + 1}`)}`
-						})
-					});
-
-				// subclass features
-				const gainSubclassFeatures = lvlFeatureList.filter(feature => feature.gainSubclassFeature);
-				if (gainSubclassFeatures.length === 1) {
-					const gainFeatureHash = `${CLSS_HASH_FEATURE}${UrlUtil.encodeForHash(`${gainSubclassFeatures[0].name} ${i + 1}`)}`;
-					it.subclasses.forEach(sc => {
-						const features = sc.subclassFeatures[scFeatureI];
-						features.forEach(feature => {
-							const baseSubclassUrl = `${UrlUtil.URL_TO_HASH_BUILDER[UrlUtil.PG_CLASSES](it)}${HASH_PART_SEP}${HASH_SUBCLASS}${UrlUtil.encodeForHash(sc.name)}${HASH_SUB_LIST_SEP}${UrlUtil.encodeForHash(sc.source)}`;
-							const name = EntryRenderer.findName(feature);
-							if (!name) throw new Error("No name!");
-							out.push({
-								n: `${sc.shortName} ${primary.parentName} ${i + 1}; ${name}`,
-								s: sc.source,
-								u: `${baseSubclassUrl}${HASH_PART_SEP}${gainFeatureHash}`
-							})
+							u: it.hash
 						});
-					});
-					scFeatureI++;
-				} else if (gainSubclassFeatures.length > 1) {
-					setTimeout(() => { throw new Error(`Multiple subclass features gained at level ${i + 1} for class "${it.name}" from source "${it.source}"!`) });
+						break;
+					case "subclassFeature":
+					case "subclassFeaturePart":
+						out.push({
+							n: `${it.subclassShortName} ${primary.parentName} ${it.level}; ${it.name}`,
+							s: indexer.getMetaId("s", it.source),
+							u: it.hash
+						});
+						break;
+					default: throw new Error(`Unhandled type "${it._type}"`);
 				}
 			});
 			return out;
@@ -193,7 +239,7 @@ Omnidexer.TO_INDEX__FROM_INDEX_JSON = [
  * test_extraIndex: (OPTIONAL) a function which can optionally be called per item if `doExtraIndex` is true.
  * 		Used to generate a complete list of links for testing; should not be used for production index.
  * 		Should return full index objects.
- * hover: (OPTIONAL) a boolean indicating if the generated link should have `EntryRenderer` hover functionality.
+ * hover: (OPTIONAL) a boolean indicating if the generated link should have `Renderer` hover functionality.
  * filter: (OPTIONAL) a function which takes a data item and returns true if it should not be indexed, false otherwise
  * include: (OPTIONAL) a function which takes a data item and returns true if it should be indexed, false otherwise
  * postLoad: (OPTIONAL) a function which takes the data set, does some post-processing,
@@ -304,6 +350,22 @@ Omnidexer.TO_INDEX = [
 		include: (it) => Omnidexer.arrIncludesOrEquals(it.featureType, "ED")
 	},
 	{
+		category: Parser.CAT_ID_ARTIFICER_INFUSION,
+		file: "optionalfeatures.json",
+		listProp: "optionalfeature",
+		baseUrl: "optionalfeatures.html",
+		hover: true,
+		include: (it) => Omnidexer.arrIncludesOrEquals(it.featureType, "AI")
+	},
+	{
+		category: Parser.CAT_ID_SHIP_UPGRADE,
+		file: "optionalfeatures.json",
+		listProp: "optionalfeature",
+		baseUrl: "optionalfeatures.html",
+		hover: true,
+		include: (it) => Omnidexer.arrIncludesOrEquals(it.featureType, "SHP:H") || Omnidexer.arrIncludesOrEquals(it.featureType, "SHP:M") || Omnidexer.arrIncludesOrEquals(it.featureType, "SHP:W") || Omnidexer.arrIncludesOrEquals(it.featureType, "SHP:F")
+	},
+	{
 		category: Parser.CAT_ID_ITEM,
 		file: "items.json",
 		listProp: "item",
@@ -322,7 +384,7 @@ Omnidexer.TO_INDEX = [
 		file: "psionics.json",
 		listProp: "psionic",
 		baseUrl: "psionics.html",
-		deepIndex: (primary, it) => {
+		deepIndex: (indexer, primary, it) => {
 			if (!it.modes) return [];
 			return it.modes.map(m => ({d: 1, n: `${primary.parentName}; ${m.name}`}))
 		},
@@ -334,11 +396,11 @@ Omnidexer.TO_INDEX = [
 		listProp: "race",
 		baseUrl: "races.html",
 		onlyDeep: true,
-		deepIndex: (primary, it) => {
-			const subs = EntryRenderer.race._mergeSubrace(it);
+		deepIndex: (indexer, primary, it) => {
+			const subs = Renderer.race._mergeSubrace(it);
 			return subs.map(r => ({
 				n: r.name,
-				s: r.source,
+				s: indexer.getMetaId("s", r.source),
 				u: UrlUtil.URL_TO_HASH_BUILDER["races.html"](r)
 			}));
 		},
@@ -356,12 +418,12 @@ Omnidexer.TO_INDEX = [
 		file: "variantrules.json",
 		listProp: "variantrule",
 		baseUrl: "variantrules.html",
-		deepIndex: (primary, it) => {
+		deepIndex: (indexer, primary, it) => {
 			const names = [];
 			it.entries.forEach(e => {
-				EntryRenderer.getNames(names, e, 1);
+				Renderer.getNames(names, e, 1);
 			});
-			const allNames = EntryRenderer.getNumberedNames(it);
+			const allNames = Renderer.getNumberedNames(it);
 			const nameKeys = Object.keys(allNames).filter(it => names.includes(it));
 
 			return nameKeys.map(n => {
@@ -391,8 +453,8 @@ Omnidexer.TO_INDEX = [
 		hashBuilder: (it) => {
 			return UrlUtil.encodeForHash([it.name, it.inherits.source]);
 		},
-		deepIndex: (primary, it) => {
-			const revName = EntryRenderer.item.modifierPostToPre(it);
+		deepIndex: (indexer, primary, it) => {
+			const revName = Renderer.item.modifierPostToPre(it);
 			if (revName) {
 				return [{
 					d: 1,
@@ -401,10 +463,28 @@ Omnidexer.TO_INDEX = [
 			}
 			return [];
 		},
-		test_extraIndex: () => {
-			const specVars = UtilSearchIndex._test_getBasicVariantItems();
-
-			return specVars.map(sv => ({c: 4, u: UrlUtil.encodeForHash([sv.name, sv.source])}));
+		additionalIndexes: {
+			item: async (indexer, rawVariants) => {
+				const specVars = await UtilSearchIndex._node_pGetBasicVariantItems(rawVariants);
+				return specVars.map(sv => {
+					const out = {
+						c: Parser.CAT_ID_ITEM,
+						u: UrlUtil.encodeForHash([sv.name, sv.source]),
+						s: indexer.getMetaId("s", sv.source),
+						n: sv.name,
+						h: 1,
+						p: sv.page
+					};
+					if (sv.genericVariant) {
+						// use z-prefixed as "other data" properties
+						out.zg = {
+							n: indexer.getMetaId("n", sv.genericVariant.name),
+							s: indexer.getMetaId("s", sv.genericVariant.source)
+						};
+					}
+					return out;
+				});
+			}
 		},
 		hover: true
 	},
@@ -447,7 +527,7 @@ Omnidexer.TO_INDEX = [
 			return `bookref-quick,${i}`;
 		},
 		onlyDeep: true,
-		deepIndex: (primary, it) => {
+		deepIndex: (indexer, primary, it) => {
 			function getDoc (name, alias) {
 				return {
 					n: alias || name,

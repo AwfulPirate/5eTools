@@ -249,6 +249,7 @@
 			font-weight: 500;
 			font-size: 1.5em;
 			margin-bottom: 0;
+			margin-top: 4px;
 		}
 
 		td#equipment ul,
@@ -304,20 +305,26 @@
 	</div>
 </header>
 <nav class="container page__nav" id="navigation">
-	<ul class="nav nav-pills" id="navbar">
+	<ul class="nav page__nav-inner" id="navbar">
 	</ul>
 </nav>
+
+<div class="cancer__wrp-leaderboard"><!--5ETOOLS_AD_LEADERBOARD--></div>
+<div class="cancer__wrp-sidebar-rhs"><!--5ETOOLS_AD_RIGHT_1--><div class="cancer__sidebar-rhs-inner"><!--5ETOOLS_AD_RIGHT_2--></div></div>
+
 <main class="container classes">
 
 	<div class="row">
 		<div class="col-sm-3" id="listcontainer">
-			<div class="input-group" id="filter-search-input-group">
-				<input type="search" id="search" class="search form-control" placeholder="Find class...">
-				<span class="input-group-btn">
-						<button class="btn btn-default" id="reset">Reset</button>
-					</span>
+			<div class="lst__form-top" id="filter-search-input-group">
+				<div class="full-width relative">
+					<input type="search" id="search" autocomplete="off" autocapitalize="off" spellcheck="false" class="search form-control lst__search lst__search--no-border-h">
+					<div class="lst__wrp-search-glass no-events flex-vh-center"><span class="glyphicon glyphicon-search"></span></div>
+					<div class="lst__wrp-search-visible no-events flex-vh-center"></div>
+				</div>
+				<button class="btn btn-default" id="reset">Reset</button>
 			</div>
-			<div id="filtertools" class="sortlabel btn-group">
+			<div id="filtertools" class="sortlabel lst__form-bottom">
 				<button class="col-8 sort btn btn-default btn-xs" data-sort="name">Name <span class="caret_wrp"></span></button>
 				<button class="col-4 sort btn btn-default btn-xs" data-sort="source">Source <span class="caret_wrp"></span></button>
 			</div>
@@ -463,7 +470,7 @@
 				<tr><th class="border" colspan="6"></th></tr>
 				<tr><th id="nameSummary" colspan="6">Name</th></tr>
 				<tr><th id="author" colspan="6">Author</th></tr>
-				<tr id="statsprof_divider"><td class="divider" colspan="6"><div></div></td></tr>
+				<tr id="statsprof_divider"><td class="divider" colspan="6"><div style="margin: 0;"></div></td></tr>
 				<tr>
 					<td id="hp" colspan="6">
 						<h5>Hit Points</h5>
@@ -554,11 +561,12 @@
 <script type="text/javascript" src="lib/list.js"></script>
 <script type="text/javascript" src="lib/elasticlunr.js"></script>
 <script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/utils-ui.js"></script>
 <script type="text/javascript" src="lib/localforage.js"></script>
 <script type="text/javascript" src="js/omnidexer.js"></script>
 <script type="text/javascript" src="js/omnisearch.js"></script>
 <script type="text/javascript" src="js/filter.js"></script>
-<script type="text/javascript" src="js/entryrender.js"></script>
+<script type="text/javascript" src="js/render.js"></script>
 <script type="text/javascript" src="js/scalecreature.js"></script>
 <script type="text/javascript" src="js/history.js"></script>
 <script type="text/javascript" src="js/classes.js"></script>

@@ -16,7 +16,7 @@
 				"tier": "Minor",
 				"rarity": "Unknown",
 				"source": "XGE",
-				"page": 71,
+				"page": 78,
 				"namePrefix": "Adamantine ",
 				"entries": [
 					"Whenever you hit an object using this ammunition, the hit is a critical hit."
@@ -67,7 +67,7 @@
 				"rarity": "Unknown",
 				"tier": "Major",
 				"source": "XGE",
-				"page": 71,
+				"page": 78,
 				"namePrefix": "Adamantine ",
 				"entries": [
 					"Whenever you hit an object with this weapon, the hit is a critical hit."
@@ -92,21 +92,8 @@
 				"entries": [
 					"You have a {=genericBonus} bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical."
 				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "ranged attacks +1",
-						"toString": [
-							null
-						]
-					},
-					{
-						"_category": "bonus",
-						"__text": "ranged damage +1",
-						"toString": [
-							null
-						]
-					}
+				"lootTables": [
+					"Magic Item Table B"
 				]
 			}
 		},
@@ -128,21 +115,8 @@
 				"entries": [
 					"You have a {=genericBonus} bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical."
 				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "ranged attacks +2",
-						"toString": [
-							null
-						]
-					},
-					{
-						"_category": "bonus",
-						"__text": "ranged damage +2",
-						"toString": [
-							null
-						]
-					}
+				"lootTables": [
+					"Magic Item Table C"
 				]
 			}
 		},
@@ -164,21 +138,8 @@
 				"entries": [
 					"You have a {=genericBonus} bonus to attack and damage rolls made with this piece of magic ammunition. Once it hits a target, the ammunition is no longer magical."
 				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "ranged attacks +3",
-						"toString": [
-							null
-						]
-					},
-					{
-						"_category": "bonus",
-						"__text": "ranged damage +3",
-						"toString": [
-							null
-						]
-					}
+				"lootTables": [
+					"Magic Item Table D"
 				]
 			}
 		},
@@ -201,7 +162,13 @@
 				"nameSuffix": " Armblade",
 				"entries": [
 					"An armblade is a weapon designed to integrate with the forearm of a warforged. If you're a warforged, you can attach an armblade by attuning to it. An attached armblade cannot be disarmed or removed from you against your will, but while the weapon is attached you cannot use that hand for other actions. You can spend one minute to end the attunement and remove the armblade.",
-					"An armblade isn't inherently considered to be a magic weapon for purposes of overcoming damage resistance. However, any sort of magical melee weapon could be created as an armblade, so you could acquire a vicious armblade or a vorpal armblade."
+					{
+						"type": "inset",
+						"name": "Magic Armblades",
+						"entries": [
+							"An armblade isn't inherently considered to be a magic weapon for purposes of overcoming damage resistance. However, any sort of magical melee weapon could be created as an armblade, so you could acquire a vicious armblade or a vorpal armblade."
+						]
+					}
 				]
 			}
 		},
@@ -222,15 +189,6 @@
 				"nameSuffix": " +1",
 				"entries": [
 					"You have a {=genericBonus} bonus to AC while wearing this armor."
-				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "ac +1",
-						"toString": [
-							null
-						]
-					}
 				]
 			}
 		},
@@ -251,15 +209,6 @@
 				"nameSuffix": " +2",
 				"entries": [
 					"You have a {=genericBonus} bonus to AC while wearing this armor."
-				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "ac +2",
-						"toString": [
-							null
-						]
-					}
 				]
 			}
 		},
@@ -280,15 +229,6 @@
 				"nameSuffix": " +3",
 				"entries": [
 					"You have a {=genericBonus} bonus to AC while wearing this armor."
-				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "ac +3",
-						"toString": [
-							null
-						]
-					}
 				]
 			}
 		},
@@ -305,7 +245,7 @@
 				"tier": "Major",
 				"rarity": "Rare",
 				"source": "DMG",
-				"page": 162,
+				"page": 152,
 				"reqAttune": true,
 				"nameSuffix": " of Acid Resistance"
 			}
@@ -323,7 +263,7 @@
 				"tier": "Major",
 				"rarity": "Rare",
 				"source": "DMG",
-				"page": 162,
+				"page": 152,
 				"reqAttune": true,
 				"nameSuffix": " of Cold Resistance"
 			}
@@ -341,7 +281,7 @@
 				"tier": "Major",
 				"rarity": "Rare",
 				"source": "DMG",
-				"page": 162,
+				"page": 152,
 				"reqAttune": true,
 				"nameSuffix": " of Fire Resistance"
 			}
@@ -359,7 +299,7 @@
 				"tier": "Major",
 				"rarity": "Rare",
 				"source": "DMG",
-				"page": 162,
+				"page": 152,
 				"reqAttune": true,
 				"nameSuffix": " of Force Resistance"
 			}
@@ -396,7 +336,7 @@
 				"tier": "Major",
 				"rarity": "Rare",
 				"source": "DMG",
-				"page": 162,
+				"page": 152,
 				"reqAttune": true,
 				"nameSuffix": " of Lightning Resistance"
 			}
@@ -414,7 +354,7 @@
 				"tier": "Major",
 				"rarity": "Rare",
 				"source": "DMG",
-				"page": 162,
+				"page": 152,
 				"reqAttune": true,
 				"nameSuffix": " of Necrotic Resistance"
 			}
@@ -432,7 +372,7 @@
 				"tier": "Major",
 				"rarity": "Rare",
 				"source": "DMG",
-				"page": 162,
+				"page": 152,
 				"reqAttune": true,
 				"nameSuffix": " of Poison Resistance"
 			}
@@ -450,7 +390,7 @@
 				"tier": "Major",
 				"rarity": "Rare",
 				"source": "DMG",
-				"page": 162,
+				"page": 152,
 				"reqAttune": true,
 				"nameSuffix": " of Psychic Resistance"
 			}
@@ -468,7 +408,7 @@
 				"tier": "Major",
 				"rarity": "Rare",
 				"source": "DMG",
-				"page": 162,
+				"page": 152,
 				"reqAttune": true,
 				"nameSuffix": " of Radiant Resistance"
 			}
@@ -486,7 +426,7 @@
 				"tier": "Major",
 				"rarity": "Rare",
 				"source": "DMG",
-				"page": 162,
+				"page": 152,
 				"reqAttune": true,
 				"nameSuffix": " of Thunder Resistance"
 			}
@@ -546,21 +486,8 @@
 					},
 					"Whenever a hostile creature damages you while the axe is in your possession, you must succeed on a DC 15 Wisdom saving throw or go berserk. While berserk, you must use your action each round to attack the creature nearest to you with the axe. If you can make extra attacks as part of the Attack action, you use those extra attacks, moving to attack the next nearest creature after you fell your current target. If you have multiple possible targets, you attack one at random. You are berserk until you start your turn with no creatures within 60 feet of you that you can see or hear."
 				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "melee attacks +1",
-						"toString": [
-							null
-						]
-					},
-					{
-						"_category": "bonus",
-						"__text": "melee damage +1",
-						"toString": [
-							null
-						]
-					}
+				"lootTables": [
+					"Magic Item Table G"
 				]
 			}
 		},
@@ -602,6 +529,9 @@
 					"You can use a bonus action to toss this magic sword into the air and speak the command word. When you do so, the sword begins to hover, flies up to 30 feet, and attacks one creature of your choice within 5 feet of it. The sword uses your attack roll and ability score modifier to damage rolls.",
 					"While the sword hovers, you can use a bonus action to cause it to fly up to 30 feet to another spot within 30 feet of you. As part of the same bonus action, you can cause the sword to attack one creature within 5 feet of it.",
 					"After the hovering sword attacks for the fourth time, it flies up to 30 feet and tries to return to your hand. If you have no hand free, it falls to the ground at your feet. If the sword has no unobstructed path to you, it moves as close to you as it can and then falls to the ground. It also ceases to hover if you grasp it or move more than 30 feet away from it."
+				],
+				"lootTables": [
+					"Magic Item Table H"
 				]
 			}
 		},
@@ -623,6 +553,9 @@
 				"entries": [
 					"You gain a +3 bonus to attack and damage rolls made with this magic weapon.",
 					"The first time you attack with the sword on each of your turns, you can transfer some or all of the sword's bonus to your Armor Class, instead of using the bonus on any attacks that turn. For example, you could reduce the bonus to your attack and damage rolls to +1 and gain a +2 bonus to AC. The adjusted bonuses remain in effect until the start of your next turn, although you must hold the sword to gain a bonus to AC from it."
+				],
+				"lootTables": [
+					"Magic Item Table I"
 				]
 			}
 		},
@@ -644,21 +577,8 @@
 					"You gain a +1 bonus to attack and damage rolls made with this magic weapon.",
 					"When you hit a dragon with this weapon, the dragon takes an extra {@dice 3d6} damage of the weapon's type. For the purpose of this weapon, \"dragon\" refers to any creature with the dragon type, including dragon turtles and wyverns."
 				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "melee attacks +1",
-						"toString": [
-							null
-						]
-					},
-					{
-						"_category": "bonus",
-						"__text": "melee damage +1",
-						"toString": [
-							null
-						]
-					}
+				"lootTables": [
+					"Magic Item Table G"
 				]
 			}
 		},
@@ -679,6 +599,9 @@
 				"namePrefix": "Flame Tongue ",
 				"entries": [
 					"You can use a bonus action to speak this magic sword's command word, causing flames to erupt from the blade. These flames shed bright light in a 40-foot radius and dim light for an additional 40 feet. While the sword is ablaze, it deals an extra {@dice 2d6} fire damage to any target it hits. The flames last until you use a bonus action to speak the command word again or until you drop or sheathe the sword."
+				],
+				"lootTables": [
+					"Magic Item Table G"
 				]
 			}
 		},
@@ -701,6 +624,9 @@
 					"When you hit with an attack using this magic sword, the target takes an extra {@dice 1d6} cold damage. In addition, while you hold the sword, you have resistance to fire damage.",
 					"In freezing temperatures, the blade sheds bright light in a 10-foot radius and dim light for an additional 10 feet.",
 					"When you draw this weapon, you can extinguish all nonmagical flames within 30 feet of you. This property can be used no more than once per hour."
+				],
+				"lootTables": [
+					"Magic Item Table H"
 				]
 			}
 		},
@@ -725,21 +651,8 @@
 					"You gain a +1 bonus to attack and damage rolls made with this magic weapon.",
 					"When you hit a giant with it, the giant takes an extra {@dice 2d6} damage of the weapon's type and must succeed on a DC 15 Strength saving throw or fall {@condition prone}. For the purpose of this weapon, \"giant\" refers to any creature with the giant type, including ettins and trolls."
 				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "melee attacks +1",
-						"toString": [
-							null
-						]
-					},
-					{
-						"_category": "bonus",
-						"__text": "melee damage +1",
-						"toString": [
-							null
-						]
-					}
+				"lootTables": [
+					"Magic Item Table G"
 				]
 			}
 		},
@@ -762,21 +675,8 @@
 					"You gain a +3 bonus to attack and damage rolls made with this magic weapon. When you hit a fiend or an undead with it, that creature takes an extra {@dice 2d10} radiant damage.",
 					"While you hold the drawn sword, it creates an aura in a 10-foot radius around you. You and all creatures friendly to you in the aura have advantage on saving throws against spells and other magical effects. If you have 17 or more levels in the paladin class, the radius of the aura increases to 30 feet."
 				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "melee attacks +3",
-						"toString": [
-							null
-						]
-					},
-					{
-						"_category": "bonus",
-						"__text": "melee damage +3",
-						"toString": [
-							null
-						]
-					}
+				"lootTables": [
+					"Magic Item Table I"
 				]
 			}
 		},
@@ -1081,32 +981,12 @@
 						]
 					}
 				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "melee attacks +1",
-						"toString": [
-							null
-						]
-					},
-					{
-						"_category": "bonus",
-						"__text": "melee damage +1",
-						"toString": [
-							null
-						]
-					},
-					{
-						"_category": "bonus",
-						"__text": "saving throws +1",
-						"toString": [
-							null
-						]
-					}
-				],
 				"charges": "{@dice 1d4-1}",
 				"attachedSpells": [
 					"wish"
+				],
+				"lootTables": [
+					"Magic Item Table I"
 				]
 			},
 			"charges": "{@dice 1d4-1}",
@@ -1130,6 +1010,9 @@
 				"namePrefix": "Mariner's ",
 				"entries": [
 					"While wearing this armor, you have a swimming speed equal to your walking speed. In addition, whenever you start your turn underwater with 0 hit points, the armor causes you to rise 60 feet toward the surface. The armor is decorated with fish and shell motifs."
+				],
+				"lootTables": [
+					"Magic Item Table B"
 				]
 			}
 		},
@@ -1194,6 +1077,9 @@
 				"namePrefix": "Mithral ",
 				"entries": [
 					"Mithral is a light, flexible metal. A mithral chain shirt or breastplate can be worn under normal clothes. If the armor normally imposes disadvantage on Dexterity ({@skill Stealth}) checks or has a Strength requirement, the mithral version of the armor doesn't."
+				],
+				"lootTables": [
+					"Magic Item Table B"
 				]
 			}
 		},
@@ -1235,23 +1121,10 @@
 					"You gain a +2 bonus to attack and damage rolls made with this magic weapon.",
 					"The sword has {@dice 1d8+1} charges. If you score a critical hit against a creature that has fewer than 100 hit points, it must succeed on a DC 15 Constitution saving throw or be slain instantly as the sword tears its life force from its body (a construct or an undead is immune). The sword loses 1 charge if the creature is slain. When the sword has no charges remaining, it loses this property."
 				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "melee attacks +2",
-						"toString": [
-							null
-						]
-					},
-					{
-						"_category": "bonus",
-						"__text": "melee damage +2",
-						"toString": [
-							null
-						]
-					}
-				],
-				"charges": "{@dice 1d8+1}"
+				"charges": "{@dice 1d8+1}",
+				"lootTables": [
+					"Magic Item Table H"
+				]
 			}
 		},
 		{
@@ -1278,7 +1151,7 @@
 				"reqAttune": true,
 				"namePrefix": "Fernian Basalt ",
 				"entries": [
-					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take damage of the type associated with the material your orb is made from, you can use your reaction to reduce the damage by {@dice 1d4}."
+					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take fire damage, you can use your reaction to reduce the damage by {@dice 1d4}."
 				]
 			}
 		},
@@ -1306,7 +1179,7 @@
 				"reqAttune": true,
 				"namePrefix": "Irian Quartz ",
 				"entries": [
-					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take damage of the type associated with the material your orb is made from, you can use your reaction to reduce the damage by {@dice 1d4}."
+					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take radiant damage, you can use your reaction to reduce the damage by {@dice 1d4}."
 				]
 			}
 		},
@@ -1334,7 +1207,7 @@
 				"reqAttune": true,
 				"namePrefix": "Kythrian Skarn ",
 				"entries": [
-					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take damage of the type associated with the material your orb is made from, you can use your reaction to reduce the damage by {@dice 1d4}."
+					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take acid or poison damage, you can use your reaction to reduce the damage by {@dice 1d4}."
 				]
 			}
 		},
@@ -1362,7 +1235,7 @@
 				"reqAttune": true,
 				"namePrefix": "Lamannian Flint ",
 				"entries": [
-					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take damage of the type associated with the material your orb is made from, you can use your reaction to reduce the damage by {@dice 1d4}."
+					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take lightning or thunder damage, you can use your reaction to reduce the damage by {@dice 1d4}."
 				]
 			}
 		},
@@ -1390,7 +1263,7 @@
 				"reqAttune": true,
 				"namePrefix": "Mabaran Obsidian ",
 				"entries": [
-					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take damage of the type associated with the material your orb is made from, you can use your reaction to reduce the damage by {@dice 1d4}."
+					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take necrotic damage, you can use your reaction to reduce the damage by {@dice 1d4}."
 				]
 			}
 		},
@@ -1418,7 +1291,7 @@
 				"reqAttune": true,
 				"namePrefix": "Quori Celestine ",
 				"entries": [
-					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take damage of the type associated with the material your orb is made from, you can use your reaction to reduce the damage by {@dice 1d4}."
+					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take psychic damage, you can use your reaction to reduce the damage by {@dice 1d4}."
 				]
 			}
 		},
@@ -1446,7 +1319,7 @@
 				"reqAttune": true,
 				"namePrefix": "Risian Shale ",
 				"entries": [
-					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take damage of the type associated with the material your orb is made from, you can use your reaction to reduce the damage by {@dice 1d4}."
+					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take cold damage, you can use your reaction to reduce the damage by {@dice 1d4}."
 				]
 			}
 		},
@@ -1474,7 +1347,7 @@
 				"reqAttune": true,
 				"namePrefix": "Shavaran Chert ",
 				"entries": [
-					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take damage of the type associated with the material your orb is made from, you can use your reaction to reduce the damage by {@dice 1d4}."
+					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take force damage, you can use your reaction to reduce the damage by {@dice 1d4}."
 				]
 			}
 		},
@@ -1502,7 +1375,7 @@
 				"reqAttune": true,
 				"namePrefix": "Xorian Marble ",
 				"entries": [
-					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take damage of the type associated with the material your orb is made from, you can use your reaction to reduce the damage by {@dice 1d4}."
+					"An orb of shielding is made from crystal or stone aligned to one of the planes. While you are holding the orb and take psychic damage, you can use your reaction to reduce the damage by {@dice 1d4}."
 				]
 			}
 		},
@@ -1523,15 +1396,6 @@
 				"nameSuffix": " +1",
 				"entries": [
 					"While holding this shield, you have a {=genericBonus} bonus to AC. This bonus is in addition to the shield's normal bonus to AC."
-				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "ac +1",
-						"toString": [
-							null
-						]
-					}
 				]
 			}
 		},
@@ -1552,15 +1416,6 @@
 				"nameSuffix": " +2",
 				"entries": [
 					"While holding this shield, you have a {=genericBonus} bonus to AC. This bonus is in addition to the shield's normal bonus to AC."
-				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "ac +2",
-						"toString": [
-							null
-						]
-					}
 				]
 			}
 		},
@@ -1581,15 +1436,6 @@
 				"nameSuffix": " +3",
 				"entries": [
 					"While holding this shield, you have a {=genericBonus} bonus to AC. This bonus is in addition to the shield's normal bonus to AC."
-				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "ac +3",
-						"toString": [
-							null
-						]
-					}
 				]
 			}
 		},
@@ -1671,6 +1517,9 @@
 				"entries": [
 					"When you attack a creature with this magic weapon and roll a 20 on the attack roll, that target takes an extra 10 necrotic damage if it isn't a construct or an undead. You also gain 10 temporary hit points.",
 					"{@i Note: According to the SRD, it is an extra {@dice 3d6} necrotic damage.}"
+				],
+				"lootTables": [
+					"Magic Item Table G"
 				]
 			}
 		},
@@ -1695,6 +1544,9 @@
 					"When you attack a creature with this weapon and roll a 20 on the attack roll, that target takes an extra 14 slashing damage. Then roll another {@dice d20}. If you roll a 20, you lop off one of the target's limbs, with the effect of such loss determined by the DM. If the creature has no limb to sever, you lop off a portion of its body instead.",
 					"{@i Note: According to the SRD, it is an extra {@dice 4d6} slashing damage, although {@link this is incorrect|https://twitter.com/JeremyECrawford/status/949111823990534144}}.",
 					"In addition, you can speak the sword's command to cause the blade to shed bright light in a 10-foot radius and dim light for an additional 10 feet. Speaking the command word again or sheathing the sword puts out the light."
+				],
+				"lootTables": [
+					"Magic Item Table H"
 				]
 			}
 		},
@@ -1726,21 +1578,8 @@
 						]
 					}
 				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "melee attacks +1",
-						"toString": [
-							null
-						]
-					},
-					{
-						"_category": "bonus",
-						"__text": "melee damage +1",
-						"toString": [
-							null
-						]
-					}
+				"lootTables": [
+					"Magic Item Table F"
 				]
 			}
 		},
@@ -1762,6 +1601,9 @@
 				"entries": [
 					"Hit points lost to this weapon's damage can be regained only through a short or long rest, rather than by regeneration, magic, or any other means.",
 					"Once per turn, when you hit a creature with an attack using this magic weapon, you can wound the target. At the start of each of the wounded creature's turns, it takes {@dice 1d4} necrotic damage for each time you've wounded it, and it can then make a DC 15 Constitution saving throw, ending the effect of all such wounds on itself on a success. Alternatively, the wounded creature, or a creature within 5 feet of it, can use an action to make a DC 15 Wisdom ({@skill Medicine}) check, ending the effect of such wounds on it on a success."
+				],
+				"lootTables": [
+					"Magic Item Table G"
 				]
 			}
 		},
@@ -1789,6 +1631,9 @@
 				"entries": [
 					"When you roll a 20 with this magic weapon, the target takes an extra 7 {=dmgType} damage.",
 					"{@i Note: According to the SRD, it is an extra {@dice 2d6} {=dmgType} damage.}"
+				],
+				"lootTables": [
+					"Magic Item Table G"
 				]
 			}
 		},
@@ -1812,21 +1657,8 @@
 					"You gain a +3 bonus to attack and damage rolls made with this magic weapon. In addition, the weapon ignores resistance to slashing damage.",
 					"When you attack a creature that has at least one head with this weapon and roll a 20 on the attack roll, you cut off one of the creature's heads. The creature dies if it can't survive without the lost head. A creature is immune to this effect if it is immune to slashing damage, doesn't have or need a head, has legendary actions, or the DM decides that the creature is too big for its head to be cut off with this weapon. Such a creature instead takes an extra {@dice 6d8} slashing damage from the hit."
 				],
-				"modifier": [
-					{
-						"_category": "bonus",
-						"__text": "melee attacks +3",
-						"toString": [
-							null
-						]
-					},
-					{
-						"_category": "bonus",
-						"__text": "melee damage +3",
-						"toString": [
-							null
-						]
-					}
+				"lootTables": [
+					"Magic Item Table I"
 				]
 			}
 		},
@@ -1929,6 +1761,9 @@
 				"nameSuffix": " +1",
 				"entries": [
 					"You have a {=genericBonus} bonus to attack and damage rolls made with this weapon."
+				],
+				"lootTables": [
+					"Magic Item Table F"
 				]
 			}
 		},
@@ -1952,6 +1787,9 @@
 				"nameSuffix": " +2",
 				"entries": [
 					"You have a {=genericBonus} bonus to attack and damage rolls made with this weapon."
+				],
+				"lootTables": [
+					"Magic Item Table G"
 				]
 			}
 		},
@@ -1975,6 +1813,9 @@
 				"nameSuffix": " +3",
 				"entries": [
 					"You have a {=genericBonus} bonus to attack and damage rolls made with this weapon."
+				],
+				"lootTables": [
+					"Magic Item Table H"
 				]
 			}
 		},
@@ -1995,6 +1836,9 @@
 				"reqAttune": true,
 				"entries": [
 					"This magic weapon warns you of danger. While the weapon is on your person, you have advantage on initiative rolls. In addition, you and any of your companions within 30 feet of you can't be surprised, except when {@condition incapacitated} by something other than nonmagical sleep. The weapon magically awakens you and your companions within range if any of you are sleeping naturally when combat begins."
+				],
+				"lootTables": [
+					"Magic Item Table F"
 				]
 			}
 		},
@@ -2086,7 +1930,7 @@
 				}
 			],
 			"inherits": {
-				"rarity": "Rare",
+				"rarity": "Very Rare",
 				"source": "LLK",
 				"page": 56,
 				"reqAttune": true,
@@ -2199,5 +2043,391 @@
 				]
 			}
 		}
-	]
+	],
+	"linkedLootTables": {
+		"DMG": {
+			"Arrow of Slaying": [
+				"Magic Item Table E"
+			],
+			"Shield +1": [
+				"Magic Item Table F"
+			],
+			"Adamantine Chain Mail": [
+				"Magic Item Table F"
+			],
+			"Adamantine Chain Shirt": [
+				"Magic Item Table F"
+			],
+			"Adamantine Scale Mail": [
+				"Magic Item Table F"
+			],
+			"Adamantine Breastplate": [
+				"Magic Item Table G"
+			],
+			"Adamantine Splint Armor": [
+				"Magic Item Table G"
+			],
+			"Chain Mail +1": [
+				"Magic Item Table G"
+			],
+			"Chain Mail of Acid Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Mail of Cold Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Mail of Fire Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Mail of Force Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Mail of Lightning Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Mail of Necrotic Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Mail of Poison Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Mail of Psychic Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Mail of Radiant Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Mail of Thunder Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Shirt +1": [
+				"Magic Item Table G"
+			],
+			"Chain Shirt of Acid Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Shirt of Cold Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Shirt of Fire Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Shirt of Force Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Shirt of Lightning Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Shirt of Necrotic Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Shirt of Poison Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Shirt of Psychic Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Shirt of Radiant Resistance": [
+				"Magic Item Table G"
+			],
+			"Chain Shirt of Thunder Resistance": [
+				"Magic Item Table G"
+			],
+			"Leather Armor +1": [
+				"Magic Item Table G"
+			],
+			"Leather Armor of Acid Resistance": [
+				"Magic Item Table G"
+			],
+			"Leather Armor of Cold Resistance": [
+				"Magic Item Table G"
+			],
+			"Leather Armor of Fire Resistance": [
+				"Magic Item Table G"
+			],
+			"Leather Armor of Force Resistance": [
+				"Magic Item Table G"
+			],
+			"Leather Armor of Lightning Resistance": [
+				"Magic Item Table G"
+			],
+			"Leather Armor of Necrotic Resistance": [
+				"Magic Item Table G"
+			],
+			"Leather Armor of Poison Resistance": [
+				"Magic Item Table G"
+			],
+			"Leather Armor of Psychic Resistance": [
+				"Magic Item Table G"
+			],
+			"Leather Armor of Radiant Resistance": [
+				"Magic Item Table G"
+			],
+			"Leather Armor of Thunder Resistance": [
+				"Magic Item Table G"
+			],
+			"Scale Mail +1": [
+				"Magic Item Table G",
+				"Magic Item Table I"
+			],
+			"Scale Mail of Acid Resistance": [
+				"Magic Item Table G"
+			],
+			"Scale Mail of Cold Resistance": [
+				"Magic Item Table G"
+			],
+			"Scale Mail of Fire Resistance": [
+				"Magic Item Table G"
+			],
+			"Scale Mail of Force Resistance": [
+				"Magic Item Table G"
+			],
+			"Scale Mail of Lightning Resistance": [
+				"Magic Item Table G"
+			],
+			"Scale Mail of Necrotic Resistance": [
+				"Magic Item Table G"
+			],
+			"Scale Mail of Poison Resistance": [
+				"Magic Item Table G"
+			],
+			"Scale Mail of Psychic Resistance": [
+				"Magic Item Table G"
+			],
+			"Scale Mail of Radiant Resistance": [
+				"Magic Item Table G"
+			],
+			"Scale Mail of Thunder Resistance": [
+				"Magic Item Table G"
+			],
+			"Shield +2": [
+				"Magic Item Table G"
+			],
+			"Shield +3": [
+				"Magic Item Table H"
+			],
+			"Adamantine Half Plate Armor": [
+				"Magic Item Table H"
+			],
+			"Adamantine Plate Armor": [
+				"Magic Item Table H"
+			],
+			"Breastplate +1": [
+				"Magic Item Table H"
+			],
+			"Breastplate of Acid Resistance": [
+				"Magic Item Table H"
+			],
+			"Breastplate of Cold Resistance": [
+				"Magic Item Table H"
+			],
+			"Breastplate of Fire Resistance": [
+				"Magic Item Table H"
+			],
+			"Breastplate of Force Resistance": [
+				"Magic Item Table H"
+			],
+			"Breastplate of Lightning Resistance": [
+				"Magic Item Table H"
+			],
+			"Breastplate of Necrotic Resistance": [
+				"Magic Item Table H"
+			],
+			"Breastplate of Poison Resistance": [
+				"Magic Item Table H"
+			],
+			"Breastplate of Psychic Resistance": [
+				"Magic Item Table H"
+			],
+			"Breastplate of Radiant Resistance": [
+				"Magic Item Table H"
+			],
+			"Breastplate of Thunder Resistance": [
+				"Magic Item Table H"
+			],
+			"Chain Mail +2": [
+				"Magic Item Table H"
+			],
+			"Chain Shirt +2": [
+				"Magic Item Table H"
+			],
+			"Leather Armor +2": [
+				"Magic Item Table H"
+			],
+			"Scale Mail +2": [
+				"Magic Item Table H"
+			],
+			"Splint Armor +1": [
+				"Magic Item Table H"
+			],
+			"Splint Armor of Acid Resistance": [
+				"Magic Item Table H"
+			],
+			"Splint Armor of Cold Resistance": [
+				"Magic Item Table H"
+			],
+			"Splint Armor of Fire Resistance": [
+				"Magic Item Table H"
+			],
+			"Splint Armor of Force Resistance": [
+				"Magic Item Table H"
+			],
+			"Splint Armor of Lightning Resistance": [
+				"Magic Item Table H"
+			],
+			"Splint Armor of Necrotic Resistance": [
+				"Magic Item Table H"
+			],
+			"Splint Armor of Poison Resistance": [
+				"Magic Item Table H"
+			],
+			"Splint Armor of Psychic Resistance": [
+				"Magic Item Table H"
+			],
+			"Splint Armor of Radiant Resistance": [
+				"Magic Item Table H"
+			],
+			"Splint Armor of Thunder Resistance": [
+				"Magic Item Table H"
+			],
+			"Studded Leather Armor +1": [
+				"Magic Item Table H"
+			],
+			"Studded Leather Armor of Acid Resistance": [
+				"Magic Item Table H"
+			],
+			"Studded Leather Armor of Cold Resistance": [
+				"Magic Item Table H"
+			],
+			"Studded Leather Armor of Fire Resistance": [
+				"Magic Item Table H"
+			],
+			"Studded Leather Armor of Force Resistance": [
+				"Magic Item Table H"
+			],
+			"Studded Leather Armor of Lightning Resistance": [
+				"Magic Item Table H"
+			],
+			"Studded Leather Armor of Necrotic Resistance": [
+				"Magic Item Table H"
+			],
+			"Studded Leather Armor of Poison Resistance": [
+				"Magic Item Table H"
+			],
+			"Studded Leather Armor of Psychic Resistance": [
+				"Magic Item Table H"
+			],
+			"Studded Leather Armor of Radiant Resistance": [
+				"Magic Item Table H"
+			],
+			"Studded Leather Armor of Thunder Resistance": [
+				"Magic Item Table H"
+			],
+			"Breastplate +2": [
+				"Magic Item Table I"
+			],
+			"Chain Mail +3": [
+				"Magic Item Table I"
+			],
+			"Chain Shirt +3": [
+				"Magic Item Table I"
+			],
+			"Half Plate Armor +1": [
+				"Magic Item Table I"
+			],
+			"Leather Armor +3": [
+				"Magic Item Table I"
+			],
+			"Plate Armor +1": [
+				"Magic Item Table I"
+			],
+			"Splint Armor +2": [
+				"Magic Item Table I"
+			],
+			"Studded Leather Armor +2": [
+				"Magic Item Table I"
+			],
+			"Half Plate Armor +2": [
+				"Magic Item Table I"
+			],
+			"Plate Armor +2": [
+				"Magic Item Table I"
+			],
+			"Studded Leather Armor +3": [
+				"Magic Item Table I"
+			],
+			"Breastplate +3": [
+				"Magic Item Table I"
+			],
+			"Splint Armor +3": [
+				"Magic Item Table I"
+			],
+			"Half Plate Armor +3": [
+				"Magic Item Table I"
+			],
+			"Plate Armor +3": [
+				"Magic Item Table I"
+			],
+			"Half Plate Armor of Acid Resistance": [
+				"Magic Item Table I"
+			],
+			"Half Plate Armor of Cold Resistance": [
+				"Magic Item Table I"
+			],
+			"Half Plate Armor of Fire Resistance": [
+				"Magic Item Table I"
+			],
+			"Half Plate Armor of Force Resistance": [
+				"Magic Item Table I"
+			],
+			"Half Plate Armor of Lightning Resistance": [
+				"Magic Item Table I"
+			],
+			"Half Plate Armor of Necrotic Resistance": [
+				"Magic Item Table I"
+			],
+			"Half Plate Armor of Poison Resistance": [
+				"Magic Item Table I"
+			],
+			"Half Plate Armor of Psychic Resistance": [
+				"Magic Item Table I"
+			],
+			"Half Plate Armor of Radiant Resistance": [
+				"Magic Item Table I"
+			],
+			"Half Plate Armor of Thunder Resistance": [
+				"Magic Item Table I"
+			],
+			"Plate Armor of Acid Resistance": [
+				"Magic Item Table I"
+			],
+			"Plate Armor of Cold Resistance": [
+				"Magic Item Table I"
+			],
+			"Plate Armor of Fire Resistance": [
+				"Magic Item Table I"
+			],
+			"Plate Armor of Force Resistance": [
+				"Magic Item Table I"
+			],
+			"Plate Armor of Lightning Resistance": [
+				"Magic Item Table I"
+			],
+			"Plate Armor of Necrotic Resistance": [
+				"Magic Item Table I"
+			],
+			"Plate Armor of Poison Resistance": [
+				"Magic Item Table I"
+			],
+			"Plate Armor of Psychic Resistance": [
+				"Magic Item Table I"
+			],
+			"Plate Armor of Radiant Resistance": [
+				"Magic Item Table I"
+			],
+			"Plate Armor of Thunder Resistance": [
+				"Magic Item Table I"
+			]
+		}
+	}
 }

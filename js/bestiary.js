@@ -5,29 +5,16 @@ const META_URL = "meta.json";
 const FLUFF_INDEX = "fluff-index.json";
 const JSON_LIST_NAME = "monster";
 const ECGEN_BASE_PLAYERS = 4; // assume a party size of four
-const renderer = EntryRenderer.getDefaultRenderer();
+const renderer = Renderer.get();
 
 window.PROF_MODE_BONUS = "bonus";
 window.PROF_MODE_DICE = "dice";
 window.PROF_DICE_MODE = PROF_MODE_BONUS;
 
-function imgError (x) {
-	if (x) $(x).remove();
-	$(`#pagecontent th.name`).css("padding-right", "0.3em");
-	$(`.mon__wrp_hp`).css("max-width", "none");
-}
-
-function handleStatblockScroll (event, ele) {
-	$(`#token_image`)
-		.toggle(ele.scrollTop < 32)
-		.css({
-			opacity: (32 - ele.scrollTop) / 32,
-			top: -ele.scrollTop
-		});
-}
-
 const _MISC_FILTER_SPELLCASTER = "Spellcaster, ";
 function ascSortMiscFilter (a, b) {
+	a = a.item;
+	b = b.item;
 	if (a.includes(_MISC_FILTER_SPELLCASTER) && b.includes(_MISC_FILTER_SPELLCASTER)) {
 		a = Parser.attFullToAbv(a.replace(_MISC_FILTER_SPELLCASTER, ""));
 		b = Parser.attFullToAbv(b.replace(_MISC_FILTER_SPELLCASTER, ""));
@@ -50,10 +37,6 @@ function getAllImmRest (toParse, key) {
 	return out;
 }
 
-function basename (str, sep) {
-	return str.substr(str.lastIndexOf(sep) + 1);
-}
-
 const meta = {};
 const languages = {};
 
@@ -68,7 +51,8 @@ function pLoadMeta () {
 				});
 
 				Object.keys(data.language).forEach(k => languages[k] = data.language[k]);
-				languageFilter.items = Object.keys(languages).sort((a, b) => SortUtil.ascSortLower(languages[a], languages[b]));
+				Object.keys(languages).sort((a, b) => SortUtil.ascSortLower(languages[a], languages[b]))
+					.forEach(la => languageFilter.addItem(la));
 				resolve();
 			});
 	});
@@ -85,14 +69,8 @@ function addLegendaryGroups (toAdd) {
 }
 
 let ixFluff = {};
-function pLoadFluffIndex () {
-	return new Promise(resolve => {
-		DataUtil.loadJSON(JSON_DIR + FLUFF_INDEX)
-			.then((data) => {
-				ixFluff = data;
-				resolve();
-			});
-	});
+async function pLoadFluffIndex () {
+	ixFluff = await DataUtil.loadJSON(JSON_DIR + FLUFF_INDEX);
 }
 
 function handleBrew (homebrew) {
@@ -106,7 +84,7 @@ function pPostLoad () {
 		BrewUtil.pAddBrewData()
 			.then(handleBrew)
 			.then(() => BrewUtil.bind({list}))
-			.then(BrewUtil.pAddLocalBrewData)
+			.then(() => BrewUtil.pAddLocalBrewData())
 			.catch(BrewUtil.pPurgeBrew)
 			.then(async () => {
 				BrewUtil.makeBrewButton("manage-brew");
@@ -140,6 +118,7 @@ window.onload = async function load () {
 		skillFilter,
 		senseFilter,
 		languageFilter,
+		damageTypeFilter,
 		acFilter,
 		averageHpFilter,
 		abilityScoreFilter
@@ -161,7 +140,12 @@ window.onload = async function load () {
 let list;
 let printBookView;
 const sourceFilter = getSourceFilter();
-const crFilter = new RangeFilter({header: "Challenge Rating", labels: true});
+const crFilter = new RangeFilter({
+	header: "Challenge Rating",
+	isLabelled: true,
+	labelSortFn: SortUtil.ascSortCr,
+	labels: [...Parser.CRS]
+});
 const sizeFilter = new Filter({
 	header: "Size",
 	items: [
@@ -173,7 +157,8 @@ const sizeFilter = new Filter({
 		SZ_GARGANTUAN,
 		SZ_VARIES
 	],
-	displayFn: Parser.sizeAbvToFull
+	displayFn: Parser.sizeAbvToFull,
+	itemSortFn: SortUtil.ascSortCr
 });
 const speedFilter = new RangeFilter({header: "Speed", min: 30, max: 30});
 const speedTypeFilter = new Filter({header: "Speed Type", items: ["walk", "burrow", "climb", "fly", "hover", "swim"], displayFn: StrUtil.uppercaseFirst});
@@ -183,28 +168,18 @@ const constitutionFilter = new RangeFilter({header: "Constitution", min: 1, max:
 const intelligenceFilter = new RangeFilter({header: "Intelligence", min: 1, max: 30});
 const wisdomFilter = new RangeFilter({header: "Wisdom", min: 1, max: 30});
 const charismaFilter = new RangeFilter({header: "Charisma", min: 1, max: 30});
-const abilityScoreFilter = new MultiFilter({name: "Ability Scores", compact: true, mode: "and"}, strengthFilter, dexterityFilter, constitutionFilter, intelligenceFilter, wisdomFilter, charismaFilter);
+const abilityScoreFilter = new MultiFilter({
+	header: "Ability Scores",
+	mode: "and",
+	filters: [strengthFilter, dexterityFilter, constitutionFilter, intelligenceFilter, wisdomFilter, charismaFilter]
+});
 const acFilter = new RangeFilter({header: "Armor Class"});
 const averageHpFilter = new RangeFilter({header: "Average Hit Points"});
 const typeFilter = new Filter({
 	header: "Type",
-	items: [
-		"aberration",
-		"beast",
-		"celestial",
-		"construct",
-		"dragon",
-		"elemental",
-		"fey",
-		"fiend",
-		"giant",
-		"humanoid",
-		"monstrosity",
-		"ooze",
-		"plant",
-		"undead"
-	],
-	displayFn: StrUtil.toTitleCase
+	items: Parser.MON_TYPES,
+	displayFn: StrUtil.toTitleCase,
+	itemSortFn: SortUtil.ascSortLower
 });
 const tagFilter = new Filter({header: "Tag", displayFn: StrUtil.uppercaseFirst});
 const alignmentFilter = new Filter({
@@ -217,6 +192,11 @@ const languageFilter = new Filter({
 	displayFn: (k) => languages[k],
 	umbrellaItems: ["X", "XX"],
 	umbrellaExcludes: ["CS"]
+});
+const damageTypeFilter = new Filter({
+	header: "Damage Inflicted",
+	displayFn: (it) => Parser.dmgTypeToFull(it).toTitleCase(),
+	items: ["A", "B", "C", "F", "O", "L", "N", "P", "I", "Y", "R", "S", "T"]
 });
 const senseFilter = new Filter({
 	header: "Senses",
@@ -296,7 +276,7 @@ const immuneFilter = new Filter({
 	items: DMG_TYPES,
 	displayFn: dispImmFilter
 });
-const defenceFilter = new MultiFilter({name: "Damage", mode: "and"}, vulnerableFilter, resistFilter, immuneFilter);
+const defenceFilter = new MultiFilter({header: "Damage", mode: "and", filters: [vulnerableFilter, resistFilter, immuneFilter]});
 const conditionImmuneFilter = new Filter({
 	header: "Condition Immunity",
 	items: CONDS,
@@ -316,9 +296,10 @@ const actionReactionFilter = new Filter({
 });
 const miscFilter = new Filter({
 	header: "Miscellaneous",
-	items: ["Familiar", "Lair Actions", "Legendary", "Named NPC", "Spellcaster", "Regional Effects", "Reactions", "Swarm", "Has Variants"],
-	displayFn: StrUtil.uppercaseFirst,
-	deselFn: (it) => it === "Named NPC"
+	items: ["Familiar", ...Object.keys(Parser.MON_MISC_TAG_TO_FULL), "Lair Actions", "Legendary", "Named NPC", "Spellcaster", ...Object.values(Parser.ATB_ABV_TO_FULL).map(it => `${_MISC_FILTER_SPELLCASTER}${it}`), "Regional Effects", "Reactions", "Swarm", "Has Variants", "Modified Copy", "Has Alternate Token"],
+	displayFn: (it) => Parser.monMiscTagToFull(it).uppercaseFirst(),
+	deselFn: (it) => it === "Named NPC",
+	itemSortFn: ascSortMiscFilter
 });
 const spellcastingTypeFilter = new Filter({
 	header: "Spellcasting Type",
@@ -327,16 +308,18 @@ const spellcastingTypeFilter = new Filter({
 });
 
 function pPageInit (loadedSources) {
-	sourceFilter.items = Object.keys(loadedSources).map(src => new FilterItem({item: src, changeFn: loadSource(JSON_LIST_NAME, addMonsters)}));
-	sourceFilter.items.sort(SortUtil.ascSort);
+	Object.keys(loadedSources)
+		.map(src => new FilterItem({item: src, changeFn: loadSource(JSON_LIST_NAME, addMonsters)}))
+		.forEach(fi => sourceFilter.addItem(fi));
 
 	list = ListUtil.search({
 		valueNames: ["name", "source", "type", "cr", "group", "alias", "uniqueid"],
 		listClass: "monsters",
 		sortFunction: sortMonsters
 	});
+	const $outVisibleResults = $(`.lst__wrp-search-visible`);
 	list.on("updated", () => {
-		filterBox.setCount(list.visibleItems.length, list.items.length);
+		$outVisibleResults.html(`${list.visibleItems.length}/${list.items.length}`);
 	});
 
 	// filtering function
@@ -361,7 +344,7 @@ function pPageInit (loadedSources) {
 		sortFunction: sortMonsters,
 		onUpdate: onSublistChange,
 		uidHandler: (mon, uid) => ScaleCreature.scale(mon, Number(uid.split("_").last())),
-		uidUnpacker: (uid) => ({scaled: Number(uid.split("_").last()), uid})
+		uidUnpacker: getUnpackedUid
 	});
 	const baseHandlerOptions = {shiftCount: 5};
 	function addHandlerGenerator () {
@@ -370,7 +353,7 @@ function pPageInit (loadedSources) {
 			if (lastRendered.isScaled) {
 				if (evt.shiftKey) ListUtil.pDoSublistAdd(History.lastLoadedId, true, 5, getScaledData());
 				else ListUtil.pDoSublistAdd(History.lastLoadedId, true, 1, getScaledData());
-			} else ListUtil._genericAddButtonHandler(evt, baseHandlerOptions);
+			} else ListUtil.genericAddButtonHandler(evt, baseHandlerOptions);
 		};
 	}
 	function subtractHandlerGenerator () {
@@ -379,7 +362,7 @@ function pPageInit (loadedSources) {
 			if (lastRendered.isScaled) {
 				if (evt.shiftKey) ListUtil.pDoSublistSubtract(History.lastLoadedId, 5, getScaledData());
 				else ListUtil.pDoSublistSubtract(History.lastLoadedId, 1, getScaledData());
-			} else ListUtil._genericSubtractButtonHandler(evt, baseHandlerOptions);
+			} else ListUtil.genericSubtractButtonHandler(evt, baseHandlerOptions);
 		};
 	}
 	ListUtil.bindAddButton(addHandlerGenerator, baseHandlerOptions);
@@ -390,7 +373,7 @@ function pPageInit (loadedSources) {
 	printBookView = new BookModeView("bookview", $(`#btn-printbook`), "If you wish to view multiple creatures, please first make a list",
 		($tbl) => {
 			return new Promise(resolve => {
-				const promises = ListUtil._genericPinKeyMapper();
+				const promises = ListUtil.genericPinKeyMapper();
 
 				Promise.all(promises).then(toShow => {
 					toShow.sort((a, b) => SortUtil.ascSort(a._displayName || a.name, b._displayName || b.name));
@@ -401,12 +384,12 @@ function pPageInit (loadedSources) {
 
 					const renderCreature = (mon) => {
 						stack.push(`<table class="printbook-bestiary-entry"><tbody>`);
-						stack.push(EntryRenderer.monster.getCompactRenderedString(mon, renderer));
+						stack.push(Renderer.monster.getCompactRenderedString(mon, renderer));
 						if (mon.legendaryGroup) {
 							const thisGroup = (meta[mon.legendaryGroup.source] || {})[mon.legendaryGroup.name];
 							if (thisGroup) {
-								stack.push(EntryRenderer.monster.getCompactRenderedStringSection(thisGroup, renderer, "Lair Actions", "lairActions", 0));
-								stack.push(EntryRenderer.monster.getCompactRenderedStringSection(thisGroup, renderer, "Regional Effects", "regionalEffects", 0));
+								stack.push(Renderer.monster.getCompactRenderedStringSection(thisGroup, renderer, "Lair Actions", "lairActions", 0));
+								stack.push(Renderer.monster.getCompactRenderedStringSection(thisGroup, renderer, "Regional Effects", "regionalEffects", 0));
 							}
 						}
 						stack.push(`</tbody></table>`);
@@ -457,11 +440,13 @@ class EncounterBuilderUtils {
 		return ListUtil.sublist.items.map(it => {
 			const mon = monsters[Number(it._values.id)];
 			if (mon.cr) {
+				const crScaled = it._values.uid ? Number(getUnpackedUid(it._values.uid).scaled) : null;
 				return {
-					cr: Parser.crToNumber(it._values.cr),
+					cr: it._values.cr,
 					count: Number(it._values.count),
 
 					// used for encounter adjuster
+					crScaled: crScaled,
 					uid: it._values.uid,
 					hash: UrlUtil.autoEncodeHash(mon)
 				}
@@ -474,14 +459,14 @@ class EncounterBuilderUtils {
 	}
 
 	static getCrCutoff (data) {
-		data = data.filter(it => it.cr !== 100).sort((a, b) => SortUtil.ascSort(b.cr, a.cr));
+		data = data.filter(it => getCr(it) !== 100).sort((a, b) => SortUtil.ascSort(getCr(b), getCr(a)));
 
 		// "When making this calculation, don't count any monsters whose challenge rating is significantly below the average
 		// challenge rating of the other monsters in the group unless you think the weak monsters significantly contribute
 		// to the difficulty of the encounter." -- DMG, p. 82
 
 		// no cutoff for CR 0-2
-		return data[0].cr <= 2 ? 0 : data[0].cr / 2;
+		return getCr(data[0]) <= 2 ? 0 : getCr(data[0]) / 2;
 	}
 
 	/**
@@ -489,7 +474,8 @@ class EncounterBuilderUtils {
 	 * @param playerCount number of players in the party
 	 */
 	static calculateEncounterXp (data, playerCount = ECGEN_BASE_PLAYERS) {
-		data = data.filter(it => it.cr !== 100).sort((a, b) => SortUtil.ascSort(b.cr, a.cr));
+		data = data.filter(it => getCr(it) !== 100)
+			.sort((a, b) => SortUtil.ascSort(getCr(b), getCr(a)));
 
 		let baseXp = 0;
 		let relevantCount = 0;
@@ -497,8 +483,8 @@ class EncounterBuilderUtils {
 
 		const crCutoff = EncounterBuilderUtils.getCrCutoff(data);
 		data.forEach(it => {
-			if (it.cr >= crCutoff) relevantCount += it.count;
-			baseXp += Parser.crToXpNumber(Parser.numberToCr(it.cr)) * it.count;
+			if (getCr(it) >= crCutoff) relevantCount += it.count;
+			baseXp += Parser.crToXpNumber(Parser.numberToCr(getCr(it))) * it.count;
 		});
 
 		const playerAdjustedXpMult = Parser.numMonstersToXpMult(relevantCount, playerCount);
@@ -546,6 +532,7 @@ function handleFilterChange () {
 			m._fSkill,
 			m.senseTags,
 			m.languageTags,
+			m.damageTags,
 			m._fAc,
 			m._fHp,
 			[
@@ -574,11 +561,6 @@ function getUid (name, source, scaledCr) {
 	return `${name}_${source}_${scaledCr}`.toLowerCase();
 }
 
-function _initParsed (mon) {
-	mon._pTypes = Parser.monTypeToFullObj(mon.type); // store the parsed type
-	mon._pCr = mon.cr === undefined ? "Unknown" : (mon.cr.cr || mon.cr);
-}
-
 const _NEUT_ALIGNS = ["NX", "NY"];
 const _addedHashes = new Set();
 function addMonsters (data) {
@@ -595,9 +577,9 @@ function addMonsters (data) {
 		if (_addedHashes.has(monHash)) continue;
 		_addedHashes.add(monHash);
 		if (ExcludeUtil.isExcluded(mon.name, "monster", mon.source)) continue;
-		_initParsed(mon);
+		RenderBestiary.initParsed(mon);
 		mon._fSpeedType = Object.keys(mon.speed).filter(k => mon.speed[k]);
-		if (mon._fSpeedType.length) mon._fSpeed = mon._fSpeedType.map(k => mon.speed[k]).sort((a, b) => SortUtil.ascSort(b, a))[0];
+		if (mon._fSpeedType.length) mon._fSpeed = mon._fSpeedType.map(k => mon.speed[k].number || mon.speed[k]).sort((a, b) => SortUtil.ascSort(b, a))[0];
 		else mon._fSpeed = 0;
 		if (mon.speed.canHover) mon._fSpeedType.push("hover");
 		mon._fAc = mon.ac.map(it => it.ac || it);
@@ -626,7 +608,7 @@ function addMonsters (data) {
 					<span class="ecgen__name name col-4-2">${mon.name}</span>
 					<span class="type col-4-1">${mon._pTypes.asText.uppercaseFirst()}</span>
 					<span class="col-1-7 text-align-center cr">${mon._pCr}</span>
-					<span title="${Parser.sourceJsonToFull(mon.source)}${EntryRenderer.utils.getSourceSubText(mon)}" class="col-2 source text-align-center ${Parser.sourceJsonToColor(mon.source)}">${abvSource}</span>
+					<span title="${Parser.sourceJsonToFull(mon.source)}${Renderer.utils.getSourceSubText(mon)}" class="col-2 source text-align-center ${Parser.sourceJsonToColor(mon.source)}">${abvSource}</span>
 					
 					${mon.group ? `<span class="group hidden">${mon.group}</span>` : ""}
 					<span class="alias hidden">${(mon.alias || []).map(it => `"${it}"`).join(",")}</span>
@@ -635,52 +617,43 @@ function addMonsters (data) {
 			</li>`;
 
 		// populate filters
-		sourceFilter.addIfAbsent(mon._fSources);
-		crFilter.addIfAbsent(mon._pCr);
-		strengthFilter.addIfAbsent(mon.str);
-		dexterityFilter.addIfAbsent(mon.dex);
-		constitutionFilter.addIfAbsent(mon.con);
-		intelligenceFilter.addIfAbsent(mon.int);
-		wisdomFilter.addIfAbsent(mon.wis);
-		charismaFilter.addIfAbsent(mon.cha);
-		speedFilter.addIfAbsent(mon._fSpeed);
-		mon.ac.forEach(it => acFilter.addIfAbsent(it.ac || it));
-		if (mon.hp.average) averageHpFilter.addIfAbsent(mon.hp.average);
-		mon._pTypes.tags.forEach(t => tagFilter.addIfAbsent(t));
+		sourceFilter.addItem(mon._fSources);
+		crFilter.addItem(mon._pCr);
+		strengthFilter.addItem(mon.str);
+		dexterityFilter.addItem(mon.dex);
+		constitutionFilter.addItem(mon.con);
+		intelligenceFilter.addItem(mon.int);
+		wisdomFilter.addItem(mon.wis);
+		charismaFilter.addItem(mon.cha);
+		speedFilter.addItem(mon._fSpeed);
+		mon.ac.forEach(it => acFilter.addItem(it.ac || it));
+		if (mon.hp.average) averageHpFilter.addItem(mon.hp.average);
+		mon._pTypes.tags.forEach(t => tagFilter.addItem(t));
 		mon._fMisc = mon.legendary || mon.legendaryGroup ? ["Legendary"] : [];
 		if (mon.familiar) mon._fMisc.push("Familiar");
 		if (mon.type.swarmSize) mon._fMisc.push("Swarm");
 		if (mon.spellcasting) {
 			mon._fMisc.push("Spellcaster");
 			mon.spellcasting.forEach(sc => {
-				if (sc.ability) {
-					const scAbility = `${_MISC_FILTER_SPELLCASTER}${Parser.attAbvToFull(sc.ability)}`;
-					mon._fMisc.push(scAbility);
-					miscFilter.addIfAbsent(scAbility);
-				}
+				if (sc.ability) mon._fMisc.push(`${_MISC_FILTER_SPELLCASTER}${Parser.attAbvToFull(sc.ability)}`);
 			});
 		}
-		if (mon.isNPC) mon._fMisc.push("Named NPC");
+		if (mon.isNpc) mon._fMisc.push("Named NPC");
 		if (mon.legendaryGroup && (meta[mon.legendaryGroup.source] || {})[mon.legendaryGroup.name]) {
 			if ((meta[mon.legendaryGroup.source] || {})[mon.legendaryGroup.name].lairActions) mon._fMisc.push("Lair Actions");
 			if ((meta[mon.legendaryGroup.source] || {})[mon.legendaryGroup.name].regionalEffects) mon._fMisc.push("Regional Effects");
 		}
 		if (mon.reaction) mon._fMisc.push("Reactions");
 		if (mon.variant) mon._fMisc.push("Has Variants");
-		traitFilter.addIfAbsent(mon.traitTags);
-		actionReactionFilter.addIfAbsent(mon.actionTags);
+		if (mon.miscTags) mon._fMisc.push(...mon.miscTags);
+		if (mon._isCopy) mon._fMisc.push("Modified Copy");
+		if (mon.altArt) mon._fMisc.push("Has Alternate Token");
+		traitFilter.addItem(mon.traitTags);
+		actionReactionFilter.addItem(mon.actionTags);
+		environmentFilter.addItem(mon.environment);
 	}
 	const lastSearch = ListUtil.getSearchTermAndReset(list);
 	table.append(textStack);
-
-	// sort filters
-	sourceFilter.items.sort(SortUtil.ascSort);
-	crFilter.items.sort(SortUtil.ascSortCr);
-	typeFilter.items.sort(SortUtil.ascSortLower);
-	tagFilter.items.sort(SortUtil.ascSort);
-	miscFilter.items.sort(ascSortMiscFilter);
-	traitFilter.items.sort(SortUtil.ascSort);
-	actionReactionFilter.items.sort(SortUtil.ascSortCr);
 
 	list.reIndex();
 	if (lastSearch) list.search(lastSearch);
@@ -697,24 +670,20 @@ function addMonsters (data) {
 	function popoutHandlerGenerator (toList, $btnPop, popoutCodeId) {
 		return (evt) => {
 			if (evt.shiftKey) {
-				EntryRenderer.hover.handlePopoutCode(evt, toList, $btnPop, popoutCodeId);
+				Renderer.hover.handlePopoutCode(evt, toList, $btnPop, popoutCodeId);
 			} else {
-				if (lastRendered.mon != null && lastRendered.isScaled) EntryRenderer.hover.doPopoutPreloaded($btnPop, lastRendered.mon, evt.clientX);
-				else if (History.lastLoadedId !== null) EntryRenderer.hover.doPopout($btnPop, toList, History.lastLoadedId, evt.clientX);
+				if (lastRendered.mon != null && lastRendered.isScaled) Renderer.hover.doPopoutPreloaded($btnPop, lastRendered.mon, evt.clientX);
+				else if (History.lastLoadedId !== null) Renderer.hover.doPopout($btnPop, toList, History.lastLoadedId, evt.clientX);
 			}
 		};
 	}
 
-	EntryRenderer.hover.bindPopoutButton(monsters, popoutHandlerGenerator);
+	Renderer.hover.bindPopoutButton(monsters, popoutHandlerGenerator);
 	UrlUtil.bindLinkExportButton(filterBox);
 	ListUtil.bindDownloadButton();
 	ListUtil.bindUploadButton(sublistFuncPreload);
 
-	$(`body`).on("click", ".btn-name-pronounce", function () {
-		const audio = $(this).find(`.name-pronounce`)[0];
-		audio.currentTime = 0;
-		audio.play();
-	});
+	Renderer.utils.bindPronounceButtons();
 }
 
 function sublistFuncPreload (json, funcOnload) {
@@ -746,8 +715,9 @@ function pGetSublistItem (mon, pinId, addCount, data = {}) {
 		const pMon = data.scaled ? ScaleCreature.scale(mon, data.scaled) : Promise.resolve(mon);
 
 		pMon.then(mon => {
+			RenderBestiary.updateParsed(mon);
 			const subHash = data.scaled ? `${HASH_PART_SEP}${MON_HASH_SCALED}${HASH_SUB_KV_SEP}${data.scaled}` : "";
-			_initParsed(mon);
+			RenderBestiary.initParsed(mon);
 
 			resolve(`
 				<li class="row row--bestiary_sublist" ${FLTR_ID}="${pinId}" oncontextmenu="ListUtil.openSubContextMenu(event, this)">
@@ -756,7 +726,7 @@ function pGetSublistItem (mon, pinId, addCount, data = {}) {
 						<span class="type col-3">${mon._pTypes.asText.uppercaseFirst()}</span>
 						<span class="cr col-2 text-align-center">${mon._pCr}</span>						
 						<span class="count col-2 text-align-center">${addCount || 1}</span>
-						<span class="id hidden">${data.uid ? "" : pinId}</span>
+						<span class="id hidden">${pinId}</span>
 						<span class="uid hidden">${data.uid || ""}</span>
 					</a>
 					
@@ -831,7 +801,7 @@ function renderStatblock (mon, isScaled) {
 				evt.stopPropagation();
 				const mon = monsters[History.lastLoadedId];
 				const lastCr = lastRendered.mon ? lastRendered.mon.cr.cr || lastRendered.mon.cr : mon.cr.cr || mon.cr;
-				EntryRenderer.monster.getCrScaleTarget($btnScaleCr, lastCr, (targetCr) => {
+				Renderer.monster.getCrScaleTarget($btnScaleCr, lastCr, (targetCr) => {
 					if (targetCr === Parser.crToNumber(mon.cr)) renderStatblock(mon);
 					else History.setSubhash(MON_HASH_SCALED, targetCr);
 				});
@@ -844,193 +814,135 @@ function renderStatblock (mon, isScaled) {
 			.click(() => History.setSubhash(MON_HASH_SCALED, null))
 			.toggle(isScaled);
 
-		$(`
-		${EntryRenderer.utils.getBorderTr()}
-		<tr><th class="name mon__name--token" colspan="6">Name <span class="source" title="Source book">SRC</span></th></tr>
-		<tr><td colspan="6" class="mon__size-type-alignment">
-			<i>${Parser.sizeAbvToFull(mon.size)} ${mon._pTypes.asText}, ${Parser.alignmentListToFull(mon.alignment).toLowerCase()}</i>
-		</td></tr>
-		<tr><td class="divider" colspan="6"><div></div></td></tr>
-		
-		<tr><td colspan="6"><strong>Armor Class</strong> ${Parser.acToFull(mon.ac)}</td></tr>
-		<tr><td colspan="6"><div class="mon__wrp_hp"><strong>Hit Points</strong> ${EntryRenderer.monster.getRenderedHp(mon.hp)}</div></td></tr>
-		<tr><td colspan="6"><strong>Speed</strong> ${Parser.getSpeedString(mon)}</td></tr>
-		<tr><td class="divider" colspan="6"><div></div></td></tr>
-		
-		<tr class="mon__ability-names">
-			<th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th>
-		</tr>
-		<tr class="mon__ability-scores">
-			<td>${EntryRenderer.getDefaultRenderer().renderEntry(`{@d20 ${Parser.getAbilityModifier(mon.str)}|${mon.str} (${Parser.getAbilityModifier(mon.str)})|Strength}`)}</td>
-			<td>${EntryRenderer.getDefaultRenderer().renderEntry(`{@d20 ${Parser.getAbilityModifier(mon.dex)}|${mon.dex} (${Parser.getAbilityModifier(mon.dex)})|Dexterity}`)}</td>
-			<td>${EntryRenderer.getDefaultRenderer().renderEntry(`{@d20 ${Parser.getAbilityModifier(mon.con)}|${mon.con} (${Parser.getAbilityModifier(mon.con)})|Constitution}`)}</td>
-			<td>${EntryRenderer.getDefaultRenderer().renderEntry(`{@d20 ${Parser.getAbilityModifier(mon.int)}|${mon.int} (${Parser.getAbilityModifier(mon.int)})|Intelligence}`)}</td>
-			<td>${EntryRenderer.getDefaultRenderer().renderEntry(`{@d20 ${Parser.getAbilityModifier(mon.wis)}|${mon.wis} (${Parser.getAbilityModifier(mon.wis)})|Wisdom}`)}</td>
-			<td>${EntryRenderer.getDefaultRenderer().renderEntry(`{@d20 ${Parser.getAbilityModifier(mon.cha)}|${mon.cha} (${Parser.getAbilityModifier(mon.cha)})|Charisma}`)}</td>
-		</tr>
-		<tr><td class="divider" colspan="6"><div></div></td></tr>
-		
-		${mon.save ? `<tr><td colspan="6"><strong>Saving Throws</strong> ${Object.keys(mon.save).map(it => EntryRenderer.monster.getSave(renderer, it, mon.save[it])).join(", ")}</td></tr>` : ""}
-		${mon.skill ? `<tr><td colspan="6"><strong>Skills</strong> ${EntryRenderer.monster.getSkillsString(renderer, mon)}</td></tr>` : ""}
-		${mon.vulnerable ? `<tr><td colspan="6"><strong>Damage Vulnerabilities</strong> ${Parser.monImmResToFull(mon.vulnerable)}</td></tr>` : ""}
-		${mon.resist ? `<tr><td colspan="6"><strong>Damage Resistances</strong> ${Parser.monImmResToFull(mon.resist)}</td></tr>` : ""}
-		${mon.immune ? `<tr><td colspan="6"><strong>Damage Immunities</strong> ${Parser.monImmResToFull(mon.immune)}</td></tr>` : ""}
-		${mon.conditionImmune ? `<tr><td colspan="6"><strong>Condition Immunities</strong> ${Parser.monCondImmToFull(mon.conditionImmune)}</td></tr>` : ""}
-		<tr><td colspan="6"><strong>Senses</strong> ${mon.senses ? `${EntryRenderer.monster.getRenderedSenses(mon.senses)},` : ""} passive Perception ${mon.passive || "\u2014"}</td></tr>
-		<tr><td colspan="6"><strong>Languages</strong> ${mon.languages || "\u2014"}</td></tr>
-		
-		<tr><td colspan="6" style="position: relative;"><strong>Challenge</strong>
-			<span>${Parser.monCrToFull(mon.cr)}</span>
-			<div data-r="$btnScaleCr"/>
-			<div data-r="$btnResetScaleCr"/>
-		</td></tr>
-		
-		<tr id="traits"><td class="divider" colspan="6"><div></div></td></tr>
-		<tr id="actions"><td colspan="6" class="mon__stat-header-underline"><span class="mon__sect-header-inner">Actions</span></td></tr>
-		<tr id="reactions"><td colspan="6" class="mon__stat-header-underline"><span class="mon__sect-header-inner">Reactions</span></td></tr>
-		<tr id="legendaries"><td colspan="6" class="mon__stat-header-underline"><span class="mon__sect-header-inner">Legendary Actions</span></td></tr>
-		<tr id="lairactions"><td colspan="6" class="mon__stat-header-underline"><span class="mon__sect-header-inner">Lair Actions</span></td></tr>
-		<tr id="regionaleffects"><td colspan="6" class="mon__stat-header-underline"><span class="mon__sect-header-inner">Regional Effects</span></td></tr>
-		
-		<tr id="variants"></tr>
-		<tr id="source"></tr>
-		${EntryRenderer.utils.getBorderTr()}
-		`).swap({$btnScaleCr, $btnResetScaleCr}).appendTo($content);
+		$content.append(RenderBestiary.$getRenderedCreature(mon, meta, {$btnScaleCr, $btnResetScaleCr}));
 
-		let renderStack = [];
-		const displayName = mon._displayName || mon.name;
-		const source = Parser.sourceJsonToAbv(mon.source);
-		const sourceFull = Parser.sourceJsonToFull(mon.source);
+		// tokens
+		(() => {
+			const $tokenImages = [];
 
-		function getPronunciationButton () {
-			return `<button class="btn btn-xs btn-default btn-name-pronounce">
-				<span class="glyphicon glyphicon-volume-up name-pronounce-icon"></span>
-				<audio class="name-pronounce">
-				   <source src="${mon.soundClip}" type="audio/mpeg">
-				   <source src="audio/bestiary/${basename(mon.soundClip, '/')}" type="audio/mpeg">
-				</audio>
-			</button>`;
-		}
-
-		const $floatToken = $(`#float-token`).empty();
-		if (mon.tokenUrl || !mon.uniqueId) {
-			const imgLink = EntryRenderer.monster.getTokenUrl(mon);
-			$floatToken.append(`
-				<a href="${imgLink}" target="_blank" rel="noopener">
-					<img src="${imgLink}" id="token_image" class="token" onerror="imgError(this)" alt="${mon.name}">
-				</a>`
-			);
-		} else imgError();
-
-		$content.find(".mon__name--token").html(
-			`<span class="stats-name copyable" onclick="EntryRenderer.utils._pHandleNameClick(this, '${mon.source.escapeQuotes()}')">${displayName}</span>
-			${mon.soundClip ? getPronunciationButton() : ""}
-			<span class="stats-source ${Parser.sourceJsonToColor(mon.source)}" title="${sourceFull}${EntryRenderer.utils.getSourceSubText(mon)}">${source}</span>`
-		);
-
-		// TODO most of this could be rolled into the string template above
-
-		let trait = EntryRenderer.monster.getOrderedTraits(mon, renderer);
-		if (trait) renderSection("trait", trait, 1);
-
-		const action = mon.action;
-		$content.find("tr#actions").hide();
-		if (action) renderSection("action", action, 1);
-
-		const reaction = mon.reaction;
-		$content.find("tr#reactions").hide();
-		if (reaction) renderSection("reaction", reaction, 1);
-
-		const dragonVariant = EntryRenderer.monster.getDragonCasterVariant(renderer, mon);
-		const variants = mon.variant;
-		const variantSect = $content.find(`#variants`);
-		if (!variants && !dragonVariant) variantSect.hide();
-		else {
-			const rStack = [];
-			(variants || []).forEach(v => renderer.recursiveEntryRender(v, rStack));
-			if (dragonVariant) rStack.push(dragonVariant);
-			variantSect.html(`<td colspan=6>${rStack.join("")}</td>`);
-			variantSect.show();
-		}
-
-		const srcCpy = {
-			source: mon.source,
-			sourceSub: mon.sourceSub,
-			page: mon.page,
-			otherSources: mon.otherSources,
-			additionalSources: mon.additionalSources,
-			externalSources: mon.externalSources
-		};
-		const additional = mon.additionalSources ? JSON.parse(JSON.stringify(mon.additionalSources)) : [];
-		if (mon.variant && mon.variant.length > 1) {
-			mon.variant.forEach(v => {
-				if (v.variantSource) {
-					additional.push({
-						source: v.variantSource.source,
-						page: v.variantSource.page
-					})
-				}
-			})
-		}
-		srcCpy.additionalSources = additional;
-		const $trSource = $content.find(`#source`);
-		const $tdSource = $(EntryRenderer.utils.getPageTr(srcCpy));
-		$trSource.append($tdSource);
-		if (mon.environment && mon.environment.length) {
-			$tdSource.attr("colspan", 4);
-			$trSource.append(`<td colspan="2" class="text-align-right mr-2"><i>Environment: ${mon.environment.sort(SortUtil.ascSortLower).map(it => it.toTitleCase()).join(", ")}</i></td>`)
-		}
-
-		const legendary = mon.legendary;
-		$content.find("tr#legendaries").hide();
-		if (legendary) {
-			renderSection("legendary", legendary, 1);
-			$content.find("tr#legendaries").after(`<tr class='legendary'><td colspan='6' class='legendary'><span class='name'></span> <span>${EntryRenderer.monster.getLegendaryActionIntro(mon)}</span></td></tr>`);
-		}
-
-		const legGroup = mon.legendaryGroup;
-		$content.find("tr#lairactions").hide();
-		$content.find("tr#regionaleffects").hide();
-		if (legGroup) {
-			const thisGroup = (meta[legGroup.source] || {})[legGroup.name];
-			if (thisGroup.lairActions) renderSection("lairaction", thisGroup.lairActions, -1);
-			if (thisGroup.regionalEffects) renderSection("regionaleffect", thisGroup.regionalEffects, -1);
-		}
-
-		function renderSection (sectionTrClass, sectionEntries, sectionLevel) {
-			let pluralSectionTrClass = sectionTrClass === `legendary` ? `legendaries` : `${sectionTrClass}s`;
-			$content.find(`tr#${pluralSectionTrClass}`).show();
-			renderStack = [];
-			if (sectionTrClass === "legendary") {
-				const cpy = MiscUtil.copy(sectionEntries).map(it => {
-					if (it.name && it.entries) {
-						it.name = `${it.name}.`;
-						it.type = it.type || "item";
-					}
-					return it;
+			// statblock scrolling handler
+			$(`#wrp-pagecontent`).off("scroll").on("scroll", function () {
+				$tokenImages.forEach($img => {
+					$img
+						.toggle(this.scrollTop < 32)
+						.css({
+							opacity: (32 - this.scrollTop) / 32,
+							top: -this.scrollTop
+						});
 				});
-				const toRender = {type: "list", style: "list-hang-notitle", items: cpy};
-				renderer.recursiveEntryRender(toRender, renderStack, sectionLevel);
-			} else {
-				sectionEntries.forEach(e => {
-					if (e.rendered) renderStack.push(e.rendered);
-					else renderer.recursiveEntryRender(e, renderStack, sectionLevel + 1);
-				});
+			});
+
+			const $floatToken = $(`#float-token`).empty();
+
+			function imgError (ele) {
+				if (ele) $(ele).parent().remove();
+				$(`#pagecontent th.name`).css("padding-right", "0.3em");
+				$(`.mon__wrp-size-type-align`).css("max-width", "none");
+				$(`.mon__wrp-avoid-token`).css("max-width", "none");
 			}
-			$content.find(`tr#${pluralSectionTrClass}`).after(`<tr class='${sectionTrClass}'><td colspan='6' class="mon__sect-row-inner">${renderStack.join("")}</td></tr>`);
-		}
 
-		// add click links for rollables
-		$content.find(".mon__ability-scores td").each(function () {
-			$(this).wrapInner(`<span class="roller" data-roll="1d20${$(this).children(".mod").html()}" title="${Parser.attAbvToFull($(this).prop("id"))}"></span>`);
-		});
+			if (mon.tokenUrl || !mon.uniqueId) {
+				const imgLink = Renderer.monster.getTokenUrl(mon);
+				const $img = $(`<img src="${imgLink}" class="mon__token" alt="${mon.name}">`)
+					.on("error", () => imgError($img));
+				$tokenImages.push($img);
+				const $lnkToken = $$`<a href="${imgLink}" class="mon__wrp-token" target="_blank" rel="noopener">${$img}</a>`.appendTo($floatToken);
 
+				const altArtMeta = [];
+
+				if (mon.altArt) altArtMeta.push(...MiscUtil.copy(mon.altArt));
+				if (mon.variant) {
+					const variantTokens = mon.variant.filter(it => it.token).map(it => it.token);
+					if (variantTokens.length) altArtMeta.push(...MiscUtil.copy(variantTokens).map(it => ({...it, displayName: `Variant; ${it.name}`})));
+				}
+
+				if (altArtMeta.length) {
+					// make a fake entry for the original token
+					altArtMeta.unshift({$ele: $lnkToken});
+
+					const buildEle = (meta) => {
+						if (!meta.$ele) {
+							const imgLink = Renderer.monster.getTokenUrl({name: meta.name, source: meta.source});
+							const $img = $(`<img src="${imgLink}" class="mon__token" alt="${meta.displayName || meta.name}">`)
+								.on("error", () => {
+									$img.attr(
+										"src",
+										`data:image/svg+xml,${encodeURIComponent(`
+											<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400">
+												<circle cx="200" cy="200" r="175" fill="#b00"/>
+												<rect x="190" y="40" height="320" width="20" fill="#ddd" transform="rotate(45 200 200)"/>
+												<rect x="190" y="40" height="320" width="20" fill="#ddd" transform="rotate(135 200 200)"/>
+											</svg>`
+										)}`
+									);
+								});
+							$tokenImages.push($img);
+							meta.$ele = $$`<a href="${imgLink}" class="mon__wrp-token" target="_blank" rel="noopener">${$img}</a>`
+								.hide()
+								.css("max-width", "100%") // hack to ensure the token gets shown at max width on first look
+								.appendTo($floatToken);
+						}
+					};
+					altArtMeta.forEach(buildEle);
+
+					let ix = 0;
+					const handleClick = (evt, direction) => {
+						evt.stopPropagation();
+						evt.preventDefault();
+
+						// avoid going off the edge of the list
+						if (ix === 0 && !~direction) return;
+						if (ix === altArtMeta.length - 1 && ~direction) return;
+
+						ix += direction;
+
+						if (!~direction) { // left
+							if (ix === 0) {
+								$btnLeft.hide();
+								$wrpFooter.hide();
+							}
+							$btnRight.show();
+						} else {
+							$btnLeft.show();
+							$wrpFooter.show();
+							if (ix === altArtMeta.length - 1) {
+								$btnRight.hide();
+							}
+						}
+						altArtMeta.filter(it => it.$ele).forEach(it => it.$ele.hide());
+
+						const meta = altArtMeta[ix];
+						meta.$ele.show();
+						setTimeout(() => meta.$ele.css("max-width", ""), 10); // hack to clear the earlier 100% width
+
+						if (meta.name && meta.source) $footer.html(`<div>${meta.displayName || meta.name}; <span title="${Parser.sourceJsonToFull(meta.source)}">${Parser.sourceJsonToAbv(meta.source)}${meta.page > 0 ? ` p${meta.page}` : ""}</span></div>`);
+						else $footer.html("");
+
+						$wrpFooter.detach().appendTo(meta.$ele);
+						$btnLeft.detach().appendTo(meta.$ele);
+						$btnRight.detach().appendTo(meta.$ele);
+					};
+
+					// append footer first to be behind buttons
+					const $footer = $(`<div class="mon__token-footer"/>`);
+					const $wrpFooter = $$`<div class="mon__wrp-token-footer">${$footer}</div>`.hide().appendTo($lnkToken);
+
+					const $btnLeft = $$`<div class="mon__btn-token-cycle mon__btn-token-cycle--left"><span class="glyphicon glyphicon-chevron-left"/></div>`
+						.click(evt => handleClick(evt, -1)).appendTo($lnkToken)
+						.hide();
+
+					const $btnRight = $$`<div class="mon__btn-token-cycle mon__btn-token-cycle--right"><span class="glyphicon glyphicon-chevron-right"/></div>`
+						.click(evt => handleClick(evt, 1)).appendTo($lnkToken);
+				}
+			} else imgError();
+		})();
+
+		// inline rollers //////////////////////////////////////////////////////////////////////////////////////////////
 		const isProfDiceMode = PROF_DICE_MODE === PROF_MODE_DICE;
 		function _addSpacesToDiceExp (exp) {
 			return exp.replace(/([^0-9d])/gi, " $1 ").replace(/\s+/g, " ");
 		}
-		// inline rollers
-		// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 		// add proficiency dice stuff for attack rolls, since those _generally_ have proficiency
 		// this is not 100% accurate; for example, ghouls don't get their prof bonus on bite attacks
 		// fixing it would probably involve machine learning though; we need an AI to figure it out on-the-fly
@@ -1075,7 +987,7 @@ function renderStatblock (mon, isScaled) {
 						const nu = `
 							(function(it) {
 								if (PROF_DICE_MODE === PROF_MODE_DICE) {
-									EntryRenderer.dice.rollerClick(event, it, '{"type":"dice","rollable":true,"toRoll":"1d20 + ${profDiceString}"}'${$(this).prop("title") ? `, '${$(this).prop("title")}'` : ""})
+									Renderer.dice.rollerClick(event, it, '{"type":"dice","rollable":true,"toRoll":"1d20 + ${profDiceString}"}'${$(this).prop("title") ? `, '${$(this).prop("title")}'` : ""})
 								} else {
 									${cached.replace(/this/g, "it")}
 								}
@@ -1095,36 +1007,43 @@ function renderStatblock (mon, isScaled) {
 			});
 
 		$content.find("p").each(function () {
-			$(this).html($(this).html().replace(/DC\s*(\d+)/g, function (match, capture) {
-				const dc = Number(capture);
+			$(this).find(`.rd__dc`).each((i, e) => {
+				const $e = $(e);
+				const dc = Number($e.html());
 
 				const expectedPB = Parser.crToPb(mon.cr);
-
 				if (expectedPB > 0) {
 					const withoutPB = dc - expectedPB;
 					const profDiceString = _addSpacesToDiceExp(`1d${(expectedPB * 2)}${withoutPB >= 0 ? "+" : ""}${withoutPB}`);
 
-					return `DC <span class="dc-roller" mode="${isProfDiceMode ? "dice" : ""}" onmousedown="window.PROF_DICE_MODE === window.PROF_MODE_DICE &&  event.preventDefault()" onclick="dcRollerClick(event, this, '${profDiceString}')" data-roll-prof-bonus="${capture}" data-roll-prof-dice="${profDiceString}">${isProfDiceMode ? profDiceString : capture}</span>`;
-				} else {
-					return match; // if there was no proficiency bonus to work with, fall back on this
+					$e
+						.addClass("dc-roller")
+						.attr("mode", isProfDiceMode ? "dice" : "")
+						.mousedown((evt) => window.PROF_DICE_MODE === window.PROF_MODE_DICE && evt.preventDefault())
+						.attr("onclick", `dcRollerClick(event, this, '${profDiceString}')`)
+						.attr("data-roll-prof-bonus", `${dc}`)
+						.attr("data-roll-prof-dice", profDiceString)
+						.html(isProfDiceMode ? profDiceString : dc)
 				}
-			}));
+			});
 		});
+
+		$(`#wrp-pagecontent`).scroll();
 	}
 
 	function buildFluffTab (isImageTab) {
-		return EntryRenderer.utils.buildFluffTab(
+		return Renderer.utils.buildFluffTab(
 			isImageTab,
 			$content,
 			mon,
-			EntryRenderer.monster.getFluff.bind(null, mon, meta),
+			Renderer.monster.getFluff.bind(null, mon, meta),
 			`${JSON_DIR}${ixFluff[mon.source]}`,
 			() => ixFluff[mon.source]
 		);
 	}
 
 	// reset tabs
-	const statTab = EntryRenderer.utils.tabButton(
+	const statTab = Renderer.utils.tabButton(
 		"Statblock",
 		() => {
 			$wrpBtnProf.append(profBtn);
@@ -1132,7 +1051,7 @@ function renderStatblock (mon, isScaled) {
 		},
 		buildStatsTab
 	);
-	const infoTab = EntryRenderer.utils.tabButton(
+	const infoTab = Renderer.utils.tabButton(
 		"Info",
 		() => {
 			profBtn = profBtn || $wrpBtnProf.children().detach();
@@ -1140,7 +1059,7 @@ function renderStatblock (mon, isScaled) {
 		},
 		buildFluffTab
 	);
-	const picTab = EntryRenderer.utils.tabButton(
+	const picTab = Renderer.utils.tabButton(
 		"Images",
 		() => {
 			profBtn = profBtn || $wrpBtnProf.children().detach();
@@ -1148,7 +1067,7 @@ function renderStatblock (mon, isScaled) {
 		},
 		() => buildFluffTab(true)
 	);
-	EntryRenderer.utils.bindTabButtons(statTab, infoTab, picTab);
+	Renderer.utils.bindTabButtons(statTab, infoTab, picTab);
 }
 
 function handleUnknownHash (link, sub) {
@@ -1168,11 +1087,20 @@ function dcRollerClick (event, ele, exp) {
 		rollable: true,
 		toRoll: exp
 	};
-	EntryRenderer.dice.rollerClick(event, ele, JSON.stringify(it));
+	Renderer.dice.rollerClick(event, ele, JSON.stringify(it));
+}
+
+function getUnpackedUid (uid) {
+	return {scaled: Number(uid.split("_").last()), uid};
+}
+
+function getCr (obj) {
+	if (obj.crScaled != null) return obj.crScaled;
+	return typeof obj.cr === "string" ? obj.cr.includes("/") ? Parser.crToNumber(obj.cr) : Number(obj.cr) : obj.cr;
 }
 
 function loadsub (sub) {
-	filterBox.setFromSubHashes(sub);
+	sub = filterBox.setFromSubHashes(sub);
 	ListUtil.setFromSubHashes(sub, sublistFuncPreload);
 
 	printBookView.handleSub(sub);

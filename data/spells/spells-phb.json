@@ -35,6 +35,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -50,10 +54,19 @@
 			"savingThrow": [
 				"dexterity"
 			],
-			"scalingEffects": true,
 			"areaTags": [
 				"ST",
 				"MT"
+			],
+			"backgrounds": [
+				{
+					"name": "Simic Scientist",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SCL",
+				"SGT"
 			]
 		},
 		{
@@ -100,6 +113,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -141,6 +158,16 @@
 			"page": 211,
 			"areaTags": [
 				"MT"
+			],
+			"backgrounds": [
+				{
+					"name": "Boros Legionnaire",
+					"source": "GGR"
+				},
+				{
+					"name": "Selesnya Initiate",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -187,6 +214,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -247,6 +278,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -309,6 +344,12 @@
 					"source": "UAThatOldBlackMagic",
 					"baseName": "Tiefling",
 					"baseSource": "PHB"
+				}
+			],
+			"backgrounds": [
+				{
+					"name": "Simic Scientist",
+					"source": "GGR"
 				}
 			]
 		},
@@ -399,6 +440,15 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Selesnya Initiate",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -468,6 +518,15 @@
 			"page": 212,
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Selesnya Initiate",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -518,6 +577,9 @@
 			"page": 212,
 			"areaTags": [
 				"MT"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -597,8 +659,16 @@
 				}
 			],
 			"page": 212,
-			"permanentEffects": true,
-			"isSummon": true
+			"backgrounds": [
+				{
+					"name": "Golgari Agent",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"PRM",
+				"SMN"
+			]
 		},
 		{
 			"name": "Animate Objects",
@@ -644,6 +714,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -698,40 +772,40 @@
 							"20",
 							"18",
 							"{@hit +8} to hit, {@damage 1d4 + 4} damage",
-							"{@dice 1d20+4|4}",
-							"{@dice 1d20+18|18}"
+							"{@dice 1d20-3|4}",
+							"{@dice 1d20+4|18}"
 						],
 						[
 							"{@creature animated object (small)|phb|Small}",
 							"25",
 							"16",
 							"{@hit +6} to hit, {@damage 1d8 + 2} damage",
-							"{@dice 1d20+6|6}",
-							"{@dice 1d20+14|14}"
+							"{@dice 1d20-2|6}",
+							"{@dice 1d20+2|14}"
 						],
 						[
 							"{@creature animated object (medium)|phb|Medium}",
 							"40",
 							"13",
 							"{@hit +5} to hit, {@damage 2d6 + 1} damage",
-							"{@dice 1d20+10|10}",
-							"{@dice 1d20+12|12}"
+							"{@dice 1d20|10}",
+							"{@dice 1d20+1|12}"
 						],
 						[
 							"{@creature animated object (large)|phb|Large}",
 							"50",
 							"10",
 							"{@hit +6} to hit, {@damage 2d10 + 2} damage",
-							"{@dice 1d20+14|14}",
-							"{@dice 1d20+10|10}"
+							"{@dice 1d20+2|14}",
+							"{@dice 1d20|10}"
 						],
 						[
 							"{@creature animated object (huge)|phb|Huge}",
 							"80",
 							"10",
 							"{@hit +8} to hit, {@damage 2d12 + 4} damage",
-							"{@dice 1d20+18|18}",
-							"{@dice 1d20+6|6}"
+							"{@dice 1d20+4|18}",
+							"{@dice 1d20-3|6}"
 						]
 					]
 				},
@@ -756,7 +830,15 @@
 			"areaTags": [
 				"MT"
 			],
-			"isSummon": true
+			"backgrounds": [
+				{
+					"name": "Izzet Engineer",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SMN"
+			]
 		},
 		{
 			"name": "Antilife Shell",
@@ -1073,6 +1155,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -1124,7 +1210,13 @@
 				"You mentally receive visual information from the eye, which has normal vision and darkvision out to 30 feet. The eye can look in every direction.",
 				"As an action, you can move the eye up to 30 feet in any direction. There is no limit to how far away from you the eye can move, but it can't enter another plane of existence. A solid barrier blocks the eye's movement, but the eye can pass through an opening as small as 1 inch in diameter."
 			],
-			"page": 214
+			"page": 214,
+			"backgrounds": [
+				{
+					"name": "Dimir Operative",
+					"source": "GGR"
+				}
+			]
 		},
 		{
 			"name": "Arcane Gate",
@@ -1179,7 +1271,10 @@
 				"The portals are two-dimensional glowing rings filled with mist, hovering inches from the ground and perpendicular to it at the points you choose. A ring is visible only from one side (your choice), which is the side that functions as a portal.",
 				"Any creature or object entering the portal exits from the other portal as if the two were adjacent to each other; passing through a portal from the nonportal side has no effect. The mist that fills each portal is opaque and blocks vision through it. On your turn, you can rotate the rings as a bonus action so that the active side faces in a different direction."
 			],
-			"page": 214
+			"page": 214,
+			"miscTags": [
+				"SGT"
+			]
 		},
 		{
 			"name": "Arcane Lock",
@@ -1223,6 +1318,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -1244,6 +1343,12 @@
 					"source": "MTF",
 					"baseName": "Tiefling",
 					"baseSource": "PHB"
+				}
+			],
+			"backgrounds": [
+				{
+					"name": "Azorius Functionary",
+					"source": "GGR"
 				}
 			]
 		},
@@ -1560,6 +1665,16 @@
 							"name": "Kraken (Stream)",
 							"source": "Stream"
 						}
+					},
+					{
+						"class": {
+							"name": "Barbarian",
+							"source": "PHB"
+						},
+						"subclass": {
+							"name": "Ancestral Guardian",
+							"source": "XGE"
+						}
 					}
 				]
 			},
@@ -1651,9 +1766,17 @@
 			"damageResist": [
 				"necrotic"
 			],
-			"isHeal": true,
 			"areaTags": [
 				"R"
+			],
+			"backgrounds": [
+				{
+					"name": "Selesnya Initiate",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"HL"
 			]
 		},
 		{
@@ -1691,6 +1814,18 @@
 					{
 						"name": "Paladin",
 						"source": "PHB"
+					}
+				],
+				"fromSubclass": [
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Battle Smith",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -1753,6 +1888,16 @@
 							"name": "Crown",
 							"source": "SCAG"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Battle Smith",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -1761,9 +1906,11 @@
 				"Healing energy radiates from you in an aura with a 30-foot radius. Until the spell ends, the aura moves with you, centered on you. You can use a bonus action to cause one creature in the aura (including you) to regain {@dice 2d6} hit points."
 			],
 			"page": 216,
-			"isHeal": true,
 			"areaTags": [
 				"R"
+			],
+			"miscTags": [
+				"HL"
 			]
 		},
 		{
@@ -1810,16 +1957,24 @@
 			},
 			"source": "PHB",
 			"entries": [
-				"After spending the casting time tracing magical pathways within a precious gemstone, you touch a Huge or smaller beast or plant. The target must have either no Intelligence score or an Intelligence of 3 or less. The target gains an Intelligence of 10. The target also gains the ability to speak one language you know. If the target is a plant, it gains the ability to move its limbs, roots, vines, creepers, and so forth, and it gains senses similar to a human's. Your DM chooses statistics appropriate for the awakened plant, such as the statistics for the awakened shrub or the awakened tree.",
+				"After spending the casting time tracing magical pathways within a precious gemstone, you touch a Huge or smaller beast or plant. The target must have either no Intelligence score or an Intelligence of 3 or less. The target gains an Intelligence of 10. The target also gains the ability to speak one language you know. If the target is a plant, it gains the ability to move its limbs, roots, vines, creepers, and so forth, and it gains senses similar to a human's. Your DM chooses statistics appropriate for the awakened plant, such as the statistics for the {@creature awakened shrub} or the {@creature awakened tree}.",
 				"The awakened beast or plant is {@condition charmed} by you for 30 days or until you or your companions do anything harmful to it. When the {@condition charmed} condition ends, the awakened creature chooses whether to remain friendly to you, based on how you treated it while it was {@condition charmed}."
 			],
 			"page": 216,
-			"permanentEffects": true,
 			"conditionInflict": [
 				"charmed"
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Selesnya Initiate",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"PRM"
 			]
 		},
 		{
@@ -1937,6 +2092,9 @@
 			],
 			"areaTags": [
 				"MT"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -1984,6 +2142,16 @@
 						"subclass": {
 							"name": "Hexblade",
 							"source": "XGE"
+						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Battle Smith",
+							"source": "UAArtificerRevisited"
 						}
 					}
 				]
@@ -2182,6 +2350,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -2345,9 +2516,17 @@
 				"This spell bestows hope and vitality. Choose any number of creatures within range. For the duration, each target has advantage on Wisdom saving throws and death saving throws, and regains the maximum number of hit points possible from any healing."
 			],
 			"page": 217,
-			"isHeal": true,
 			"areaTags": [
 				"MT"
+			],
+			"backgrounds": [
+				{
+					"name": "Boros Legionnaire",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"HL"
 			]
 		},
 		{
@@ -2413,6 +2592,12 @@
 			"page": 217,
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Gruul Anarch",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -2545,6 +2730,12 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Orzhov Representative",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -2584,6 +2775,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -2640,6 +2835,9 @@
 			],
 			"spellAttack": [
 				"M"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -2967,6 +3165,16 @@
 							"name": "Darkness (Stream)",
 							"source": "Twitter"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Alchemist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -2994,6 +3202,15 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Orzhov Representative",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -3042,6 +3259,16 @@
 							"name": "Stone",
 							"source": "UASorcerer"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Battle Smith",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -3059,6 +3286,12 @@
 			],
 			"conditionInflict": [
 				"blinded"
+			],
+			"backgrounds": [
+				{
+					"name": "Boros Legionnaire",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -3175,6 +3408,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -3219,6 +3455,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -3269,7 +3509,10 @@
 				"Roll a {@dice d20} at the end of each of your turns for the duration of the spell. On a roll of 11 or higher, you vanish from your current plane of existence and appear in the Ethereal Plane (the spell fails and the casting is wasted if you were already on that plane). At the start of your next turn, and when the spell ends if you are on the Ethereal Plane, you return to an unoccupied space of your choice that you can see within 10 feet of the space you vanished from. If no unoccupied space is available within that range, you appear in the nearest unoccupied space (chosen at random if more than one space is equally near). You can dismiss this spell as an action.",
 				"While on the Ethereal Plane, you can see and hear the plane you originated from, which is cast in shades of gray, and you can't see anything there more than 60 feet away. You can only affect and be affected by other creatures on the Ethereal Plane. Creatures that aren't there can't perceive you or interact with you, unless they have the ability to do so."
 			],
-			"page": 219
+			"page": 219,
+			"miscTags": [
+				"SGT"
+			]
 		},
 		{
 			"name": "Blur",
@@ -3313,6 +3556,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -3410,6 +3657,16 @@
 						"subclass": {
 							"name": "Stone",
 							"source": "UASorcerer"
+						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Battle Smith",
+							"source": "UAArtificerRevisited"
 						}
 					}
 				]
@@ -3586,6 +3843,12 @@
 			],
 			"areaTags": [
 				"N"
+			],
+			"backgrounds": [
+				{
+					"name": "Rakdos Cultist",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -3684,6 +3947,15 @@
 			],
 			"areaTags": [
 				"S"
+			],
+			"backgrounds": [
+				{
+					"name": "Izzet Engineer",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -3763,6 +4035,16 @@
 			],
 			"areaTags": [
 				"S"
+			],
+			"backgrounds": [
+				{
+					"name": "Azorius Functionary",
+					"source": "GGR"
+				},
+				{
+					"name": "Selesnya Initiate",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -3828,6 +4110,9 @@
 			"areaTags": [
 				"ST",
 				"MT"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -3964,6 +4249,15 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Selesnya Initiate",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -4025,7 +4319,6 @@
 			"spellAttack": [
 				"R"
 			],
-			"scalingEffects": true,
 			"races": [
 				{
 					"name": "Elf (Eladrin)",
@@ -4048,6 +4341,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SCL"
 			]
 		},
 		{
@@ -4119,6 +4415,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -4335,6 +4634,16 @@
 							"name": "Seeker (UA)",
 							"source": "UATheFaithful"
 						}
+					},
+					{
+						"class": {
+							"name": "Barbarian",
+							"source": "PHB"
+						},
+						"subclass": {
+							"name": "Ancestral Guardian",
+							"source": "XGE"
+						}
 					}
 				]
 			},
@@ -4344,7 +4653,13 @@
 				"When you cast the spell, you choose seeing or hearing. You can use the chosen sense through the sensor as if you were in its space. As your action, you can switch between seeing and hearing.",
 				"A creature that can see the sensor (such as a creature benefiting from {@spell see invisibility} or truesight) sees a luminous, intangible orb about the size of your fist."
 			],
-			"page": 222
+			"page": 222,
+			"backgrounds": [
+				{
+					"name": "Azorius Functionary",
+					"source": "GGR"
+				}
+			]
 		},
 		{
 			"name": "Clone",
@@ -4386,11 +4701,13 @@
 			},
 			"source": "PHB",
 			"entries": [
-				"This spell grows an inert duplicate of a living creature as a safeguard against death. This clone forms inside a sealed vessel and grows to full size and maturity after 120 days; you can also choose to have the clone be a younger version of the same creature. It remains inert and endures indefinitely, as long as its vessel remains undisturbed.",
+				"This spell grows an inert duplicate of a living, Medium creature as a safeguard against death. This clone forms inside a sealed vessel and grows to full size and maturity after 120 days; you can also choose to have the clone be a younger version of the same creature. It remains inert and endures indefinitely, as long as its vessel remains undisturbed.",
 				"At any time after the clone matures, if the original creature dies, its soul transfers to the clone, provided that the soul is free and willing to return. The clone is physically identical to the original and has the same personality, memories, and abilities, but none of the original's equipment. The original creature's physical remains, if they still exist, become inert and can't thereafter be restored to life, since the creature's soul is elsewhere."
 			],
 			"page": 222,
-			"permanentEffects": true
+			"miscTags": [
+				"PRM"
+			]
 		},
 		{
 			"name": "Cloud of Daggers",
@@ -4568,6 +4885,16 @@
 							"name": "Destruction (Stream)",
 							"source": "Twitter"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Alchemist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -4595,6 +4922,12 @@
 			],
 			"areaTags": [
 				"S"
+			],
+			"backgrounds": [
+				{
+					"name": "Golgari Agent",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -4782,6 +5115,16 @@
 							"name": "Order (UA)",
 							"source": "UAOrderDomain"
 						}
+					},
+					{
+						"class": {
+							"name": "Cleric",
+							"source": "PHB"
+						},
+						"subclass": {
+							"name": "Order",
+							"source": "GGR"
+						}
 					}
 				]
 			},
@@ -4843,6 +5186,19 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Azorius Functionary",
+					"source": "GGR"
+				},
+				{
+					"name": "Orzhov Representative",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -4911,6 +5267,16 @@
 						"subclass": {
 							"name": "Order (UA)",
 							"source": "UAOrderDomain"
+						}
+					},
+					{
+						"class": {
+							"name": "Cleric",
+							"source": "PHB"
+						},
+						"subclass": {
+							"name": "Order",
+							"source": "GGR"
 						}
 					}
 				]
@@ -5026,7 +5392,13 @@
 				},
 				"For example, you could determine the location of powerful undead in the area, the location of major sources of safe drinking water, and the location of any nearby towns."
 			],
-			"page": 224
+			"page": 224,
+			"backgrounds": [
+				{
+					"name": "Selesnya Initiate",
+					"source": "GGR"
+				}
+			]
 		},
 		{
 			"name": "Compelled Duel",
@@ -5109,6 +5481,15 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Gruul Anarch",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -5169,6 +5550,16 @@
 						"subclass": {
 							"name": "City (PSA)",
 							"source": "UAModernMagic"
+						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Archivist",
+							"source": "UAArtificerRevisited"
 						}
 					}
 				]
@@ -5241,6 +5632,16 @@
 							"name": "Beauty (Stream)",
 							"source": "Twitter"
 						}
+					},
+					{
+						"class": {
+							"name": "Cleric",
+							"source": "PHB"
+						},
+						"subclass": {
+							"name": "Order",
+							"source": "GGR"
+						}
 					}
 				]
 			},
@@ -5255,6 +5656,15 @@
 			],
 			"areaTags": [
 				"MT"
+			],
+			"backgrounds": [
+				{
+					"name": "Azorius Functionary",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -5335,6 +5745,16 @@
 						"subclass": {
 							"name": "Kraken (Stream)",
 							"source": "Stream"
+						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Artillerist",
+							"source": "UAArtificerRevisited"
 						}
 					}
 				]
@@ -5532,6 +5952,12 @@
 			],
 			"areaTags": [
 				"S"
+			],
+			"backgrounds": [
+				{
+					"name": "Rakdos Cultist",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -5605,10 +6031,10 @@
 				{
 					"type": "list",
 					"items": [
-						"One {@filter beast of challenge rating 2 or lower|bestiary|challenge rating=2|type=beast|miscellaneous=!swarm}",
-						"Two {@filter beasts of challenge rating 1 or lower|bestiary|challenge rating=1|type=beast|miscellaneous=!swarm}",
-						"Four {@filter beasts of challenge rating 1/2 or lower|bestiary|challenge rating=1/2|type=beast|miscellaneous=!swarm}",
-						"Eight {@filter beasts of challenge rating 1/4 or lower|bestiary|challenge rating=0;1/8;1/4|type=beast|miscellaneous=!swarm}"
+						"One {@filter beast of challenge rating 2 or lower|bestiary|challenge rating=[&2]|type=beast|miscellaneous=!swarm}",
+						"Two {@filter beasts of challenge rating 1 or lower|bestiary|challenge rating=[&1]|type=beast|miscellaneous=!swarm}",
+						"Four {@filter beasts of challenge rating 1/2 or lower|bestiary|challenge rating=[&2]|type=beast|miscellaneous=!swarm}",
+						"Eight {@filter beasts of challenge rating 1/4 or lower|bestiary|challenge rating=[&0;&1/4]|type=beast|miscellaneous=!swarm}"
 					]
 				},
 				"Each beast is also considered fey, and it disappears when it drops to 0 hit points or when the spell ends.",
@@ -5625,7 +6051,16 @@
 				}
 			],
 			"page": 225,
-			"isSummon": true
+			"backgrounds": [
+				{
+					"name": "Gruul Anarch",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SMN",
+				"SGT"
+			]
 		},
 		{
 			"name": "Conjure Barrage",
@@ -5672,6 +6107,12 @@
 			],
 			"areaTags": [
 				"N"
+			],
+			"backgrounds": [
+				{
+					"name": "Gruul Anarch",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -5715,7 +6156,7 @@
 			},
 			"source": "PHB",
 			"entries": [
-				"You summon a {@filter celestial of challenge rating 4 or lower|bestiary|challenge rating=0;1/8;1/4;1/2;1;2;3;4|type=celestial|miscellaneous=!swarm}, which appears in an unoccupied space that you can see within range. The celestial disappears when it drops to 0 hit points or when the spell ends.",
+				"You summon a {@filter celestial of challenge rating 4 or lower|bestiary|challenge rating=[&0;&4]|type=celestial|miscellaneous=!swarm}, which appears in an unoccupied space that you can see within range. The celestial disappears when it drops to 0 hit points or when the spell ends.",
 				"The celestial is friendly to you and your companions for the duration. Roll initiative for the celestial, which has its own turns. It obeys any verbal commands that you issue to it (no action required by you), as long as they don't violate its alignment. If you don't issue any commands to the celestial, it defends itself from hostile creatures but otherwise takes no actions.",
 				"The DM has {@creature couatl|mm|the celestial}'s statistics."
 			],
@@ -5724,12 +6165,15 @@
 					"type": "entries",
 					"name": "At Higher Levels",
 					"entries": [
-						"When you cast this spell using a 9th-level spell slot, you summon a {@filter celestial of challenge rating 5 or lower|bestiary|challenge rating=0;1/8;1/4;1/2;1;2;3;4;5|type=celestial|miscellaneous=!swarm}."
+						"When you cast this spell using a 9th-level spell slot, you summon a {@filter celestial of challenge rating 5 or lower|bestiary|challenge rating=[&0;&5]|type=celestial|miscellaneous=!swarm}."
 					]
 				}
 			],
-			"isSummon": true,
-			"page": 225
+			"page": 225,
+			"miscTags": [
+				"SMN",
+				"SGT"
+			]
 		},
 		{
 			"name": "Conjure Elemental",
@@ -5790,7 +6234,7 @@
 			},
 			"source": "PHB",
 			"entries": [
-				"You call forth an elemental servant. Choose an area of air, earth, fire, or water that fills a 10-foot cube within range. An {@filter elemental of challenge rating 5 or lower|bestiary|challenge rating=0;1/8;1/4;1/2;1;2;3;4;5|type=elemental|miscellaneous=!swarm} appropriate to the area you chose appears in an unoccupied space within 10 feet of it. For example, a {@creature fire elemental} emerges from a bonfire, and an {@creature earth elemental} rises up from the ground. The elemental disappears when it drops to 0 hit points or when the spell ends.",
+				"You call forth an elemental servant. Choose an area of air, earth, fire, or water that fills a 10-foot cube within range. An {@filter elemental of challenge rating 5 or lower|bestiary|challenge rating=[&0;&5]|type=elemental|miscellaneous=!swarm} appropriate to the area you chose appears in an unoccupied space within 10 feet of it. For example, a {@creature fire elemental} emerges from a bonfire, and an {@creature earth elemental} rises up from the ground. The elemental disappears when it drops to 0 hit points or when the spell ends.",
 				"The elemental is friendly to you and your companions for the duration. Roll initiative for the elemental, which has its own turns. It obeys any verbal commands that you issue to it (no action required by you). If you don't issue any commands to the elemental, it defends itself from hostile creatures but otherwise takes no actions.",
 				"If your concentration is broken, the elemental doesn't disappear. Instead, you lose control of the elemental, it becomes hostile toward you and your companions, and it might attack. An uncontrolled elemental can't be dismissed by you, and it disappears 1 hour after you summoned it.",
 				"The DM has the elemental's statistics."
@@ -5804,8 +6248,16 @@
 					]
 				}
 			],
-			"isSummon": true,
-			"page": 225
+			"page": 225,
+			"backgrounds": [
+				{
+					"name": "Izzet Engineer",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SMN"
+			]
 		},
 		{
 			"name": "Conjure Fey",
@@ -5852,7 +6304,7 @@
 			},
 			"source": "PHB",
 			"entries": [
-				"You summon a {@filter fey creature of challenge rating 6 or lower|bestiary|challenge rating=0;1/8;1/4;1/2;1;2;3;4;5;6|type=fey|miscellaneous=!swarm}, or a fey spirit that takes the form of a {@filter beast of challenge rating 6 or lower|bestiary|challenge rating=0;1/8;1/4;1/2;1;2;3;4;5;6|type=beast|miscellaneous=!swarm}. It appears in an unoccupied space that you can see within range. The fey creature disappears when it drops to 0 hit points or when the spell ends.",
+				"You summon a {@filter fey creature of challenge rating 6 or lower|bestiary|challenge rating=[&0;&6]|type=fey|miscellaneous=!swarm}, or a fey spirit that takes the form of a {@filter beast of challenge rating 6 or lower|bestiary|challenge rating=[&0;&6]|type=beast|miscellaneous=!swarm}. It appears in an unoccupied space that you can see within range. The fey creature disappears when it drops to 0 hit points or when the spell ends.",
 				"The fey creature is friendly to you and your companions for the duration. Roll initiative for the creature, which has its own turns. It obeys any verbal commands that you issue to it (no action required by you), as long as they don't violate its alignment. If you don't issue any commands to the fey creature, it defends itself from hostile creatures but otherwise takes no actions.",
 				"If your concentration is broken, the fey creature doesn't disappear. Instead, you lose control of the fey creature, it becomes hostile toward you and your companions, and it might attack. An uncontrolled fey creature can't be dismissed by you, and it disappears 1 hour after you summoned it.",
 				"The DM has the fey creature's statistics."
@@ -5866,8 +6318,11 @@
 					]
 				}
 			],
-			"isSummon": true,
-			"page": 226
+			"page": 226,
+			"miscTags": [
+				"SMN",
+				"SGT"
+			]
 		},
 		{
 			"name": "Conjure Minor Elementals",
@@ -5918,10 +6373,10 @@
 				{
 					"type": "list",
 					"items": [
-						"One {@filter elemental of challenge rating 2 or lower|bestiary|challenge rating=2|type=elemental|miscellaneous=!swarm}",
-						"Two {@filter elementals of challenge rating 1 or lower|bestiary|challenge rating=1|type=elemental|miscellaneous=!swarm}",
-						"Four {@filter elementals of challenge rating 1/2 or lower|bestiary|challenge rating=1/2|type=elemental|miscellaneous=!swarm}",
-						"Eight {@filter elementals of challenge rating 1/4 or lower|bestiary|challenge rating=0;1/8;1/4|type=elemental|miscellaneous=!swarm}."
+						"One {@filter elemental of challenge rating 2 or lower|bestiary|challenge rating=[&2]|type=elemental|miscellaneous=!swarm}",
+						"Two {@filter elementals of challenge rating 1 or lower|bestiary|challenge rating=[&1]|type=elemental|miscellaneous=!swarm}",
+						"Four {@filter elementals of challenge rating 1/2 or lower|bestiary|challenge rating=[&2]|type=elemental|miscellaneous=!swarm}",
+						"Eight {@filter elementals of challenge rating 1/4 or lower|bestiary|challenge rating=[&0;&1/4]|type=elemental|miscellaneous=!swarm}."
 					]
 				},
 				"An elemental summoned by this spell disappears when it drops to 0 hit points or when the spell ends.",
@@ -5937,8 +6392,21 @@
 					]
 				}
 			],
-			"isSummon": true,
-			"page": 226
+			"page": 226,
+			"backgrounds": [
+				{
+					"name": "Izzet Engineer",
+					"source": "GGR"
+				},
+				{
+					"name": "Selesnya Initiate",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SMN",
+				"SGT"
+			]
 		},
 		{
 			"name": "Conjure Volley",
@@ -6037,10 +6505,10 @@
 				{
 					"type": "list",
 					"items": [
-						"One {@filter fey creature of challenge rating 2 or lower|bestiary|challenge rating=2|type=fey|miscellaneous=!swarm}",
-						"Two {@filter fey creatures of challenge rating 1 or lower|bestiary|challenge rating=1|type=fey|miscellaneous=!swarm}",
-						"Four {@filter fey creatures of challenge rating 1/2 or lower|bestiary|challenge rating=1/2|type=fey|miscellaneous=!swarm}",
-						"Eight {@filter fey creatures of challenge rating 1/4 or lower|bestiary|challenge rating=0;1/8;1/4|type=fey|miscellaneous=!swarm}"
+						"One {@filter fey creature of challenge rating 2 or lower|bestiary|challenge rating=[&2]|type=fey|miscellaneous=!swarm}",
+						"Two {@filter fey creatures of challenge rating 1 or lower|bestiary|challenge rating=[&1]|type=fey|miscellaneous=!swarm}",
+						"Four {@filter fey creatures of challenge rating 1/2 or lower|bestiary|challenge rating=[&2]|type=fey|miscellaneous=!swarm}",
+						"Eight {@filter fey creatures of challenge rating 1/4 or lower|bestiary|challenge rating=[&0;&1/4]|type=fey|miscellaneous=!swarm}"
 					]
 				},
 				"A summoned creature disappears when it drops to 0 hit points or when the spell ends.",
@@ -6056,8 +6524,11 @@
 					]
 				}
 			],
-			"isSummon": true,
-			"page": 226
+			"page": 226,
+			"miscTags": [
+				"SMN",
+				"SGT"
+			]
 		},
 		{
 			"name": "Contact Other Plane",
@@ -6347,6 +6818,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -6690,7 +7165,7 @@
 			},
 			"source": "PHB",
 			"entries": [
-				"You plant four pieces of nonmagical ammunition\u2014arrows or crossbow bolts\u2014in the ground within range and lay magic upon them to protect an area. Until the spell ends, whenever a creature other than you comes within 30 feet of the ammunition for the first time on a turn or ends its turn there, one piece of ammunition flies up to strike it. The creature must succeed on a Dexterity saving throw or take {@dice 1d6} piercing damage. The piece of ammunition is then destroyed. The spell ends when no ammunition remains.",
+				"You plant four pieces of nonmagical ammunition\u2014{@item arrow|phb|arrows} or {@item crossbow bolt|phb|crossbow bolts}\u2014in the ground within range and lay magic upon them to protect an area. Until the spell ends, whenever a creature other than you comes within 30 feet of the ammunition for the first time on a turn or ends its turn there, one piece of ammunition flies up to strike it. The creature must succeed on a Dexterity saving throw or take {@dice 1d6} piercing damage. The piece of ammunition is then destroyed. The spell ends when no ammunition remains.",
 				"When you cast this spell, you can designate any creatures you choose, and the spell ignores them."
 			],
 			"entriesHigherLevel": [
@@ -6790,7 +7265,13 @@
 					]
 				}
 			],
-			"page": 228
+			"page": 228,
+			"backgrounds": [
+				{
+					"name": "Azorius Functionary",
+					"source": "GGR"
+				}
+			]
 		},
 		{
 			"name": "Create Food and Water",
@@ -6839,6 +7320,16 @@
 							"name": "Land",
 							"source": "PHB",
 							"subSubclass": "Desert"
+						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Alchemist",
+							"source": "UAArtificerRevisited"
 						}
 					}
 				]
@@ -6906,13 +7397,15 @@
 					"type": "entries",
 					"name": "At Higher Levels",
 					"entries": [
-						"When you cast this spell using a 7th-level spell slot, you can animate or reassert control over four ghouls. When you cast this spell using an 8th-level spell slot, you can animate or reassert control over five ghouls or two ghasts or wights. When you cast this spell using a 9th-level spell slot, you can animate or reassert control over six ghouls, three ghasts or wights, or two mummies."
+						"When you cast this spell using a 7th-level spell slot, you can animate or reassert control over four {@creature ghoul|mm|ghouls}. When you cast this spell using an 8th-level spell slot, you can animate or reassert control over five {@creature ghoul|mm|ghouls} or two {@creature ghast|mm|ghasts} or {@creature wight|mm|wights}. When you cast this spell using a 9th-level spell slot, you can animate or reassert control over six {@creature ghoul|mm|ghouls}, three {@creature ghast|mm|ghasts} or {@creature wight|mm|wights}, or two {@creature mummy|mm|mummies}."
 					]
 				}
 			],
 			"page": 229,
-			"isSummon": true,
-			"permanentEffects": true
+			"miscTags": [
+				"PRM",
+				"SMN"
+			]
 		},
 		{
 			"name": "Create or Destroy Water",
@@ -6993,7 +7486,6 @@
 				}
 			],
 			"page": 229,
-			"permanentEffects": true,
 			"races": [
 				{
 					"name": "Genasi (Water)",
@@ -7004,6 +7496,15 @@
 			],
 			"areaTags": [
 				"C"
+			],
+			"backgrounds": [
+				{
+					"name": "Izzet Engineer",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"PRM"
 			]
 		},
 		{
@@ -7042,6 +7543,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -7116,7 +7621,13 @@
 					]
 				}
 			],
-			"page": 229
+			"page": 229,
+			"backgrounds": [
+				{
+					"name": "Simic Scientist",
+					"source": "GGR"
+				}
+			]
 		},
 		{
 			"name": "Crown of Madness",
@@ -7210,6 +7721,15 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Rakdos Cultist",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -7334,6 +7854,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -7401,9 +7925,11 @@
 					"baseSource": "PHB"
 				}
 			],
-			"isHeal": true,
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"HL"
 			]
 		},
 		{
@@ -7451,6 +7977,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -7478,6 +8008,12 @@
 					"source": "UAThatOldBlackMagic",
 					"baseName": "Tiefling",
 					"baseSource": "PHB"
+				}
+			],
+			"backgrounds": [
+				{
+					"name": "Golgari Agent",
+					"source": "GGR"
 				}
 			]
 		},
@@ -7701,6 +8237,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -7941,6 +8481,16 @@
 							"name": "Grave",
 							"source": "XGE"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Alchemist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -7953,6 +8503,16 @@
 			"page": 230,
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Boros Legionnaire",
+					"source": "GGR"
+				},
+				{
+					"name": "Orzhov Representative",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -8073,7 +8633,10 @@
 				"Each time you cast this spell, you can create a new demiplane, or have the shadowy door connect to a demiplane you created with a previous casting of this spell. Additionally, if you know the nature and contents of a demiplane created by a casting of this spell by another creature, you can have the shadowy door connect to its demiplane instead."
 			],
 			"page": 231,
-			"permanentEffects": true
+			"miscTags": [
+				"PRM",
+				"SGT"
+			]
 		},
 		{
 			"name": "Destructive Wave",
@@ -8179,6 +8742,12 @@
 			"areaTags": [
 				"MT",
 				"R"
+			],
+			"backgrounds": [
+				{
+					"name": "Gruul Anarch",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -8289,6 +8858,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -8379,7 +8952,13 @@
 				"For the duration, you can sense the presence and location of poisons, poisonous creatures, and diseases within 30 feet of you. You also identify the kind of poison, poisonous creature, or disease in each case.",
 				"The spell can penetrate most barriers, but it is blocked by 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt."
 			],
-			"page": 231
+			"page": 231,
+			"backgrounds": [
+				{
+					"name": "Simic Scientist",
+					"source": "GGR"
+				}
+			]
 		},
 		{
 			"name": "Detect Thoughts",
@@ -8437,6 +9016,16 @@
 							"name": "Great Old One",
 							"source": "PHB"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Archivist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -8474,6 +9063,15 @@
 					"baseName": "Tiefling",
 					"baseSource": "PHB"
 				}
+			],
+			"backgrounds": [
+				{
+					"name": "Dimir Operative",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -8572,6 +9170,9 @@
 			"page": 233,
 			"damageInflict": [
 				"force"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -8620,6 +9221,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -8701,10 +9306,6 @@
 					"source": "VGM"
 				},
 				{
-					"name": "Firbolg",
-					"source": "VGM"
-				},
-				{
 					"name": "Tiefling (Dispater)",
 					"source": "UAFiendishOptions",
 					"baseName": "Tiefling",
@@ -8728,6 +9329,15 @@
 					"baseName": "Tiefling",
 					"baseSource": "PHB"
 				}
+			],
+			"backgrounds": [
+				{
+					"name": "Dimir Operative",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -8794,6 +9404,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -8924,6 +9537,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -9019,6 +9636,16 @@
 							"name": "Great Old One",
 							"source": "PHB"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Archivist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -9044,6 +9671,12 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Rakdos Cultist",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -9117,7 +9750,17 @@
 				"The spell doesn't take into account any possible circumstances that might change the outcome, such as the casting of additional spells or the loss or gain of a companion.",
 				"If you cast the spell two or more times before finishing your next long rest, there is a cumulative 25 percent chance for each casting after the first that you get a random reading. The DM makes this roll in secret."
 			],
-			"page": 234
+			"page": 234,
+			"backgrounds": [
+				{
+					"name": "Azorius Functionary",
+					"source": "GGR"
+				},
+				{
+					"name": "Izzet Engineer",
+					"source": "GGR"
+				}
+			]
 		},
 		{
 			"name": "Divine Favor",
@@ -9246,6 +9889,9 @@
 			],
 			"areaTags": [
 				"MT"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -9388,6 +10034,15 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Gruul Anarch",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -9466,6 +10121,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -9624,6 +10282,16 @@
 							"name": "Beauty (Stream)",
 							"source": "Twitter"
 						}
+					},
+					{
+						"class": {
+							"name": "Cleric",
+							"source": "PHB"
+						},
+						"subclass": {
+							"name": "Order",
+							"source": "GGR"
+						}
 					}
 				]
 			},
@@ -9652,6 +10320,19 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Azorius Functionary",
+					"source": "GGR"
+				},
+				{
+					"name": "Rakdos Cultist",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -9839,7 +10520,17 @@
 					]
 				}
 			],
-			"page": 236
+			"page": 236,
+			"backgrounds": [
+				{
+					"name": "Selesnya Initiate",
+					"source": "GGR"
+				},
+				{
+					"name": "Simic Scientist",
+					"source": "GGR"
+				}
+			]
 		},
 		{
 			"name": "Earthquake",
@@ -9927,6 +10618,9 @@
 			],
 			"areaTags": [
 				"R"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -9975,9 +10669,12 @@
 			"spellAttack": [
 				"R"
 			],
-			"scalingEffects": true,
 			"areaTags": [
-				"ST"
+				"ST",
+				"MT"
+			],
+			"miscTags": [
+				"SCL"
 			]
 		},
 		{
@@ -10015,6 +10712,10 @@
 					{
 						"name": "Paladin",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -10100,6 +10801,12 @@
 				"fire",
 				"lightning",
 				"thunder"
+			],
+			"backgrounds": [
+				{
+					"name": "Izzet Engineer",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -10154,6 +10861,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -10257,6 +10968,12 @@
 			"page": 237,
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Simic Scientist",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -10304,6 +11021,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -10370,6 +11091,15 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Simic Scientist",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -10447,6 +11177,16 @@
 			],
 			"conditionInflict": [
 				"restrained"
+			],
+			"backgrounds": [
+				{
+					"name": "Azorius Functionary",
+					"source": "GGR"
+				},
+				{
+					"name": "Azorius Functionary",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -10539,6 +11279,12 @@
 			],
 			"areaTags": [
 				"Q"
+			],
+			"backgrounds": [
+				{
+					"name": "Golgari Agent",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -10613,6 +11359,19 @@
 			],
 			"areaTags": [
 				"MT"
+			],
+			"backgrounds": [
+				{
+					"name": "Orzhov Representative",
+					"source": "GGR"
+				},
+				{
+					"name": "Rakdos Cultist",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -10689,6 +11448,9 @@
 			"page": 238,
 			"damageInflict": [
 				"force"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -10785,6 +11547,9 @@
 			],
 			"areaTags": [
 				"Q"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -10834,6 +11599,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -10853,7 +11622,13 @@
 			"entries": [
 				"This spell allows you to move at an incredible pace. When you cast this spell, and then as a bonus action on each of your turns until the spell ends, you can take the Dash action."
 			],
-			"page": 238
+			"page": 238,
+			"backgrounds": [
+				{
+					"name": "Simic Scientist",
+					"source": "GGR"
+				}
+			]
 		},
 		{
 			"name": "Eyebite",
@@ -10940,6 +11715,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -10977,6 +11755,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -11009,7 +11791,10 @@
 				"Creatures or magic items can't be created or transmuted by this spell. You also can't use it to create items that ordinarily require a high degree of craftsmanship, such as jewelry, weapons, glass, or armor, unless you have proficiency with the type of artisan's tools used to craft such objects."
 			],
 			"page": 239,
-			"permanentEffects": true
+			"miscTags": [
+				"PRM",
+				"SGT"
+			]
 		},
 		{
 			"name": "Faerie Fire",
@@ -11050,6 +11835,10 @@
 					{
 						"name": "Druid",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -11155,6 +11944,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -11363,6 +12156,12 @@
 			],
 			"areaTags": [
 				"N"
+			],
+			"backgrounds": [
+				{
+					"name": "Rakdos Cultist",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -11409,6 +12208,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -11496,6 +12299,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -11654,8 +12460,11 @@
 				"Finally, when you cast a spell with a range of touch, your familiar can deliver the spell as if it had cast the spell. Your familiar must be within 100 feet of you, and it must use its reaction to deliver the spell when you cast it. If the spell requires an attack roll, you use your attack modifier for the roll."
 			],
 			"page": 240,
-			"isSummon": true,
-			"permanentEffects": true
+			"miscTags": [
+				"PRM",
+				"SMN",
+				"SGT"
+			]
 		},
 		{
 			"name": "Find Steed",
@@ -11699,8 +12508,10 @@
 				"While your steed is within 1 mile of you, you can communicate with each other telepathically.",
 				"You can't have more than one steed bonded by this spell at a time. As an action, you can release the steed from its bond at any time, causing it to disappear."
 			],
-			"isSummon": true,
-			"page": 240
+			"page": 240,
+			"miscTags": [
+				"SMN"
+			]
 		},
 		{
 			"name": "Find Traps",
@@ -11862,9 +12673,12 @@
 			"savingThrow": [
 				"constitution"
 			],
-			"permanentEffects": true,
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"PRM",
+				"SGT"
 			]
 		},
 		{
@@ -11902,6 +12716,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -11930,7 +12748,6 @@
 			"spellAttack": [
 				"R"
 			],
-			"scalingEffects": true,
 			"races": [
 				{
 					"name": "Elf (Eladrin)",
@@ -11941,6 +12758,23 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Boros Legionnaire",
+					"source": "GGR"
+				},
+				{
+					"name": "Gruul Anarch",
+					"source": "GGR"
+				},
+				{
+					"name": "Rakdos Cultist",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SCL"
 			]
 		},
 		{
@@ -12164,6 +12998,16 @@
 						"subclass": {
 							"name": "Destruction (Stream)",
 							"source": "Twitter"
+						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Artillerist",
+							"source": "UAArtificerRevisited"
 						}
 					}
 				]
@@ -12406,6 +13250,12 @@
 			],
 			"areaTags": [
 				"Y"
+			],
+			"backgrounds": [
+				{
+					"name": "Boros Legionnaire",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -12529,6 +13379,12 @@
 			],
 			"areaTags": [
 				"S"
+			],
+			"backgrounds": [
+				{
+					"name": "Rakdos Cultist",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -12592,6 +13448,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -12642,6 +13501,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -12817,7 +13680,9 @@
 				"necrotic",
 				"radiant"
 			],
-			"permanentEffects": true
+			"miscTags": [
+				"PRM"
+			]
 		},
 		{
 			"name": "Forcecage",
@@ -12997,6 +13862,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -13095,6 +13964,16 @@
 			"page": 244,
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Dimir Operative",
+					"source": "GGR"
+				},
+				{
+					"name": "Simic Scientist",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -13178,6 +14057,20 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Azorius Functionary",
+					"source": "GGR"
+				},
+				{
+					"name": "Orzhov Representative",
+					"source": "GGR"
+				},
+				{
+					"name": "Selesnya Initiate",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -13228,6 +14121,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -13263,6 +14160,16 @@
 			"page": 244,
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Dimir Operative",
+					"source": "GGR"
+				},
+				{
+					"name": "Simic Scientist",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -13323,7 +14230,10 @@
 				"Deities and other planar rulers can prevent portals created by this spell from opening in their presence or anywhere within their domains.",
 				"When you cast this spell, you can speak the name of a specific creature (a pseudonym, title, or nickname doesn't work). If that creature is on a plane other than the one you are on, the portal opens in the named creature's immediate vicinity and draws the creature through it to the nearest unoccupied space on your side of the portal. You gain no special power over the creature, and it is free to act as the DM deems appropriate. It might leave, attack you, or help you."
 			],
-			"page": 244
+			"page": 244,
+			"miscTags": [
+				"SGT"
+			]
 		},
 		{
 			"name": "Geas",
@@ -13417,6 +14327,15 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Orzhov Representative",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -13571,10 +14490,18 @@
 				"A creature remains in its giant size for the duration, until it drops to 0 hit points, or until you use an action to dismiss the effect on it.",
 				"The DM might allow you to choose different targets. For example, if you transform a bee, its giant version might have the same statistics as a {@creature giant wasp}."
 			],
-			"isSummon": true,
 			"page": 245,
 			"areaTags": [
 				"MT"
+			],
+			"backgrounds": [
+				{
+					"name": "Golgari Agent",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SMN"
 			]
 		},
 		{
@@ -13737,6 +14664,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -13809,6 +14740,12 @@
 			],
 			"areaTags": [
 				"S"
+			],
+			"backgrounds": [
+				{
+					"name": "Izzet Engineer",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -13855,7 +14792,9 @@
 				"The berries lose their potency if they have not been consumed within 24 hours of the casting of this spell."
 			],
 			"page": 246,
-			"isHeal": true
+			"miscTags": [
+				"HL"
+			]
 		},
 		{
 			"name": "Grasping Vine",
@@ -13923,6 +14862,15 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Golgari Agent",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -13961,6 +14909,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -14154,6 +15106,10 @@
 					{
 						"name": "Druid",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -14327,6 +15283,9 @@
 			],
 			"savingThrow": [
 				"dexterity"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -14390,40 +15349,42 @@
 					"type": "entries",
 					"name": "Doors",
 					"entries": [
-						"All doors in the warded area are magically locked, as if sealed by an arcane lock spell. In addition, you can cover up to ten doors with an illusion (equivalent to the illusory object function of the minor illusion spell) to make them appear as plain sections of wall."
+						"All doors in the warded area are magically locked, as if sealed by an {@spell arcane lock} spell. In addition, you can cover up to ten doors with an illusion (equivalent to the illusory object function of the minor illusion spell) to make them appear as plain sections of wall."
 					]
 				},
 				{
 					"type": "entries",
 					"name": "Stairs",
 					"entries": [
-						"Webs fill all stairs in the warded area from top to bottom, as the web spell. These strands regrow in 10 minutes if they are burned or torn away while guards and wards lasts."
+						"Webs fill all stairs in the warded area from top to bottom, as the {@spell web} spell. These strands regrow in 10 minutes if they are burned or torn away while guards and wards lasts."
 					]
 				},
 				{
 					"type": "entries",
 					"name": "Other Spell Effect",
 					"entries": [
-						"You can place your choice of one of the following magical effects within the warded area of the stronghold."
-					]
-				},
-				{
-					"type": "list",
-					"items": [
-						"Place dancing lights in four corridors. You can designate a simple program that the lights repeat as long as guards and wards lasts.",
-						"Place magic mouth in two locations.",
-						"Place stinking cloud in two locations. The vapors appear in the places you designate; they return within 10 minutes if dispersed by wind while guards and wards lasts.",
-						"Place a constant gust of wind in one corridor or room.",
-						"Place a suggestion in one location. You select an area of up to 5 feet square, and any creature that enters or passes through the area receives the suggestion mentally."
+						"You can place your choice of one of the following magical effects within the warded area of the stronghold.",
+						{
+							"type": "list",
+							"items": [
+								"Place {@spell dancing lights} in four corridors. You can designate a simple program that the lights repeat as long as guards and wards lasts.",
+								"Place {@spell magic mouth} in two locations.",
+								"Place {@spell stinking cloud} in two locations. The vapors appear in the places you designate; they return within 10 minutes if dispersed by wind while guards and wards lasts.",
+								"Place a constant {@spell gust of wind} in one corridor or room.",
+								"Place a {@spell suggestion} in one location. You select an area of up to 5 feet square, and any creature that enters or passes through the area receives the suggestion mentally."
+							]
+						}
 					]
 				},
 				"The whole warded area radiates magic. A {@spell dispel magic} cast on a specific effect, if successful, removes only that effect.",
 				"You can create a permanently guarded and warded structure by casting this spell there every day for one year."
 			],
 			"page": 248,
-			"permanentEffects": true,
 			"areaTags": [
 				"Q"
+			],
+			"miscTags": [
+				"PRM"
 			]
 		},
 		{
@@ -14465,6 +15426,10 @@
 					{
 						"name": "Druid",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -14475,6 +15440,12 @@
 			"page": 248,
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Orzhov Representative",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -14559,6 +15530,12 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Boros Legionnaire",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -15006,6 +15983,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -15053,6 +16033,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -15137,6 +16121,15 @@
 			"page": 250,
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Rakdos Cultist",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -15191,9 +16184,12 @@
 				}
 			],
 			"page": 250,
-			"isHeal": true,
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"HL",
+				"SGT"
 			]
 		},
 		{
@@ -15251,9 +16247,12 @@
 				}
 			],
 			"page": 250,
-			"isHeal": true,
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"HL",
+				"SGT"
 			]
 		},
 		{
@@ -15297,6 +16296,10 @@
 					{
 						"name": "Druid",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -15355,6 +16358,15 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Izzet Engineer",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -15452,6 +16464,12 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Rakdos Cultist",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -15582,6 +16600,26 @@
 							"name": "Beauty (Stream)",
 							"source": "Twitter"
 						}
+					},
+					{
+						"class": {
+							"name": "Cleric",
+							"source": "PHB"
+						},
+						"subclass": {
+							"name": "Order",
+							"source": "GGR"
+						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Battle Smith",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -15601,6 +16639,12 @@
 			"page": 250,
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Boros Legionnaire",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -15684,6 +16728,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -15822,6 +16869,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -15975,6 +17025,16 @@
 							"source": "UAGiantSoulSorcerer",
 							"subSubclass": "Frost"
 						}
+					},
+					{
+						"class": {
+							"name": "Cleric",
+							"source": "PHB"
+						},
+						"subclass": {
+							"name": "Order",
+							"source": "GGR"
+						}
 					}
 				]
 			},
@@ -16000,6 +17060,15 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Azorius Functionary",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -16188,6 +17257,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -16269,6 +17341,16 @@
 						"subclass": {
 							"name": "Beauty (Stream)",
 							"source": "Twitter"
+						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Archivist",
+							"source": "UAArtificerRevisited"
 						}
 					}
 				]
@@ -16383,6 +17465,16 @@
 							"name": "Destruction (Stream)",
 							"source": "Twitter"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Artillerist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -16450,6 +17542,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -16557,7 +17653,13 @@
 				"Should the spell be dispelled, the original script and the illusion both disappear.",
 				"A creature with truesight can read the hidden message."
 			],
-			"page": 252
+			"page": 252,
+			"backgrounds": [
+				{
+					"name": "Orzhov Representative",
+					"source": "GGR"
+				}
+			]
 		},
 		{
 			"name": "Imprisonment",
@@ -16667,6 +17769,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -16995,6 +18100,12 @@
 			],
 			"areaTags": [
 				"S"
+			],
+			"backgrounds": [
+				{
+					"name": "Golgari Agent",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -17049,6 +18160,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -17196,6 +18311,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -17242,6 +18361,12 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Simic Scientist",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -17292,7 +18417,10 @@
 				"If you choose a target that is held shut with arcane lock, that spell is suppressed for 10 minutes, during which time the target can be opened and shut normally.",
 				"When you cast the spell, a loud knock, audible from as far away as 300 feet, emanates from the target object."
 			],
-			"page": 254
+			"page": 254,
+			"miscTags": [
+				"SGT"
+			]
 		},
 		{
 			"name": "Legend Lore",
@@ -17379,6 +18507,16 @@
 							"name": "Seeker (UA)",
 							"source": "UATheFaithful"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Archivist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -17427,6 +18565,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -17449,7 +18591,15 @@
 				"After 60 days, there is a cumulative 5 percent chance per day that the spell's effect ends. This effect ends if you cast this spell again, if the smaller replica chest is destroyed, or if you choose to end the spell as an action. If the spell ends and the larger chest is on the Ethereal Plane, it is irretrievably lost."
 			],
 			"page": 254,
-			"permanentEffects": true
+			"backgrounds": [
+				{
+					"name": "Orzhov Representative",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"PRM"
+			]
 		},
 		{
 			"name": "Leomund's Tiny Hut",
@@ -17558,6 +18708,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -17659,6 +18813,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -17700,6 +18858,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -17748,6 +18909,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -18134,6 +19299,26 @@
 							"name": "Order (UA)",
 							"source": "UAOrderDomain"
 						}
+					},
+					{
+						"class": {
+							"name": "Cleric",
+							"source": "PHB"
+						},
+						"subclass": {
+							"name": "Order",
+							"source": "GGR"
+						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Archivist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -18213,6 +19398,16 @@
 							"name": "Seeker (UA)",
 							"source": "UATheFaithful"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Archivist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -18275,6 +19470,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -18394,6 +19593,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -18452,6 +19655,12 @@
 					"source": "MTF",
 					"baseName": "Tiefling",
 					"baseSource": "PHB"
+				}
+			],
+			"backgrounds": [
+				{
+					"name": "Dimir Operative",
+					"source": "GGR"
 				}
 			]
 		},
@@ -18591,6 +19800,9 @@
 			],
 			"areaTags": [
 				"Y"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -18646,6 +19858,9 @@
 			"page": 257,
 			"savingThrow": [
 				"charisma"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -18730,7 +19945,11 @@
 				}
 			],
 			"areaTags": [
-				"ST"
+				"ST",
+				"MT"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -18776,6 +19995,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -18788,7 +20011,10 @@
 				"When that circumstance occurs, a magical mouth appears on the object and recites the message in your voice and at the same volume you spoke. If the object you chose has a mouth or something that looks like a mouth (for example, the mouth of a statue), the magical mouth appears there so that the words appear to come from the object's mouth. When you cast this spell, you can have the spell end after it delivers its message, or it can remain and repeat its message whenever the trigger occurs.",
 				"The triggering circumstance can be as general or as detailed as you like, though it must be based on visual or audible conditions that occur within 30 feet of the object. For example, you could instruct the mouth to speak when any creature moves within 30 feet of the object or when a silver bell rings within 30 feet of it."
 			],
-			"page": 257
+			"page": 257,
+			"miscTags": [
+				"SGT"
+			]
 		},
 		{
 			"name": "Magic Weapon",
@@ -18833,6 +20059,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -18993,6 +20223,9 @@
 			"page": 258,
 			"opposedCheck": [
 				"intelligence"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -19056,6 +20289,16 @@
 							"name": "Solidarity (PSA)",
 							"source": "PSA"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Battle Smith",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -19073,10 +20316,12 @@
 				}
 			],
 			"page": 258,
-			"isHeal": true,
 			"areaTags": [
 				"MT",
 				"S"
+			],
+			"miscTags": [
+				"HL"
 			]
 		},
 		{
@@ -19118,9 +20363,12 @@
 				"A flood of healing energy flows from you into injured creatures around you. You restore up to 700 hit points, divided as you choose among any number of creatures that you can see within range. Creatures healed by this spell are also cured of all diseases and any effect making them {@condition blinded} or {@condition deafened}. This spell has no effect on undead or constructs."
 			],
 			"page": 258,
-			"isHeal": true,
 			"areaTags": [
 				"MT"
+			],
+			"miscTags": [
+				"HL",
+				"SGT"
 			]
 		},
 		{
@@ -19182,9 +20430,12 @@
 				}
 			],
 			"page": 258,
-			"isHeal": true,
 			"areaTags": [
 				"MT"
+			],
+			"miscTags": [
+				"HL",
+				"SGT"
 			]
 		},
 		{
@@ -19235,6 +20486,18 @@
 						"name": "Wizard",
 						"source": "PHB"
 					}
+				],
+				"fromSubclass": [
+					{
+						"class": {
+							"name": "Cleric",
+							"source": "PHB"
+						},
+						"subclass": {
+							"name": "Order",
+							"source": "GGR"
+						}
+					}
 				]
 			},
 			"source": "PHB",
@@ -19262,6 +20525,9 @@
 			],
 			"areaTags": [
 				"MT"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -19312,6 +20578,9 @@
 			"page": 258,
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -19383,6 +20652,12 @@
 			],
 			"conditionInflict": [
 				"prone"
+			],
+			"backgrounds": [
+				{
+					"name": "Dimir Operative",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -19429,6 +20704,16 @@
 							"name": "Land",
 							"source": "PHB",
 							"subSubclass": "Swamp"
+						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Alchemist",
+							"source": "UAArtificerRevisited"
 						}
 					}
 				]
@@ -19504,6 +20789,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -19558,6 +20847,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -19577,6 +20870,12 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Azorius Functionary",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -19632,6 +20931,9 @@
 			],
 			"areaTags": [
 				"S"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -20000,6 +21302,9 @@
 				"blinded",
 				"deafened",
 				"invisible"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -20119,6 +21424,9 @@
 					"baseName": "Gith",
 					"baseSource": "MTF"
 				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -20183,6 +21491,16 @@
 							"name": "Ambition (PSA)",
 							"source": "PSA"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Archivist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -20207,13 +21525,22 @@
 			"savingThrow": [
 				"wisdom"
 			],
-			"permanentEffects": true,
 			"conditionInflict": [
 				"charmed",
 				"incapacitated"
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Dimir Operative",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"PRM",
+				"SGT"
 			]
 		},
 		{
@@ -20335,6 +21662,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -20347,6 +21678,9 @@
 			"page": 261,
 			"damageInflict": [
 				"piercing"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -20443,6 +21777,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -20473,7 +21811,9 @@
 				}
 			],
 			"page": 262,
-			"permanentEffects": true
+			"miscTags": [
+				"PRM"
+			]
 		},
 		{
 			"name": "Mordenkainen's Sword",
@@ -20536,6 +21876,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -20678,6 +22021,12 @@
 			"page": 263,
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Dimir Operative",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -20750,9 +22099,11 @@
 				}
 			],
 			"page": 263,
-			"permanentEffects": true,
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"PRM"
 			]
 		},
 		{
@@ -20860,6 +22211,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -20923,6 +22278,12 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Izzet Engineer",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -20978,6 +22339,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -21061,6 +22425,12 @@
 			],
 			"areaTags": [
 				"MT"
+			],
+			"backgrounds": [
+				{
+					"name": "Dimir Operative",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -21140,7 +22510,10 @@
 				"A passage appears at a point of your choice that you can see on a wooden, plaster, or stone surface (such as a wall, a ceiling, or a floor) within range, and lasts for the duration. You choose the opening's dimensions: up to 5 feet wide, 8 feet tall, and 20 feet deep. The passage creates no instability in a structure surrounding it.",
 				"When the opening disappears, any creatures or objects still in the passage created by the spell are safely ejected to an unoccupied space nearest to the surface on which you cast the spell."
 			],
-			"page": 264
+			"page": 264,
+			"miscTags": [
+				"SGT"
+			]
 		},
 		{
 			"name": "Phantasmal Force",
@@ -21229,6 +22602,9 @@
 			],
 			"opposedCheck": [
 				"intelligence"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -21289,6 +22665,16 @@
 							"name": "Hexblade",
 							"source": "XGE"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Archivist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -21317,6 +22703,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -21363,9 +22752,12 @@
 			},
 			"entries": [
 				"A Large quasi-real, horselike creature appears on the ground in an unoccupied space of your choice within range. You decide the creature's appearance, but it is equipped with a saddle, bit, and bridle. Any of the equipment created by the spell vanishes in a puff of smoke if it is carried more than 10 feet away from the steed.",
-				"For the duration, you or a creature you choose can ride the steed. The creature uses the statistics for a riding horse, except it has a speed of 100 feet and can travel 10 miles in an hour, or 13 miles at a fast pace. When the spell ends, the steed gradually fades, giving the rider 1 minute to dismount. The spell ends if you use an action to dismiss it or if the steed takes any damage."
+				"For the duration, you or a creature you choose can ride the steed. The creature uses the statistics for a {@creature riding horse}, except it has a speed of 100 feet and can travel 10 miles in an hour, or 13 miles at a fast pace. When the spell ends, the steed gradually fades, giving the rider 1 minute to dismount. The spell ends if you use an action to dismiss it or if the steed takes any damage."
 			],
-			"page": 265
+			"page": 265,
+			"miscTags": [
+				"SMN"
+			]
 		},
 		{
 			"name": "Planar Ally",
@@ -21410,8 +22802,10 @@
 				"After the creature completes the task, or when the agreed-upon duration of service expires, the creature returns to its home plane after reporting back to you, if appropriate to the task and if possible. If you are unable to agree on a price for the creature's service, the creature immediately returns to its home plane.",
 				"A creature enlisted to join your group counts as a member of it, receiving a full share of experience points awarded."
 			],
-			"isSummon": true,
-			"page": 265
+			"page": 265,
+			"miscTags": [
+				"SMN"
+			]
 		},
 		{
 			"name": "Planar Binding",
@@ -21538,9 +22932,11 @@
 			"savingThrow": [
 				"charisma"
 			],
-			"isSummon": true,
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SMN"
 			]
 		},
 		{
@@ -21710,7 +23106,17 @@
 				"You can exclude one or more areas of any size within the spell's area from being affected.",
 				"If you cast this spell over 8 hours, you enrich the land. All plants in a half-mile radius centered on a point within range become enriched for 1 year. The plants yield twice the normal amount of food when harvested."
 			],
-			"page": 266
+			"page": 266,
+			"backgrounds": [
+				{
+					"name": "Golgari Agent",
+					"source": "GGR"
+				},
+				{
+					"name": "Selesnya Initiate",
+					"source": "GGR"
+				}
+			]
 		},
 		{
 			"name": "Poison Spray",
@@ -21755,6 +23161,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -21770,7 +23180,6 @@
 			"savingThrow": [
 				"constitution"
 			],
-			"scalingEffects": true,
 			"races": [
 				{
 					"name": "Yuan-ti Pureblood",
@@ -21779,6 +23188,10 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SCL",
+				"SGT"
 			]
 		},
 		{
@@ -21859,6 +23272,15 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Simic Scientist",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -21899,9 +23321,11 @@
 				"A wave of healing energy washes over the creature you touch. The target regains all its hit points. If the creature is {@condition charmed}, {@condition frightened}, {@condition paralyzed}, or {@condition stunned}, the condition ends. If the creature is {@condition prone}, it can use its reaction to stand up. This spell has no effect on undead or constructs."
 			],
 			"page": 266,
-			"isHeal": true,
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"HL"
 			]
 		},
 		{
@@ -21956,6 +23380,9 @@
 			"page": 266,
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -22017,6 +23444,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -22066,9 +23496,12 @@
 				}
 			],
 			"page": 267,
-			"isHeal": true,
 			"areaTags": [
 				"MT"
+			],
+			"miscTags": [
+				"HL",
+				"SGT"
 			]
 		},
 		{
@@ -22119,6 +23552,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -22271,7 +23708,6 @@
 				"constitution",
 				"wisdom"
 			],
-			"permanentEffects": true,
 			"conditionInflict": [
 				"blinded",
 				"petrified",
@@ -22279,6 +23715,9 @@
 			],
 			"areaTags": [
 				"N"
+			],
+			"miscTags": [
+				"PRM"
 			]
 		},
 		{
@@ -22390,7 +23829,6 @@
 				"dexterity",
 				"wisdom"
 			],
-			"permanentEffects": true,
 			"conditionInflict": [
 				"blinded",
 				"petrified",
@@ -22398,6 +23836,10 @@
 			],
 			"areaTags": [
 				"W"
+			],
+			"miscTags": [
+				"PRM",
+				"SGT"
 			]
 		},
 		{
@@ -22450,7 +23892,6 @@
 			"spellAttack": [
 				"R"
 			],
-			"scalingEffects": true,
 			"races": [
 				{
 					"name": "Genasi (Fire)",
@@ -22461,6 +23902,19 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Gruul Anarch",
+					"source": "GGR"
+				},
+				{
+					"name": "Izzet Engineer",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SCL"
 			]
 		},
 		{
@@ -22581,6 +24035,9 @@
 			"conditionInflict": [
 				"blinded",
 				"deafened"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -22638,6 +24095,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -22976,6 +24437,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -23012,6 +24477,12 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Golgari Agent",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -23053,6 +24524,18 @@
 					{
 						"name": "Paladin",
 						"source": "PHB"
+					}
+				],
+				"fromSubclass": [
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Alchemist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -23143,6 +24626,16 @@
 							"name": "Grave",
 							"source": "XGE"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Alchemist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -23154,7 +24647,9 @@
 				"Coming back from the dead is an ordeal. The target takes a \u22124 penalty to all attack rolls, saving throws, and ability checks. Every time the target finishes a long rest, the penalty is reduced by 1 until it disappears."
 			],
 			"page": 270,
-			"isHeal": true
+			"miscTags": [
+				"HL"
+			]
 		},
 		{
 			"name": "Rary's Telepathic Bond",
@@ -23317,6 +24812,16 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Golgari Agent",
+					"source": "GGR"
+				},
+				{
+					"name": "Orzhov Representative",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -23354,6 +24859,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -23382,7 +24891,6 @@
 			"spellAttack": [
 				"R"
 			],
-			"scalingEffects": true,
 			"races": [
 				{
 					"name": "Tiefling (Levistus)",
@@ -23399,6 +24907,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SCL"
 			]
 		},
 		{
@@ -23458,6 +24969,16 @@
 							"name": "Undying",
 							"source": "SCAG"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Alchemist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -23503,6 +25024,12 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Golgari Agent",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -23557,9 +25084,11 @@
 				"The target's severed body members (fingers, legs, tails, and so on), if any, are restored after 2 minutes. If you have the severed part and hold it to the stump, the spell instantaneously causes the limb to knit to the stump."
 			],
 			"page": 271,
-			"isHeal": true,
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"HL"
 			]
 		},
 		{
@@ -23859,6 +25388,10 @@
 					{
 						"name": "Druid",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -23935,7 +25468,9 @@
 				"Casting this spell to restore life to a creature that has been dead for one year or longer taxes you greatly. Until you finish a long rest, you can't cast spells again, and you have disadvantage on all attack rolls, ability checks, and saving throws."
 			],
 			"page": 272,
-			"isHeal": true
+			"miscTags": [
+				"HL"
+			]
 		},
 		{
 			"name": "Reverse Gravity",
@@ -24042,6 +25577,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -24102,9 +25641,11 @@
 				"You touch a creature that has died within the last minute. That creature returns to life with 1 hit point. This spell can't return to life a creature that has died of old age, nor can it restore any missing body parts."
 			],
 			"page": 272,
-			"isHeal": true,
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"HL"
 			]
 		},
 		{
@@ -24146,6 +25687,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -24198,7 +25743,17 @@
 				"Attacks and spells can't cross through the entrance into or out of the extradimensional space, but those inside can see out of it as if through a 3-foot-by-5-foot window centered on the rope.",
 				"Anything inside the extradimensional space drops out when the spell ends."
 			],
-			"page": 272
+			"page": 272,
+			"backgrounds": [
+				{
+					"name": "Izzet Engineer",
+					"source": "GGR"
+				},
+				{
+					"name": "Izzet Engineer",
+					"source": "GGR"
+				}
+			]
 		},
 		{
 			"name": "Sacred Flame",
@@ -24268,9 +25823,18 @@
 			"savingThrow": [
 				"dexterity"
 			],
-			"scalingEffects": true,
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Boros Legionnaire",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SCL",
+				"SGT"
 			]
 		},
 		{
@@ -24313,6 +25877,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -24418,6 +25986,16 @@
 							"name": "Fiend",
 							"source": "PHB"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Artillerist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -24443,7 +26021,14 @@
 				"R"
 			],
 			"areaTags": [
-				"ST"
+				"ST",
+				"MT"
+			],
+			"backgrounds": [
+				{
+					"name": "Boros Legionnaire",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -24630,6 +26215,9 @@
 			"page": 273,
 			"savingThrow": [
 				"wisdom"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -24707,6 +26295,16 @@
 						"subclass": {
 							"name": "Forge",
 							"source": "XGE"
+						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Battle Smith",
+							"source": "UAArtificerRevisited"
 						}
 					}
 				]
@@ -24789,6 +26387,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -24796,7 +26398,10 @@
 			"entries": [
 				"For the duration, you see {@condition invisible} creatures and objects as if they were visible, and you can see into the Ethereal Plane. Ethereal creatures and objects appear ghostly and translucent."
 			],
-			"page": 274
+			"page": 274,
+			"miscTags": [
+				"SGT"
+			]
 		},
 		{
 			"name": "Seeming",
@@ -24912,6 +26517,9 @@
 			],
 			"areaTags": [
 				"MT"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -25177,6 +26785,16 @@
 							"name": "Destruction (Stream)",
 							"source": "Twitter"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Artillerist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -25203,6 +26821,12 @@
 			],
 			"areaTags": [
 				"S"
+			],
+			"backgrounds": [
+				{
+					"name": "Gruul Anarch",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -25285,6 +26909,16 @@
 						"subclass": {
 							"name": "Redemption (UA)",
 							"source": "UAATrioOfSubclasses"
+						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Artillerist",
+							"source": "UAArtificerRevisited"
 						}
 					}
 				]
@@ -25479,6 +27113,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -25507,9 +27145,17 @@
 			"spellAttack": [
 				"M"
 			],
-			"scalingEffects": true,
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Izzet Engineer",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SCL"
 			]
 		},
 		{
@@ -25816,6 +27462,12 @@
 			],
 			"areaTags": [
 				"S"
+			],
+			"backgrounds": [
+				{
+					"name": "Dimir Operative",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -25981,6 +27633,16 @@
 							"name": "Order (UA)",
 							"source": "UAOrderDomain"
 						}
+					},
+					{
+						"class": {
+							"name": "Cleric",
+							"source": "PHB"
+						},
+						"subclass": {
+							"name": "Order",
+							"source": "GGR"
+						}
 					}
 				]
 			},
@@ -26031,6 +27693,10 @@
 					{
 						"name": "Cleric",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -26055,6 +27721,12 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Golgari Agent",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -26151,7 +27823,13 @@
 			"entries": [
 				"You gain the ability to comprehend and verbally communicate with beasts for the duration. The knowledge and awareness of many beasts is limited by their intelligence, but at minimum, beasts can give you information about nearby locations and monsters, including whatever they can perceive or have perceived within the past day. You might be able to persuade a beast to perform a small favor for you, at the DM's discretion."
 			],
-			"page": 277
+			"page": 277,
+			"backgrounds": [
+				{
+					"name": "Gruul Anarch",
+					"source": "GGR"
+				}
+			]
 		},
 		{
 			"name": "Speak with Dead",
@@ -26243,7 +27921,13 @@
 				"You grant the semblance of life and intelligence to a corpse of your choice within range, allowing it to answer the questions you pose. The corpse must still have a mouth and can't be undead. The spell fails if the corpse was the target of this spell within the last 10 days.",
 				"Until the spell ends, you can ask the corpse up to five questions. The corpse knows only what it knew in life, including the languages it knew. Answers are usually brief, cryptic, or repetitive, and the corpse is under no compulsion to offer a truthful answer if you are hostile to it or it recognizes you as an enemy. This spell doesn't return the creature's soul to its body, only its animating spirit. Thus, the corpse can't learn new information, doesn't comprehend anything that has happened since it died, and can't speculate about future events."
 			],
-			"page": 277
+			"page": 277,
+			"backgrounds": [
+				{
+					"name": "Orzhov Representative",
+					"source": "GGR"
+				}
+			]
 		},
 		{
 			"name": "Speak with Plants",
@@ -26299,7 +27983,13 @@
 				"If a plant creature is in the area, you can communicate with it as if you shared a common language, but you gain no magical ability to influence it.",
 				"This spell can cause the plants created by the entangle spell to release a {@condition restrained} creature."
 			],
-			"page": 277
+			"page": 277,
+			"backgrounds": [
+				{
+					"name": "Selesnya Initiate",
+					"source": "GGR"
+				}
+			]
 		},
 		{
 			"name": "Spider Climb",
@@ -26349,6 +28039,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -26398,6 +28092,12 @@
 					"source": "UAThatOldBlackMagic",
 					"baseName": "Tiefling",
 					"baseSource": "PHB"
+				}
+			],
+			"backgrounds": [
+				{
+					"name": "Golgari Agent",
+					"source": "GGR"
 				}
 			]
 		},
@@ -26592,6 +28292,15 @@
 			],
 			"areaTags": [
 				"S"
+			],
+			"backgrounds": [
+				{
+					"name": "Orzhov Representative",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -26796,6 +28505,16 @@
 							"name": "Destruction (Stream)",
 							"source": "Twitter"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Battle Smith",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -26890,6 +28609,16 @@
 							"name": "Fiend",
 							"source": "PHB"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Alchemist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -26950,6 +28679,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -27039,6 +28772,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -27136,6 +28873,12 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Gruul Anarch",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -27226,6 +28969,9 @@
 			],
 			"areaTags": [
 				"Y"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -27342,6 +29088,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -27520,7 +29269,9 @@
 				"On each of your turns until the spell ends, you can use a bonus action to make two attacks with a weapon that uses ammunition from the quiver. Each time you make such a ranged attack, your quiver magically replaces the piece of ammunition you used with a similar piece of nonmagical ammunition. Any pieces of ammunition created by this spell disintegrate when the spell ends. If the quiver leaves your possession, the spell ends."
 			],
 			"page": 279,
-			"scalingEffects": true
+			"miscTags": [
+				"SCL"
+			]
 		},
 		{
 			"name": "Symbol",
@@ -27738,6 +29489,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -27822,6 +29576,9 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -28025,7 +29782,10 @@
 				}
 			],
 			"page": 281,
-			"permanentEffects": true
+			"miscTags": [
+				"PRM",
+				"SGT"
+			]
 		},
 		{
 			"name": "Teleportation Circle",
@@ -28136,7 +29896,9 @@
 				"You can create a permanent teleportation circle by casting this spell in the same location every day for one year. You need not use the circle to teleport when you cast the spell in this way."
 			],
 			"page": 282,
-			"permanentEffects": true
+			"miscTags": [
+				"PRM"
+			]
 		},
 		{
 			"name": "Tenser's Floating Disk",
@@ -28200,6 +29962,9 @@
 					"baseName": "Tiefling",
 					"baseSource": "PHB"
 				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -28364,6 +30129,10 @@
 					{
 						"name": "Druid",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				]
 			},
@@ -28379,9 +30148,11 @@
 			"spellAttack": [
 				"M"
 			],
-			"scalingEffects": true,
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"SCL"
 			]
 		},
 		{
@@ -28534,6 +30305,16 @@
 							"source": "UAGiantSoulSorcerer",
 							"subSubclass": "Storm"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Artillerist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -28568,6 +30349,12 @@
 			],
 			"areaTags": [
 				"C"
+			],
+			"backgrounds": [
+				{
+					"name": "Gruul Anarch",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -28663,6 +30450,18 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					}
+				],
+				"fromSubclass": [
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Archivist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -28863,7 +30662,7 @@
 					"type": "entries",
 					"name": "Object into Creature",
 					"entries": [
-						"You can turn an object into any kind of creature, as long as the creature's size is no larger than the object's size and the creature's challenge rating is {@filter 9 or lower|bestiary|challenge rating=0;1/8;1/4;1/2;1;2;3;4;5;67;8;9|miscellaneous=!swarm}. The creature is friendly to you and your companions. It acts on each of your turns. You decide what action it takes and how it moves. The DM has the creature's statistics and resolves all of its actions and movement."
+						"You can turn an object into any kind of creature, as long as the creature's size is no larger than the object's size and the creature's challenge rating is {@filter 9 or lower|bestiary|challenge rating=[&0;&9]|miscellaneous=!swarm}. The creature is friendly to you and your companions. It acts on each of your turns. You decide what action it takes and how it moves. The DM has the creature's statistics and resolves all of its actions and movement."
 					]
 				},
 				"If the spell becomes permanent, you no longer control the creature. It might remain friendly to you, depending on how you have treated it.",
@@ -28879,10 +30678,13 @@
 			"savingThrow": [
 				"wisdom"
 			],
-			"permanentEffects": true,
-			"isSummon": true,
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"PRM",
+				"SMN",
+				"SGT"
 			]
 		},
 		{
@@ -28934,9 +30736,11 @@
 				"The spell can even provide a new body if the original no longer exists, in which case you must speak the creature's name. The creature then appears in an unoccupied space you choose within 10 feet of you."
 			],
 			"page": 284,
-			"isHeal": true,
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"HL"
 			]
 		},
 		{
@@ -29182,7 +30986,13 @@
 				"Once on each of your turns as a bonus action, you can mentally command the servant to move up to 15 feet and interact with an object. The servant can perform simple tasks that a human servant could do, such as fetching things, cleaning, mending, folding clothes, lighting fires, serving food, and pouring wine. Once you give the command, the servant performs the task to the best of its ability until it completes the task, then waits for your next command.",
 				"If you command the servant to perform a task that would move it more than 60 feet away from you, the spell ends."
 			],
-			"page": 284
+			"page": 284,
+			"backgrounds": [
+				{
+					"name": "Izzet Engineer",
+					"source": "GGR"
+				}
+			]
 		},
 		{
 			"name": "Vampiric Touch",
@@ -29308,9 +31118,11 @@
 			"spellAttack": [
 				"M"
 			],
-			"isHeal": true,
 			"areaTags": [
 				"ST"
+			],
+			"miscTags": [
+				"HL"
 			]
 		},
 		{
@@ -29358,7 +31170,6 @@
 			"savingThrow": [
 				"wisdom"
 			],
-			"scalingEffects": true,
 			"races": [
 				{
 					"name": "Tiefling (Variant)",
@@ -29369,6 +31180,16 @@
 			],
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Rakdos Cultist",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SCL",
+				"SGT"
 			]
 		},
 		{
@@ -29478,6 +31299,16 @@
 							"name": "Forge",
 							"source": "XGE"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Artillerist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -29505,6 +31336,16 @@
 			],
 			"areaTags": [
 				"W"
+			],
+			"backgrounds": [
+				{
+					"name": "Boros Legionnaire",
+					"source": "GGR"
+				},
+				{
+					"name": "Rakdos Cultist",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -29575,6 +31416,16 @@
 						"subclass": {
 							"name": "Redemption",
 							"source": "XGE"
+						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Artillerist",
+							"source": "UAArtificerRevisited"
 						}
 					}
 				]
@@ -29704,6 +31555,10 @@
 					{
 						"name": "Wizard",
 						"source": "PHB"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -29744,9 +31599,11 @@
 			"savingThrow": [
 				"dexterity"
 			],
-			"permanentEffects": true,
 			"areaTags": [
 				"W"
+			],
+			"miscTags": [
+				"PRM"
 			]
 		},
 		{
@@ -29876,6 +31733,16 @@
 							"name": "Solidarity (PSA)",
 							"source": "PSA"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Battle Smith",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -29887,6 +31754,12 @@
 			"page": 287,
 			"areaTags": [
 				"ST"
+			],
+			"backgrounds": [
+				{
+					"name": "Selesnya Initiate",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -29941,6 +31814,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -29977,6 +31854,15 @@
 			"page": 287,
 			"areaTags": [
 				"MT"
+			],
+			"backgrounds": [
+				{
+					"name": "Simic Scientist",
+					"source": "GGR"
+				}
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -30031,6 +31917,10 @@
 					{
 						"name": "Artificer",
 						"source": "UAArtificer"
+					},
+					{
+						"name": "Artificer Revisited",
+						"source": "UAArtificerRevisited"
 					}
 				],
 				"fromSubclass": [
@@ -30069,6 +31959,9 @@
 			"page": 287,
 			"areaTags": [
 				"MT"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -30134,6 +32027,16 @@
 						"subclass": {
 							"name": "Lolth (Twitter)",
 							"source": "Twitter"
+						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Alchemist",
+							"source": "UAArtificerRevisited"
 						}
 					}
 				]
@@ -30278,6 +32181,9 @@
 			],
 			"areaTags": [
 				"MT"
+			],
+			"miscTags": [
+				"SGT"
 			]
 		},
 		{
@@ -30333,6 +32239,16 @@
 							"name": "Nature",
 							"source": "PHB"
 						}
+					},
+					{
+						"class": {
+							"name": "Artificer Revisited",
+							"source": "UAArtificerRevisited"
+						},
+						"subclass": {
+							"name": "Artillerist",
+							"source": "UAArtificerRevisited"
+						}
 					}
 				]
 			},
@@ -30351,6 +32267,12 @@
 			],
 			"areaTags": [
 				"W"
+			],
+			"backgrounds": [
+				{
+					"name": "Simic Scientist",
+					"source": "GGR"
+				}
 			]
 		},
 		{
@@ -30425,7 +32347,10 @@
 				"slashing",
 				"thunder"
 			],
-			"isHeal": true
+			"miscTags": [
+				"HL",
+				"SGT"
+			]
 		},
 		{
 			"name": "Witch Bolt",
@@ -30741,6 +32666,16 @@
 							"name": "Monster Slayer",
 							"source": "XGE"
 						}
+					},
+					{
+						"class": {
+							"name": "Cleric",
+							"source": "PHB"
+						},
+						"subclass": {
+							"name": "Order",
+							"source": "GGR"
+						}
 					}
 				]
 			},
@@ -30755,6 +32690,12 @@
 			],
 			"areaTags": [
 				"S"
+			],
+			"backgrounds": [
+				{
+					"name": "Orzhov Representative",
+					"source": "GGR"
+				}
 			]
 		}
 	]

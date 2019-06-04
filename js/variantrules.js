@@ -8,7 +8,7 @@ window.onload = async function load () {
 	DataUtil.loadJSON(JSON_URL).then(onJsonLoad);
 };
 
-const entryRenderer = EntryRenderer.getDefaultRenderer();
+const entryRenderer = Renderer.get();
 
 let list;
 const sourceFilter = getSourceFilter();
@@ -22,9 +22,11 @@ async function onJsonLoad (data) {
 
 	filterBox = await pInitFilterBox(sourceFilter);
 
+	const $outVisibleResults = $(`.lst__wrp-search-visible`);
 	list.on("updated", () => {
-		filterBox.setCount(list.visibleItems.length, list.items.length);
+		$outVisibleResults.html(`${list.visibleItems.length}/${list.items.length}`);
 	});
+
 	// filtering function
 	$(filterBox).on(
 		FilterBox.EVNT_VALCHANGE,
@@ -42,7 +44,7 @@ async function onJsonLoad (data) {
 	BrewUtil.pAddBrewData()
 		.then(handleBrew)
 		.then(() => BrewUtil.bind({list}))
-		.then(BrewUtil.pAddLocalBrewData)
+		.then(() => BrewUtil.pAddLocalBrewData())
 		.catch(BrewUtil.pPurgeBrew)
 		.then(async () => {
 			BrewUtil.makeBrewButton("manage-brew");
@@ -74,7 +76,7 @@ function addVariantRules (data) {
 
 		const searchStack = [];
 		for (const e1 of curRule.entries) {
-			EntryRenderer.getNames(searchStack, e1);
+			Renderer.getNames(searchStack, e1);
 		}
 
 		// populate table
@@ -88,12 +90,10 @@ function addVariantRules (data) {
 			</li>`;
 
 		// populate filters
-		sourceFilter.addIfAbsent(curRule.source);
+		sourceFilter.addItem(curRule.source);
 	}
 	const lastSearch = ListUtil.getSearchTermAndReset(list);
 	$("ul.variantRules").append(tempString);
-	// sort filters
-	sourceFilter.items.sort(SortUtil.ascSort);
 
 	list.reIndex();
 	if (lastSearch) list.search(lastSearch);
@@ -107,7 +107,7 @@ function addVariantRules (data) {
 		primaryLists: [list]
 	});
 	ListUtil.bindPinButton();
-	EntryRenderer.hover.bindPopoutButton(rulesList);
+	Renderer.hover.bindPopoutButton(rulesList);
 }
 
 function getSublistItem (rule, pinId) {
@@ -127,7 +127,7 @@ function handleFilterChange () {
 		const r = rulesList[$(item.elm).attr(FLTR_ID)];
 		return filterBox.toDisplay(f, r.source);
 	});
-	FilterBox.nextIfHidden(rulesList);
+	FilterBox.selectFirstVisible(rulesList);
 }
 
 function loadhash (id) {
@@ -136,12 +136,12 @@ function loadhash (id) {
 	entryRenderer.setFirstSection(true);
 	const textStack = [];
 	entryRenderer.resetHeaderIndex();
-	entryRenderer.recursiveEntryRender(curRule, textStack);
+	entryRenderer.recursiveRender(curRule, textStack);
 	$("#pagecontent").html(`
-		${EntryRenderer.utils.getBorderTr()}
+		${Renderer.utils.getBorderTr()}
 		<tr class="text"><td colspan="6">${textStack.join("")}</td></tr>
-		${EntryRenderer.utils.getPageTr(curRule)}
-		${EntryRenderer.utils.getBorderTr()}
+		${Renderer.utils.getPageTr(curRule)}
+		${Renderer.utils.getBorderTr()}
 	`);
 
 	loadsub([]);
@@ -152,6 +152,9 @@ function loadhash (id) {
 function loadsub (sub) {
 	if (!sub.length) return;
 
-	const $title = $(`.entry-title[data-title-index="${sub[0]}"]`);
+	sub = filterBox.setFromSubHashes(sub);
+	ListUtil.setFromSubHashes(sub);
+
+	const $title = $(`.rd__h[data-title-index="${sub[0]}"]`);
 	if ($title.length) $title[0].scrollIntoView();
 }

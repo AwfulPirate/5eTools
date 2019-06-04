@@ -134,7 +134,7 @@
 		}
 
 		.night-mode #pointbuy input[readonly] {
-			background-color: #eee2;
+			background-color: #3a3a3a;
 		}
 
 		.choose_head {
@@ -185,9 +185,13 @@
 	</div>
 </header>
 <nav class="container page__nav" id="navigation">
-	<ul class="nav nav-pills" id="navbar">
+	<ul class="nav page__nav-inner" id="navbar">
 	</ul>
 </nav>
+
+<div class="cancer__wrp-leaderboard"><!--5ETOOLS_AD_LEADERBOARD--></div>
+<div class="cancer__wrp-sidebar-rhs"><!--5ETOOLS_AD_RIGHT_1--><div class="cancer__sidebar-rhs-inner"><!--5ETOOLS_AD_RIGHT_2--></div></div>
+
 <main class="container">
 
 	<div class="row">
@@ -230,16 +234,17 @@
 							<span class="text-align-center">Remaining</span>
 							<input class="form-control" id="remaining" type="number" min="10" value="27" readonly>
 						</label>
-						<button id="reset" class="btn btn-default" style="margin: auto auto 7px 2px;">Reset</button>
+						<button id="reset" class="btn btn-default" style="margin: auto 2px 7px 2px;">Reset</button>
+						<button id="randomise" class="btn btn-default" style="margin: auto auto 7px 2px;">Random</button>
 					</div>
 
 					<table class="pbuy__table">
 						<tr>
 							<td></td>
-							<td class="text-align-center">Base</td>
+							<td class="text-align-center bold">Base</td>
 							<td class="text-align-center">Racial</td>
 							<td class="choose choose_head"></td>
-							<td title="Input any additional/custom bonuses here" class="text-align-center help">User</td>
+							<td title="Input any additional/custom bonuses here" class="text-align-center help text-muted">User</td>
 
 							<td style="width: 18px;"></td>
 
@@ -361,10 +366,11 @@
 	</div>
 </main>    <!--5ETOOLS_SCRIPT_ANCHOR-->
 <script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/utils-ui.js"></script>
 <script type="text/javascript" src="lib/localforage.js"></script>
 <script type="text/javascript" src="js/omnidexer.js"></script>
 <script type="text/javascript" src="js/omnisearch.js"></script>
-<script type="text/javascript" src="js/entryrender.js"></script>
+<script type="text/javascript" src="js/render.js"></script>
 <script type="text/javascript" src="js/scalecreature.js"></script>
 <script type="text/javascript" src="js/statgen.js"></script>
 <script type="text/javascript" src="lib/jquery.js"></script>

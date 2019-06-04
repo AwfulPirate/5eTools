@@ -9,7 +9,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/cover.jpg"
-					}
+					},
+					"width": 3000,
+					"height": 2000
 				},
 				{
 					"type": "section",
@@ -296,7 +298,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/000-intro01.png"
-							}
+							},
+							"width": 1000,
+							"height": 686
 						}
 					]
 				},
@@ -484,7 +488,7 @@
 									"type": "entries",
 									"name": "Sending Spells",
 									"entries": [
-										"Inside Undermountain, Halaster can't be contacted by means of {@spell sending} spells. Any creature that tries to contact him with a {@spell sending} spell is magically redirected to the Mad Mage's nothic secretary (see {@adventure level 9, area 31|WDMM|9|31. Halaster's Secretary}). Each time it is contacted in this manner, the nothic replies with a string of expletives in Undercommon. Other things the nothic night say (in Undercommon) include the following:",
+										"Inside Undermountain, Halaster can't be contacted by means of {@spell sending} spells. Any creature that tries to contact him with a {@spell sending} spell is magically redirected to the Mad Mage's nothic secretary (see {@adventure level 9, area 31|WDMM|9|31. Halaster's Secretary}). Each time it is contacted in this manner, the nothic replies with a string of expletives in Undercommon. Other things the nothic might say (in Undercommon) include the following:",
 										{
 											"type": "list",
 											"items": [
@@ -664,7 +668,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/001-101.png"
-					}
+					},
+					"width": 2550,
+					"height": 1653
 				},
 				"The Dungeon Level is designed for four 5th-level characters, and characters who defeat the monsters on this level should gain enough XP to reach 6th level.",
 				{
@@ -731,7 +737,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/002-102.png"
-							}
+							},
+							"width": 2259,
+							"height": 3000
 						},
 						{
 							"type": "image",
@@ -739,7 +747,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/003-103.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						{
 							"type": "entries",
@@ -2033,7 +2043,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/004-201.png"
-					}
+					},
+					"width": 2550,
+					"height": 1587
 				},
 				"This level of Undermountain is designed for four 6th-level characters. Those who overcome this level's challenges should amass enough XP to reach 7th level.",
 				{
@@ -2106,7 +2118,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/005-202.png"
-							}
+							},
+							"width": 2259,
+							"height": 3000
 						},
 						{
 							"type": "image",
@@ -2114,7 +2128,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/006-203.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						{
 							"type": "entries",
@@ -2199,7 +2215,7 @@
 											"entries": [
 												"{@b Torches}. Flickering torches in iron brackets light this room.",
 												"{@b Bugbears}. Four {@creature Bugbear|MM|bugbears} stand in the room's corners.",
-												"{@b Goblins}. A handsome man wearing a golden circlet on his brow (Yek the Tall, a {@b {@creature goblin} boss} in altered form) reclines on a mound of cushions at the north end of the room, eating an apple. Ten {@creature Goblin|MM|goblins} (Yek's toadies) lie about on moldy cushions around him.",
+												"{@b Goblins}. A handsome man wearing a golden circlet on his brow (Yek the Tall, a {@creature goblin boss} in altered form) reclines on a mound of cushions at the north end of the room, eating an apple. Ten {@creature Goblin|MM|goblins} (Yek's toadies) lie about on moldy cushions around him.",
 												"{@b Prisoner}. Chained to the south wall is a male dwarf clad in leather armor who has been gagged. He has copper-orange hair, but his beard has been shaved off (see \"Shaved Dwarf\" below)."
 											]
 										},
@@ -3126,7 +3142,7 @@
 									]
 								},
 								"Each animated ballista is a Large wood-and-iron construct with AC 15, 50 hit points, a walking speed of 30 feet, immunity to poison damage, and the following ability scores: Strength 14, Dexterity 10, Constitution 10, Intelligence 3, Wisdom 3, and Charisma 1. It has {@sense blindsight} out to a range of 120 feet and is blind beyond this distance. It can't be {@condition blinded}, {@condition charmed}, {@condition deafened}, {@condition frightened}, {@condition paralyzed}, {@condition petrified}, or {@condition poisoned}, and it can't right itself if knocked {@condition prone}. As an action, it can fire a magic bolt of fire (+6 to hit) at a target it can perceive, dealing 16 ({@dice 3d10}) fire damage on a hit, but it can't attack any creature directly above it. Treat each ballista as a monster with a challenge rating of 2 (450 XP).",
-								"The ballistae can't perceive (and thus they ignore) creatures that keep to the easternmost 60-foot section of the hallway. Once they detect intruders, however, the ballistae amble forward on hinged legs to close the distance. If a ballista has nothing to attack on its turn, it returns to its startingposition."
+								"The ballistae can't perceive (and thus they ignore) creatures that keep to the easternmost 60-foot section of the hallway. Once they detect intruders, however, the ballistae amble forward on hinged legs to close the distance. If a ballista has nothing to attack on its turn, it returns to its starting position."
 							]
 						},
 						{
@@ -3240,7 +3256,9 @@
 											"href": {
 												"type": "internal",
 												"path": "adventure/WDMM/007-204.png"
-											}
+											},
+											"width": 1000,
+											"height": 771
 										},
 										{
 											"type": "inset",
@@ -3533,7 +3551,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/008-301.png"
-					}
+					},
+					"width": 1000,
+					"height": 635
 				},
 				"The Sargauth Level is designed for four 7th-level characters, and characters who defeat the monsters on this level should gain enough XP to reach 8th level. This level of Undermountain is connected to the subterranean settlement of Skullport by way of tunnels, as well as the River Sargauth itself (see \"{@adventure Skullport|WDMM|24}\"). More ancient than Skullport is the town of Stromkuhldur, whose ruins lie half-buried in the heart of the Sargauth Level. Goblinoids and drow vie for control of these ruins, which were previously inhabited by the Netherese and the Melairkyn dwarves.",
 				{
@@ -3594,7 +3614,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/009-302.png"
-							}
+							},
+							"width": 2259,
+							"height": 3000
 						},
 						{
 							"type": "image",
@@ -3602,7 +3624,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/010-303.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						{
 							"type": "entries",
@@ -3752,7 +3776,7 @@
 											"type": "list",
 											"items": [
 												"Marta is neutral evil.",
-												"She has the following racial traits: She speaks Common, Draconic, Dwarvish, Elvish, and Undercommon. She has {@sense darkvision} out to a range of 60 feet. She has advantage on saving throws against being {@condition charmed}, and magic can't put her to sleep. Add {@spell ray of frost} to her list of knowncantrips.",
+												"She has the following racial traits: She speaks Common, Draconic, Dwarvish, Elvish, and Undercommon. She has {@sense darkvision} out to a range of 60 feet. She has advantage on saving throws against being {@condition charmed}, and magic can't put her to sleep. Add {@spell ray of frost} to her list of known cantrips.",
 												"Her spellbook and her arcane focus were taken from her. (The characters can find them in {@adventure area 20b|WDMM|3|20b. T'rissa's Quarters}.)"
 											]
 										}
@@ -4631,7 +4655,7 @@
 										]
 									]
 								},
-								"Combat behind closed doors probably doesn't raise an alarm, but any loud disturbance in the streets is likely to put the entire settlement on alert. As it happens, the Legion of Azrok's military has been winnowed down by recent altercations with the drow. The current defenders of Azrok's Hold include eight bugbears, thirty-two goblins, twenty hobgoblins, four hobgoblin captains (including Lurkana), Azrok the hobgoblin warlord, and two worgs. These forces don't include goblinoids in league with the Xanathar Guild or other visitors, nor do they include noncombatants such aschildren.",
+								"Combat behind closed doors probably doesn't raise an alarm, but any loud disturbance in the streets is likely to put the entire settlement on alert. As it happens, the Legion of Azrok's military has been winnowed down by recent altercations with the drow. The current defenders of Azrok's Hold include eight bugbears, thirty-two goblins, twenty hobgoblins, four hobgoblin captains (including Lurkana), Azrok the hobgoblin warlord, and two worgs. These forces don't include goblinoids in league with the Xanathar Guild or other visitors, nor do they include noncombatants such as children.",
 								"Buildings not keyed on the map are assumed to be empty rooms. The rest are described below.",
 								{
 									"type": "entries",
@@ -4776,25 +4800,27 @@
 											]
 										},
 										{
-											"type": "entries",
-											"name": "Fear Ray",
-											"entries": [
-												"The target must succeed on a DC 15 Wisdom saving throw or be {@condition frightened} for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+											"type": "list",
+											"style": "list-hang-notitle",
+											"items": [
+												{
+													"type": "item",
+													"name": "Fear Ray.",
+													"entry": "The target must succeed on a DC 15 Wisdom saving throw or be {@condition frightened} for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+												},
+												{
+													"type": "item",
+													"name": "Paralyzing Ray.",
+													"entry": "The target must succeed on a DC 15 Constitution saving throw or be {@condition paralyzed} for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+												}
 											]
 										},
+										"If the characters promise not to harm her, Preeta shares two Undermountain secrets with them. Determine each secret by drawing a card from the Secrets Deck (see {@adventure appendix C|WDMM|27}).",
 										{
-											"type": "entries",
-											"name": "Paralyzing Ray",
+											"type": "inset",
+											"name": "Side Quest: Free Alussiarr",
 											"entries": [
-												"The target must succeed on a DC 15 Constitution saving throw or be {@condition paralyzed} for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
-												"If the characters promise not to harm her, Preeta shares two Undermountain secrets with them. Determine each secret by drawing a card from the Secrets Deck (see {@adventure appendix C|WDMM|27}).",
-												{
-													"type": "inset",
-													"name": "Side Quest: Free Alussiarr",
-													"entries": [
-														"Preeta Kreepa knows that Arcturia uses the blood of a \"magical man\" named Alussiarr as a material component in her horrid transformation rituals. She suggests that the characters free this man to prevent Arcturia from creating new abominations. Preeta knows that Alussiarr is a prisoner in Arcturiadoom, the fourteenth level of Undermountain, but she doesn't know that Alussiarr is a rakshasa."
-													]
-												}
+												"Preeta Kreepa knows that Arcturia uses the blood of a \"magical man\" named Alussiarr as a material component in her horrid transformation rituals. She suggests that the characters free this man to prevent Arcturia from creating new abominations. Preeta knows that Alussiarr is a prisoner in Arcturiadoom, the fourteenth level of Undermountain, but she doesn't know that Alussiarr is a rakshasa."
 											]
 										},
 										{
@@ -4998,7 +5024,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/011-401.png"
-					}
+					},
+					"width": 1000,
+					"height": 645
 				},
 				"Designed for four 8th-level characters, this level of Undermountain contains enough XP to advance such a group halfway to 9th level. The Twisted Caverns feature an aboleth, which is a legendary monster. Review the \"Aboleth\" entry in the {@book Monster Manual|MM}  before running this level of the dungeon to help you run the monster effectively.",
 				{
@@ -5097,7 +5125,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/012-402.png"
-							}
+							},
+							"width": 2259,
+							"height": 3000
 						},
 						{
 							"type": "image",
@@ -5105,7 +5135,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/013-403.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						"Unless otherwise noted, all tunnels on this level are 20 feet high, and caverns are 30 to 50 feet high. Most of the floors on this level are uneven and covered in dirt and bat guano. Because of this soft ground, Wisdom ({@skill Survival}) checks made to track creatures on this level are made with advantage.",
 						{
@@ -5537,7 +5569,9 @@
 									"href": {
 										"type": "internal",
 										"path": "adventure/WDMM/014-404.png"
-									}
+									},
+									"width": 1000,
+									"height": 577
 								},
 								"Illuun the aboleth can sense the characters' presence and creates a magical projection of itself to interact with them. The projection lasts for as long as the aboleth maintains concentration, as if concentrating on a spell. Although the projection is intangible, it looks, sounds, and moves like the aboleth.",
 								"Illuun can sense, speak, and use telepathy from the projection's position as if the aboleth were present at that location. If the projection takes any damage, it disappears. The aboleth has had unpleasant dealings with adventurers in the past and maintains a healthy fear of them. It uses the projection to warn characters that it will not tolerate incursions into its domain and urges them to withdraw or face extermination. It suggests the characters take the south passage to the river, then follow the current down to Wyllowwood ({@adventure level 5|WDMM|5}). It's happy to let them descend to lower levels of Undermountain, for it plans to conquer those levels eventually itself.",
@@ -5832,7 +5866,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/015-501.png"
-					}
+					},
+					"width": 1000,
+					"height": 646
 				},
 				"Wyllowwood is designed for four 8th-level characters. Those who defeat the monsters on this level should gain enough XP to reach 9th level. In some cases, defeating a monster can be accomplished without slaying it. If the characters strike a truce with a creature, award them XP as if they had defeated it in combat.",
 				"The characters will most likely arrive here by way of the River of the Depths, which they first encounter on level 4. Characters who follow the river must navigate rapids and small waterfalls to reach Wyllowwood. Beyond this level, the River of the Depths begins its lengthy, tumultuous descent into the Underdark\u2014a voyage no ordinary boat or raft can survive.",
@@ -5933,7 +5969,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/016-502.png"
-							}
+							},
+							"width": 2259,
+							"height": 3000
 						},
 						{
 							"type": "image",
@@ -5941,7 +5979,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/017-503.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						{
 							"type": "entries",
@@ -6948,7 +6988,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/018-601.png"
-					}
+					},
+					"width": 2550,
+					"height": 1635
 				},
 				"The Lost Level is designed for four 9th-level characters, and characters who defeat the monsters on this level should gain enough XP to advance halfway to 10th level. This level was a temple complex dedicated to the dwarven god Dumathoin, the Keeper of Secrets under the Mountain. Hidden inside is the tomb of Melair, king of the Melairkyn dwarves.",
 				"Before running this level, review the \"Duergar\" entry in the {@book Monster Manual|MM}. That information will help you run and roleplay the duergar NPCs found throughout the Lost Level.",
@@ -6986,7 +7028,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/019-602.png"
-							}
+							},
+							"width": 2259,
+							"height": 3000
 						},
 						{
 							"type": "image",
@@ -6994,7 +7038,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/020-603.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						"Many of the stone doors on this level have been demolished by the umber hulks. Creatures can move through the debris without penalty.",
 						"Quartz pillars found throughout the Lost Level shed bright light in a 20-foot radius and dim light for an additional 20 feet. Casting a successful {@spell dispel magic} spell on a pillar (DC 12) extinguishes its magical light forever, as does destroying the pillar. A quartz pillar is a Huge object with AC 11, 50 hit points, and immunity to poison and psychic damage. The quartz pillars aren't load-bearing, and their destruction won't trigger a roof collapse. Characters who have the Stonecunning trait can discern this fact by examining the pillars (no check required).",
@@ -7942,7 +7988,7 @@
 										},
 										"When cold water from an underground river is fed into the tank through the pipe, the fire elemental turns the water into steam. The steam billows out through vents in the cylinder's sides, making the room into a sauna.",
 										"The tank is a Large object with AC 11, 45 hit points, and immunity to fire, poison, and psychic damage. If the tank takes more than 10 damage, the elemental escapes and attacks all other creatures it encounters until it is destroyed.",
-										"Rust has caused the iron wheel to seize up, and it takes a successful DC 15 Strength ({@skill Athletics}) check to turn it. Turning the wheel clockwise sends water pour ing down the pipe and into the tank."
+										"Rust has caused the iron wheel to seize up, and it takes a successful DC 15 Strength ({@skill Athletics}) check to turn it. Turning the wheel clockwise sends water pouring down the pipe and into the tank."
 									]
 								},
 								{
@@ -8266,7 +8312,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/021-701.png"
-					}
+					},
+					"width": 2550,
+					"height": 1644
 				},
 				"Maddgoth's Castle is designed for four 9th-level characters, who should amass enough XP to reach 10th level. The characters can forge tenuous alliances with several of the monsters on this level. Award XP for these creatures as if the characters had defeated them in combat.",
 				"The level is named after a miniature, one-twelfth-scale fortress in one of its caverns. This castle serves as the home base of Madd­goth, a serial killer who lures other wizards to his lair to murder them and keep their arcane focuses and spellbooks as trophies. Madd­goth isn't home when the adventurers first arrive, but he might show up later (see \"{@adventure Aftermath|WDMM|7|Aftermath}\"). Most creatures are reduced to one-twelfth their normal size as they approach Maddgoth's castle, enabling them to better fit inside. Either by design or because of some failing, the shrinking magic doesn't affect all creatures, as adventurers who explore the castle will discover.",
@@ -8353,7 +8401,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/022-702.png"
-							}
+							},
+							"width": 2513,
+							"height": 3338
 						},
 						{
 							"type": "image",
@@ -8361,7 +8411,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/023-703.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						{
 							"type": "entries",
@@ -8981,8 +9033,7 @@
 							"type": "entries",
 							"name": "28. Well-Appointed Halls",
 							"entries": [
-								"The halls on",
-								"this level join to form a circuit. Their features are as follows:",
+								"The halls on this level join to form a circuit. Their features are as follows:",
 								{
 									"type": "inset",
 									"entries": [
@@ -9419,7 +9470,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/024-801.png"
-					}
+					},
+					"width": 2550,
+					"height": 1644
 				},
 				"Slitherswamp is designed for four 10th-level characters, and characters who defeat the monsters on this level should gain enough XP to reach halfway to 11th level. This level consists of muck-filled caverns and decaying temples dedicated to evil deities of the yuan-ti. The serpent folk lived here until they were defeated by nagas known as the Ssethian Scourges. Afterward, Halaster replaced the yuan-ti with a bullywug tribe governed by a cruel death slaad overlord.",
 				{
@@ -9470,7 +9523,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/025-802.png"
-							}
+							},
+							"width": 2259,
+							"height": 3000
 						},
 						{
 							"type": "image",
@@ -9478,7 +9533,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/026-803.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2955
 						},
 						"This entire level is wet and humid. Ordinary frogs, toads, and insects thrive here.",
 						{
@@ -10118,7 +10175,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/027-901.png"
-					}
+					},
+					"width": 2550,
+					"height": 1659
 				},
 				"Dweomercore is an academy of magic designed to test, trap, and confound its students. The level is designed for four 10th-level characters, and characters who defeat its monsters and villains should gain enough XP to reach 11th level.",
 				{
@@ -10243,7 +10302,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/028-902.png"
-							}
+							},
+							"width": 2259,
+							"height": 3000
 						},
 						{
 							"type": "image",
@@ -10251,7 +10312,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/029-903.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						{
 							"type": "entries",
@@ -11617,7 +11680,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/030-10-01.png"
-					}
+					},
+					"width": 2550,
+					"height": 1656
 				},
 				"Muiral's Gauntlet is designed for four 11th-level characters. Those who overcome this level's challenges should gain enough XP to advance at least halfway to 12th level. Prior to running Muiral's Gauntlet, review the \"Elves: Drow\" entry in the {@book Monster Manual|MM}, because dark elves feature prominently throughout this level of Undermountain.",
 				{
@@ -11767,7 +11832,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/031-10-02.png"
-							}
+							},
+							"width": 2259,
+							"height": 3000
 						},
 						{
 							"type": "image",
@@ -11775,7 +11842,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/032-10-03.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						{
 							"type": "entries",
@@ -12623,7 +12692,9 @@
 									"href": {
 										"type": "internal",
 										"path": "adventure/WDMM/033-10-04.png"
-									}
+									},
+									"width": 993,
+									"height": 1146
 								},
 								"When not serving as the consort of Drinrith Auvryndar (see {@adventure area 18b|WDMM|10|18b. Fight Club}), Kereth is tasked with interrogating drow accused of being House Freth spies. The quasit has already used its Scare action option on Tazirahc, and Kereth is preparing to zap the prisoner with a {@spell ray of frost} cantrip, hoping he'll divulge the identities of other House Freth spies in their midst.",
 								"The drow attack characters who interfere in the interrogation. Once Kereth and his cronies are dealt with, characters can cut through Tazirahc's bonds and release him if they so desire. If Xarann A'Daragon (see {@adventure area 17d|WDMM|10|17d. Temple of Vhaeraun}) is with the party, he questions Tazirahc to make sure he didn't divulge any compromising information. If the characters haven't met Xarann yet, Tazirahc is determined to find him once he is released. Tazirahc rewards his liberators by sharing one Undermountain secret with them; draw a card from the Secrets Deck (see {@adventure appendix C|WDMM|27}) to determine what Tazirahc knows.",
@@ -12855,7 +12926,9 @@
 									"href": {
 										"type": "internal",
 										"path": "adventure/WDMM/034-10-05.png"
-									}
+									},
+									"width": 999,
+									"height": 920
 								},
 								"No one may enter these chambers without the consent of Vlonwelv Auvryndar. The punishment for violating her chambers is death.",
 								{
@@ -12971,7 +13044,7 @@
 											"type": "entries",
 											"name": "Painting Trap",
 											"entries": [
-												"A {@spell detect magic} spell reveals an aura of necromancy magic around the painting. If anyone straightens the picture or otherwise tampers with it, the image of Halaster magically turns, revealing a withered skull face wearing a grin so horrifying that any creature looking at it must make a DC 15 Constitution saving throw; on a failed save, the creature drops to 0 hit points and is dying. After revealing its ghastly visage, the skull-faced Halaster then turns back around so that only its hair is visible once more. Once this trap triggers, the painting becomes nonmagical andharmless."
+												"A {@spell detect magic} spell reveals an aura of necromancy magic around the painting. If anyone straightens the picture or otherwise tampers with it, the image of Halaster magically turns, revealing a withered skull face wearing a grin so horrifying that any creature looking at it must make a DC 15 Constitution saving throw; on a failed save, the creature drops to 0 hit points and is dying. After revealing its ghastly visage, the skull-faced Halaster then turns back around so that only its hair is visible once more. Once this trap triggers, the painting becomes nonmagical and harmless."
 											]
 										}
 									]
@@ -13049,7 +13122,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/035-11-01.png"
-					}
+					},
+					"width": 2550,
+					"height": 1662
 				},
 				"The Troglodyte Warrens are designed for four 11th-level characters, and characters who defeat the monsters on this level should gain enough XP to reach 12th level. These reeking caverns and rough tunnels have long been home to clans of troglodytes. The presence of drow on the levels above and below has turned these warrens into a battlefield\u2014and an opportunity for unlikely alliances.",
 				{
@@ -13098,7 +13173,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/036-11-02.jpg"
-							}
+							},
+							"width": 2259,
+							"height": 3000
 						},
 						{
 							"type": "image",
@@ -13106,7 +13183,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/037-11-03.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						{
 							"type": "entries",
@@ -13668,7 +13747,7 @@
 											"entries": [
 												"The behir can take three legendary actions, choosing from the options below. It can take only one legendary action at a time and only at the end of another creature's turn. The behir regains spent legendary actions at the start of its turn. Its spellcasting ability is Charisma (spell save DC 13).",
 												"{@b Lesser Magic}. The behir casts {@spell color spray} or {@spell sleep}, requiring no components.",
-												"{@b Greater Magic (Costs 2 Actions}). The behir casts {@spell invisibility} or {@spell misty step}, requiring no components."
+												"{@b Greater Magic (Costs 2 Actions)}. The behir casts {@spell invisibility} or {@spell misty step}, requiring no components."
 											]
 										}
 									]
@@ -13710,7 +13789,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/038-12-01.png"
-					}
+					},
+					"width": 2550,
+					"height": 1668
 				},
 				"The Maze Level is designed for four 12th-level characters, and characters who defeat the monsters on this level should gain enough XP to advance halfway to 13th level.",
 				{
@@ -13762,7 +13843,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/039-12-02.jpg"
-							}
+							},
+							"width": 2513,
+							"height": 3338
 						},
 						{
 							"type": "image",
@@ -13770,7 +13853,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/040-12-03.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						"A 2-foot-thick layer of fog covers the floor in many of the Maze Level's tunnels and caves; the area within the fog is heavily obscured. The fog can be cleared away by a {@spell gust of wind} spell or similar magic. Fog that is cleared away returns in 1 minute.",
 						"The stench of death pervades the entire level, growing stronger as the characters get closer to area 8a.",
@@ -14674,7 +14759,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/041-13-01.png"
-					}
+					},
+					"width": 2550,
+					"height": 1694
 				},
 				"Known as the Metal Mage, Trobriand specializes in the manufacture of metal constructs. This level serves as his workshop, testing ground, and junkyard. Trobriand himself is an infrequent visitor, preferring instead to remain close to his master, Halaster, on {@adventure level 23|WDMM|23}. Trobriand's Graveyard is designed for four 12th-level characters. Those who overcome this level's challenges should gain enough XP to reach 13th level.",
 				{
@@ -14753,7 +14840,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/042-13-02.png"
-							}
+							},
+							"width": 2513,
+							"height": 3338
 						},
 						{
 							"type": "image",
@@ -14761,7 +14850,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/043-13-03.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						{
 							"type": "entries",
@@ -14826,7 +14917,7 @@
 									"type": "inset",
 									"entries": [
 										"{@b Metal Wasps}. Buzzing about the 50-foot-high cavern are five giant wasps made of metal (see \"Metal Wasps\").",
-										"{@b Discarded Junk}. Half-completed and destroyed metal contraptions, most rusted beyond repair, lay strewn across the floor. Hidden amidthe wreckage are a couple discarded magic items (see \"Treasure\" below).",
+										"{@b Discarded Junk}. Half-completed and destroyed metal contraptions, most rusted beyond repair, lay strewn across the floor. Hidden amid the wreckage are a couple discarded magic items (see \"Treasure\" below).",
 										"{@b Rust Monsters}. Three {@b {@creature rust monster}s }gorge on the piles of scrap and are too distracted by the abundance of food to pose much of a threat. They fight only in self-defense."
 									]
 								},
@@ -14834,7 +14925,7 @@
 									"type": "entries",
 									"name": "Metal Wasps",
 									"entries": [
-										"The metal wasps are programmed to attack Medium humanoids; they ignore other creatures unless attacked by them. They are {@creature Giant Wasp|MM|giant wasps}, with these changes:",
+										"The {@creature metal wasp|wdmm|metal wasps} are programmed to attack Medium humanoids; they ignore other creatures unless attacked by them. They are {@creature Giant Wasp|MM|giant wasps}, with these changes:",
 										{
 											"type": "list",
 											"items": [
@@ -15327,7 +15418,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/044-14-01.png"
-					}
+					},
+					"width": 2550,
+					"height": 1694
 				},
 				"Arcturiadoom is designed for four 13th-level characters, and adventurers who defeat the monsters on this level should gain enough XP to advance halfway to 14th level. The lich Arcturia, who dwells on {@adventure level 23|WDMM|23} of Undermountain, is one of Halaster's most accomplished apprentices, arguably the most powerful of the Seven, and a master of transmutation magic. Arcturiadoom is her personal retreat (\"doom\" being an archaic term for a lord's domain). Hidden on this level is Arcturia's phylactery, and adventurers would be wise to find and destroy it before facing the lich in battle on {@adventure level 23|WDMM|23}.",
 				{
@@ -15417,7 +15510,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/045-14-02.png"
-							}
+							},
+							"width": 2513,
+							"height": 3338
 						},
 						{
 							"type": "image",
@@ -15425,7 +15520,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/046-14-03.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						{
 							"type": "entries",
@@ -16412,7 +16509,7 @@
 									"type": "entries",
 									"name": "Using the Mithral Keys",
 									"entries": [
-										"Six mithral keys are required to activate the chamber. Each conforms in shape to one of the six indentations in the walls, which are (from left to right, going clockwise around the room): an upside-down Y, a backward J with a small loop at the top, an upside-down F, an upside-down U, a Vwith a small loop at the bottom, and an H missing its top left stem. When the six keys (located in {@adventure areas 7|WDMM|14|7. Statue of Halaster}, {@adventure 10|WDMM|14|10. Dwarves' Den}, {@adventure 13b|WDMM|14|13b. Alteration Chamber}, {@adventure 27|WDMM|14|27. Dead Apprentice}, and {@adventure 39a|WDMM|14|39a. Gold and Black Boudoir}) are placed in their corresponding indentations, a {@spell magic mouth} spell counts down from 20 seconds (in Common). At the end of the countdown, there is an ear-splitting whine, and a powerful spell deals 150 force damage to every creature on level 14 of Undermountain (no saving throw allowed). Any creature reduced to 0 hit points by this effect is immediately disintegrated and reduced to a pile of dust. The spell also disintegrates the six mithral keys.",
+										"Six mithral keys are required to activate the chamber. Each conforms in shape to one of the six indentations in the walls, which are (from left to right, going clockwise around the room): an upside-down Y, a backward J with a small loop at the top, an upside-down F, an upside-down U, a V with a small loop at the bottom, and an H missing its top left stem. When the six keys (located in {@adventure areas 7|WDMM|14|7. Statue of Halaster}, {@adventure 10|WDMM|14|10. Dwarves' Den}, {@adventure 13b|WDMM|14|13b. Alteration Chamber}, {@adventure 27|WDMM|14|27. Dead Apprentice}, and {@adventure 39a|WDMM|14|39a. Gold and Black Boudoir}) are placed in their corresponding indentations, a {@spell magic mouth} spell counts down from 20 seconds (in Common). At the end of the countdown, there is an ear-splitting whine, and a powerful spell deals 150 force damage to every creature on level 14 of Undermountain (no saving throw allowed). Any creature reduced to 0 hit points by this effect is immediately disintegrated and reduced to a pile of dust. The spell also disintegrates the six mithral keys.",
 										"Creatures that are standing in the lit alcoves when the spell goes off are unharmed, as are creatures inside an antimagic field. (The antimagic fields in {@adventure areas 4|WDMM|14|4. Prison} and {@adventure 32|WDMM|14|32. Death's Head Barracks} protect the creatures there.)"
 									]
 								}
@@ -16600,7 +16697,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/047-15-01.png"
-					}
+					},
+					"width": 2550,
+					"height": 1626
 				},
 				"The Obstacle Course is designed for four 13th-level characters, and adventurers who defeat the monsters on this level should gain enough XP to advance to 14th level. Before running this level of Undermountain, review the description of the death tyrant in the \"Beholders\" entry in the {@book Monster Manual|MM}, as that information will help you roleplay the death tyrant that claims the Obstacle Course as its lair.",
 				{
@@ -16719,7 +16818,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/048-15-02.png"
-							}
+							},
+							"width": 2513,
+							"height": 3338
 						},
 						{
 							"type": "image",
@@ -16727,7 +16828,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/049-15-03.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						"The Obstacle Course is mostly devoid of furnishings, since the level was designed explicitly to dispose of intruders in an efficient yet entertaining manner.",
 						{
@@ -17809,7 +17912,7 @@
 							"type": "entries",
 							"name": "29. Trapped Halls",
 							"entries": [
-								"A unusual pit and an unusual painting await adventurers in these tunnels.",
+								"an unusual pit and an unusual painting await adventurers in these tunnels.",
 								{
 									"type": "entries",
 									"name": "29a. Pit of Brown Mold",
@@ -18225,7 +18328,9 @@
 									"href": {
 										"type": "internal",
 										"path": "adventure/WDMM/050-15-04.png"
-									}
+									},
+									"width": 1000,
+									"height": 1087
 								},
 								"Adventurers who explore this area are doomed to face Netherskull the death tyrant if they haven't done so already. Netherskull can't be surprised in its lair.",
 								{
@@ -18320,7 +18425,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/051-16-01.png"
-					}
+					},
+					"width": 2550,
+					"height": 1666
 				},
 				"Githyanki recently turned the Crystal Labyrinth into an outpost of their interplanar empire. It houses a gate to Stardock, a hollowed-out asteroid in orbit around the planet Toril (one of many that form the asteroid cluster known as the Tears of Selûne). Together, the Crystal Labyrinth and Stardock are designed for four 14th-level characters. Those who defeat the monsters on this level should gain enough XP to advance halfway to 15th level.",
 				"Before running this level of Undermountain, you should review the \"Gith\" entry in the {@book Monster Manual|MM}, because it contains information that will help you roleplay githyanki effectively. Additional information about githyanki society can be found in {@book Mordenkainen's Tome of Foes|MTF}, although that resource is not required to run the Crystal Labyrinth.",
@@ -18422,7 +18529,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/052-16-02.jpg"
-							}
+							},
+							"width": 2513,
+							"height": 3338
 						},
 						{
 							"type": "image",
@@ -18430,7 +18539,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/053-16-03.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						{
 							"type": "entries",
@@ -19344,7 +19455,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/054-17-01.png"
-					}
+					},
+					"width": 2550,
+					"height": 1638
 				},
 				"Seadeeps is designed for four 14th-level characters, and adventurers who defeat the monsters on this level should gain enough XP to advance to 15th level. Before running this level, consider reviewing the \"Gith\" and \"Mind Flayer\" entries in the {@book Monster Manual|MM}, as well as the \"{@adventure Ulitharid|WDMM|25|Ulitharid}\" entry in appendix A. They will help you roleplay the monsters on this level and bring their conflict in Seadeeps to life.",
 				{
@@ -19405,7 +19518,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/055-17-02.png"
-							}
+							},
+							"width": 2513,
+							"height": 3338
 						},
 						{
 							"type": "image",
@@ -19413,7 +19528,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/056-17-03.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						"The caverns surrounding the mind flayer colony are dark and damp. The space occupied by the colony is smoothly carved from solid stone. Throughout this level, adventurers hear the constant thunder of the underground river, which is especially loud in {@adventure area 12|WDMM|17|12. Dynamo} and slightly less so in {@adventure areas 16|WDMM|17|16. Old Dwarven Halls} through {@adventure 20|WDMM|17|20. River Branches}.",
 						{
@@ -20057,7 +20174,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/057-18-01.png"
-					}
+					},
+					"width": 2550,
+					"height": 1592
 				},
 				"Vanrakdoom is designed for four 15th-level characters, and those who defeat the monsters on this level should gain enough XP to advance halfway to 16th level. The level is named after Vanrak Moonstar, a Waterdavian noble who turned to the worship of Shar (god of darkness and loss), descended into Undermountain, and became a death knight. To grasp what's happening on this level and why, one needs to know the fate that befell Lord Moonstar.",
 				{
@@ -20187,7 +20306,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/058-18-02.png"
-							}
+							},
+							"width": 2513,
+							"height": 3338
 						},
 						{
 							"type": "image",
@@ -20195,7 +20316,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/059-18-03.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2850
 						},
 						{
 							"type": "entries",
@@ -21071,7 +21194,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/060-19-01.png"
-					}
+					},
+					"width": 2550,
+					"height": 1716
 				},
 				"Named for the primordial ooze that flows through its naturally formed tunnels and chambers, this cavernous level of Undermountain is designed for four 15th-level characters. Those who overcome its challenges should reach 16th level. Whimsical even by Undermountain's standards, the Caverns of Ooze offer DMs the rare opportunity to sing, should they wish to portray the genies on this level in the vein of characters from an animated feature film.",
 				{
@@ -21188,7 +21313,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/061-19-02.png"
-							}
+							},
+							"width": 2513,
+							"height": 3338
 						},
 						{
 							"type": "image",
@@ -21196,7 +21323,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/062-19-03.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2850
 						},
 						{
 							"type": "inset",
@@ -21255,7 +21384,9 @@
 											"href": {
 												"type": "internal",
 												"path": "adventure/WDMM/063-19-04.png"
-											}
+											},
+											"width": 900,
+											"height": 1125
 										},
 										"The marid, Ichthyglug, is swimming in his pool when the characters first arrive. He greets them with a song (see the \"{@adventure Ichthyglug's Song|WDMM|19|1c. Ichthyglug's Cavern}\" sidebar). As he sings, Ichthyglug uses his magic to cause fountains of water to erupt from the pool as quippers leap out of the water around him. Ichthyglug is neither good nor evil, but always unpredictable. His attitude toward the characters reflects their attitude toward him.",
 										"After concluding his song, Ichthyglug floats up to characters who seem receptive and gives them the opportunity to flatter his singing. After these pleasantries, he offers the characters a quest: destroy the lich Ezzat on {@adventure level 20|WDMM|20} and give the lich's phylactery to Ichthyglug. The marid promises fabulous treasure in exchange, even going so far as to mention that he is forced by Halaster's magic to make good on this promise (see \"Treasure\" below).",
@@ -21550,7 +21681,9 @@
 											"href": {
 												"type": "internal",
 												"path": "adventure/WDMM/064-19-05.png"
-											}
+											},
+											"width": 1171,
+											"height": 871
 										},
 										"Once his song has ended, Jarûk offers the characters a quest: destroy the lich Ezzat on {@adventure level 20|WDMM|20} and bring him the lich's phylactery. The dao promises treasure in exchange and is forced by Halaster's magic to make good on this promise (see \"Treasure\" below). If the characters complete Jarûk's quest and give Ezzat's phylactery to the dao, the sandy floor turns into a giant vortex that draws Jarûk, the medusas, the sand, and the lich's phylactery back to the Elemental Plane of Earth. The characters find Jarûk's promised reward on the floor of the emptied cave. Characters who complete Jarûk's quest should receive XP as if they had defeated the dao and the medusas in combat.",
 										"If the characters destroy Ezzat but give the lich's phylactery to Ichthyglug the marid in {@adventure area 1c|WDMM|19|1c. Ichthyglug's Cavern}, Jarûk knows this and attacks the characters the next time he sees them.",
@@ -21719,7 +21852,7 @@
 									"type": "entries",
 									"name": "13g. Bridge",
 									"entries": [
-										"The door to the bridge stands slightly ajar. N'ghathrod, ther mind flayer captain, is here (see the \"{@adventure Captain N'ghathrod|WDMM|19|13. The Scavenger}\" sidebar). The features of the bridge are as follows:",
+										"The door to the bridge stands slightly ajar. N'ghathrod, the mind flayer captain, is here (see the \"{@adventure Captain N'ghathrod|WDMM|19|13. The Scavenger}\" sidebar). The features of the bridge are as follows:",
 										{
 											"type": "inset",
 											"entries": [
@@ -21798,7 +21931,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/065-20-01.png"
-					}
+					},
+					"width": 2550,
+					"height": 1648
 				},
 				"Runestone Caverns is designed for four 16th-level characters, and characters who defeat the monsters on this level should gain enough XP to advance halfway to 17th level. This level introduces the characters to a potentially powerful ally in their fight against Halaster\u2014or an enemy whose destruction can put them in the Mad Mage's good graces.",
 				{
@@ -21864,7 +21999,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/066-20-02.png"
-							}
+							},
+							"width": 2513,
+							"height": 3338
 						},
 						{
 							"type": "image",
@@ -21872,7 +22009,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/067-20-03.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						{
 							"type": "entries",
@@ -22297,7 +22436,7 @@
 									"type": "entries",
 									"name": "11c. Unreliable Oracle",
 									"entries": [
-										"This empty, 10-foot-high cavern has a large question mark carved into the east wall. If anyone asks a question in this cave, a whispering voice replies with an answer dsetermined by rolling percentile dice and consulting the Oracle Answers table.",
+										"This empty, 10-foot-high cavern has a large question mark carved into the east wall. If anyone asks a question in this cave, a whispering voice replies with an answer determined by rolling percentile dice and consulting the Oracle Answers table.",
 										{
 											"type": "table",
 											"caption": "Oracle Answers",
@@ -22756,7 +22895,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/068-21-01.png"
-					}
+					},
+					"width": 2550,
+					"height": 1630
 				},
 				"Known also as the Deep Mines, this level of Undermountain originally revealed its riches to dwarves and, later, to warmongering duergar. The gray dwarves have long controlled the mines, first depleting them of mithral, then excavating the iron to supply their forges. Now, Halaster's whims and depraved planar influences have supplanted the duergar as the most dangerous inhabitants of the level.",
 				"The Terminus Level is designed for four 16th-level characters. Those who overcome this level's challenges should gain enough XP to reach 17th level.",
@@ -22846,7 +22987,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/069-21-02.png"
-							}
+							},
+							"width": 2513,
+							"height": 3338
 						},
 						{
 							"type": "image",
@@ -22854,7 +22997,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/070-21-03.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						{
 							"type": "entries",
@@ -23659,7 +23804,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/071-22-01.png"
-					}
+					},
+					"width": 2550,
+					"height": 1636
 				},
 				"Shadowdusk Hold is designed for four 17th-level characters, and characters who defeat the monsters on this level should gain enough XP to advance halfway to 18th level.",
 				{
@@ -23705,7 +23852,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/072-22-02.png"
-							}
+							},
+							"width": 2513,
+							"height": 3338
 						},
 						{
 							"type": "image",
@@ -23713,7 +23862,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/073-22-03.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						"The following features apply throughout Shadowdusk Hold unless otherwise noted in an area's description:",
 						{
@@ -23945,7 +24096,9 @@
 											"href": {
 												"type": "internal",
 												"path": "adventure/WDMM/074-22-04.png"
-											}
+											},
+											"width": 1000,
+											"height": 1375
 										},
 										"Derrion enjoys killing unwelcome visitors. He is a human {@creature champion|VGM} (see {@adventure appendix A|WDMM|25}), with these changes:",
 										{
@@ -24818,7 +24971,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/075-23-01.png"
-					}
+					},
+					"width": 2550,
+					"height": 1638
 				},
 				"Halaster makes his home in the lowest level of Undermountain, which is optimized for four characters of 17th level or higher. Characters who defeat the monsters on this level should gain enough XP to reach 20th level.",
 				{
@@ -24862,7 +25017,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/076-23-02.png"
-							}
+							},
+							"width": 2513,
+							"height": 3338
 						},
 						{
 							"type": "image",
@@ -24870,7 +25027,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/077-23-03.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2175,
+							"height": 2925
 						},
 						{
 							"type": "entries",
@@ -25147,7 +25306,9 @@
 											"href": {
 												"type": "internal",
 												"path": "adventure/WDMM/078-23-04.png"
-											}
+											},
+											"width": 1000,
+											"height": 1243
 										},
 										"The body of a frail man in dark robes lies atop a stone slab near the south wall. The man has long, wavy hair and a thick beard the color of iron, and he wears a metal ring on the index finger of his left hand.",
 										"Characters who have seen images of Trobriand know that the body lying on the slab is his. After Trobriand successfully transferred his spirit to an iron golem (see {@adventure area 13|WDMM|23|13. The Metal Mage}), his body was placed here by the scaladar servants that guard {@adventure area 11b|WDMM|23|11b. Scaladar}. The body is in stasis but can be attacked normally. It is {@condition unconscious} and has AC 12 and 99 hit points. Without its spirit, the body is an empty vessel, and Trobriand is unaware of what's happening to it while his spirit resides elsewhere. Destroying this body prevents Trobriand's spirit from returning to it when the spirit is forced to vacate the golem in {@adventure area 13|WDMM|23|13. The Metal Mage}, effectively killing the Metal Mage.",
@@ -25200,16 +25361,22 @@
 											"name": "Spellcasting",
 											"entries": [
 												"Trobriand is an 18th-level spellcaster. His spellcasting ability is Intelligence (spell save DC 20, +12 to hit with spell attacks). He has the following wizard spells prepared:",
-												"Cantrips (at will): {@spell fire bolt}, {@spell mage hand}, {@spell prestidigitation}",
-												"1st level (4 slots): {@spell detect magic}, {@spell magic missile}, {@spell shield}",
-												"2nd level (3 slots): {@spell blur}, {@spell detect thoughts}, {@spell misty step}, {@spell shatter}",
-												"3rd level (3 slots): {@spell counterspell}, {@spell dispel magic}, {@spell fireball}, {@spell haste}",
-												"4th level (3 slots): {@spell blight}, {@spell greater invisibility}",
-												"5th level (3 slots): {@spell animate objects}, {@spell Bigby's Hand|PHB|Bigby's hand}, {@spell scrying}",
-												"6th level (1 slot): {@spell chain lightning}, {@spell globe of invulnerability}",
-												"7th level (1 slot): {@spell finger of death}, {@spell forcecage}",
-												"8th level (1 slot): {@spell incendiary cloud}, {@spell power word stun}",
-												"9th level (1 slot): {@spell power word kill}",
+												{
+													"type": "list",
+													"style": "list-hang-notitle",
+													"items": [
+														"Cantrips (at will): {@spell fire bolt}, {@spell mage hand}, {@spell prestidigitation}",
+														"1st level (4 slots): {@spell detect magic}, {@spell magic missile}, {@spell shield}",
+														"2nd level (3 slots): {@spell blur}, {@spell detect thoughts}, {@spell misty step}, {@spell shatter}",
+														"3rd level (3 slots): {@spell counterspell}, {@spell dispel magic}, {@spell fireball}, {@spell haste}",
+														"4th level (3 slots): {@spell blight}, {@spell greater invisibility}",
+														"5th level (3 slots): {@spell animate objects}, {@spell Bigby's Hand|PHB|Bigby's hand}, {@spell scrying}",
+														"6th level (1 slot): {@spell chain lightning}, {@spell globe of invulnerability}",
+														"7th level (1 slot): {@spell finger of death}, {@spell forcecage}",
+														"8th level (1 slot): {@spell incendiary cloud}, {@spell power word stun}",
+														"9th level (1 slot): {@spell power word kill}"
+													]
+												},
 												"Deactivating or destroying one or more of the pillars, destroying the golem, or forcing the golem out of the room causes Trobriand's spirit to vacate the golem and attempt to reunite with his normal body, which is hidden in {@adventure area 11c|WDMM|23|11c. Trobriand's Body}. If the characters have not destroyed his body, Trobriand's spirit returns to it immediately, and he awakens in {@adventure area 11c|WDMM|23|11c. Trobriand's Body} as an {@creature archmage} with the same spell list as in his golem form and the same spell slots remaining as he had when he left his golem body. His primary goal thereafter is to destroy the characters for meddling in his affairs.",
 												"If the golem in this room has not been destroyed when Trobriand's spirit leaves it, the golem becomes an ordinary {@creature iron golem} under the Metal Mage's command and attacks intruders on sight.",
 												"If the characters have already destroyed Trobriand's body in {@adventure area 11c|WDMM|23|11c. Trobriand's Body}, and then they deactivate or destroy at least one of the pillars in this room, Trobriand's spirit is forced to leave the golem but has nowhere to go, effectively killing him."
@@ -25283,7 +25450,9 @@
 											"href": {
 												"type": "internal",
 												"path": "adventure/WDMM/079-23-05.png"
-											}
+											},
+											"width": 1000,
+											"height": 1201
 										},
 										"Arcturia is a {@creature lich}, with these changes:",
 										{
@@ -25845,7 +26014,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/080-24-01.png"
-					}
+					},
+					"width": 2550,
+					"height": 1660
 				},
 				"Skullport is a grim, cutthroat outpost of civilization where adventurers can resupply and take refuge. Yet few souls of the surface world have any clue how to reach this shadowy reflection of Waterdeep, making any talk of the Port of Shadow akin to a rumor, or a warning\u2014which is just how its denizens like it.",
 				{
@@ -25910,7 +26081,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/081-24-02.png"
-							}
+							},
+							"width": 2513,
+							"height": 3338
 						},
 						{
 							"type": "image",
@@ -25918,7 +26091,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/082-24-03.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2250,
+							"height": 2850
 						},
 						{
 							"type": "inset",
@@ -26056,7 +26231,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/083-24-04.png"
-							}
+							},
+							"width": 2513,
+							"height": 3338
 						},
 						{
 							"type": "image",
@@ -26064,7 +26241,9 @@
 								"type": "internal",
 								"path": "adventure/WDMM/084-24-05.jpg"
 							},
-							"title": "(Player Version)"
+							"title": "(Player Version)",
+							"width": 2100,
+							"height": 2850
 						},
 						"The town has no general store, and some merchandise that is abundant in Waterdeep simply isn't available here. Prices in Skullport are five times higher than normal. If an NPC is mentioned by name with no pointer to a stat block, assume the NPC is a {@creature commoner}.",
 						{
@@ -26265,7 +26444,9 @@
 									"href": {
 										"type": "internal",
 										"path": "adventure/WDMM/085-24-06.png"
-									}
+									},
+									"width": 2513,
+									"height": 1668
 								},
 								{
 									"type": "image",
@@ -26273,7 +26454,9 @@
 										"type": "internal",
 										"path": "adventure/WDMM/086-24-07.jpg"
 									},
-									"title": "(Player Version)"
+									"title": "(Player Version)",
+									"width": 2100,
+									"height": 1500
 								}
 							]
 						},
@@ -26331,7 +26514,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/087-636764575275750736.png"
-					}
+					},
+					"width": 380,
+					"height": 508
 				},
 				{
 					"type": "entries",
@@ -26394,7 +26579,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/088-636609838742538624.png"
-							}
+							},
+							"width": 360,
+							"height": 351
 						}
 					]
 				},
@@ -26421,7 +26608,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/089-636764576973103179.png"
-							}
+							},
+							"width": 300,
+							"height": 414
 						}
 					]
 				},
@@ -26469,7 +26658,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/090-636764577191537221.png"
-							}
+							},
+							"width": 300,
+							"height": 407
 						}
 					]
 				},
@@ -26484,7 +26675,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/091-636331381858675803.jpeg"
-							}
+							},
+							"width": 400,
+							"height": 296
 						}
 					]
 				},
@@ -26556,7 +26749,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/092-636331340815791689.jpeg"
-							}
+							},
+							"width": 319,
+							"height": 487
 						}
 					]
 				},
@@ -26596,7 +26791,9 @@
 							"href": {
 								"type": "internal",
 								"path": "adventure/WDMM/093-636764577391179535.png"
-							}
+							},
+							"width": 399,
+							"height": 261
 						}
 					]
 				}
@@ -26611,7 +26808,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/087-25-01.jpg"
-					}
+					},
+					"width": 2054,
+					"height": 2781
 				}
 			]
 		},
@@ -26624,14 +26823,18 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/088-26-01.jpg"
-					}
+					},
+					"width": 2057,
+					"height": 2782
 				},
 				{
 					"type": "image",
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/089-26-02.jpg"
-					}
+					},
+					"width": 2057,
+					"height": 2782
 				}
 			]
 		},
@@ -26644,7 +26847,9 @@
 					"href": {
 						"type": "internal",
 						"path": "adventure/WDMM/key.jpg"
-					}
+					},
+					"width": 2044,
+					"height": 3000
 				}
 			]
 		}

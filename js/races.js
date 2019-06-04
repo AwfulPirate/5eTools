@@ -60,12 +60,51 @@ function getSpeedRating (speed) {
 	return speed > 30 ? "Walk (Fast)" : speed < 30 ? "Walk (Slow)" : "Walk";
 }
 
+function filterAscSortSize (a, b) {
+	a = a.item;
+	b = b.item;
+
+	return SortUtil.ascSort(toNum(a), toNum(b));
+
+	function toNum (size) {
+		switch (size) {
+			case "M":
+				return 0;
+			case "S":
+				return -1;
+			case "V":
+				return 1;
+		}
+	}
+}
+
+function filterAscSortAsi (a, b) {
+	a = a.item;
+	b = b.item;
+
+	if (a === "Player Choice") return -1;
+	else if (a.startsWith("Any") && b.startsWith("Any")) {
+		const aAbil = a.replace("Any", "").replace("Increase", "").trim();
+		const bAbil = b.replace("Any", "").replace("Increase", "").trim();
+		return ASI_SORT_POS[aAbil] - ASI_SORT_POS[bAbil];
+	} else if (a.startsWith("Any")) {
+		return -1;
+	} else if (b.startsWith("Any")) {
+		return 1;
+	} else {
+		const [aAbil, aScore] = a.split(" ");
+		const [bAbil, bScore] = b.split(" ");
+		return (ASI_SORT_POS[aAbil] - ASI_SORT_POS[bAbil]) || (Number(bScore) - Number(aScore));
+	}
+}
+
 let list;
 const sourceFilter = getSourceFilter();
-const sizeFilter = new Filter({header: "Size", displayFn: Parser.sizeAbvToFull});
+const sizeFilter = new Filter({header: "Size", displayFn: Parser.sizeAbvToFull, itemSortFn: filterAscSortSize});
 const asiFilter = new Filter({
 	header: "Ability Bonus (Including Subrace)",
 	items: [
+		"Player Choice",
 		"Any Strength Increase",
 		"Any Dexterity Increase",
 		"Any Constitution Increase",
@@ -84,7 +123,8 @@ const asiFilter = new Filter({
 		"Wisdom +1",
 		"Charisma +2",
 		"Charisma +1"
-	]
+	],
+	itemSortFn: filterAscSortAsi
 });
 let filterBox;
 async function onJsonLoad (data) {
@@ -93,7 +133,7 @@ async function onJsonLoad (data) {
 		listClass: "races"
 	});
 
-	const jsonRaces = EntryRenderer.race.mergeSubraces(data.race);
+	const jsonRaces = Renderer.race.mergeSubraces(data.race);
 	const speedFilter = new Filter({header: "Speed", items: ["Climb", "Fly", "Swim", "Walk (Fast)", "Walk", "Walk (Slow)"]});
 	const traitFilter = new Filter({
 		header: "Traits",
@@ -112,6 +152,7 @@ async function onJsonLoad (data) {
 			"Spellcasting",
 			"Tool Proficiency",
 			"Unarmed Strike",
+			"Uncommon Race",
 			"Weapon Proficiency"
 		],
 		deselFn: (it) => {
@@ -154,8 +195,9 @@ async function onJsonLoad (data) {
 		languageFilter
 	);
 
+	const $outVisibleResults = $(`.lst__wrp-search-visible`);
 	list.on("updated", () => {
-		filterBox.setCount(list.visibleItems.length, list.items.length);
+		$outVisibleResults.html(`${list.visibleItems.length}/${list.items.length}`);
 	});
 
 	// filtering function
@@ -175,7 +217,7 @@ async function onJsonLoad (data) {
 	BrewUtil.pAddBrewData()
 		.then(handleBrew)
 		.then(() => BrewUtil.bind({list}))
-		.then(BrewUtil.pAddLocalBrewData)
+		.then(() => BrewUtil.pAddLocalBrewData())
 		.catch(BrewUtil.pPurgeBrew)
 		.then(async () => {
 			BrewUtil.makeBrewButton("manage-brew");
@@ -207,13 +249,14 @@ function addRaces (data) {
 		const race = raceList[rcI];
 		if (ExcludeUtil.isExcluded(race.name, "race", race.source)) continue;
 
-		const ability = race.ability ? utils_getAbilityData(race.ability) : {asTextShort: "None"};
+		const ability = race.ability ? Renderer.getAbilityData(race.ability) : {asTextShort: "None"};
 		if (race.ability) {
 			const abils = getAbilityObjs(race.ability);
 			race._fAbility = abils.map(a => mapAbilityObjToFull(a));
 			const increases = {};
 			abils.filter(it => it.amount > 0).forEach(it => increases[it.asi] = true);
 			Object.keys(increases).forEach(it => race._fAbility.push(`Any ${Parser.attAbvToFull(it)} Increase`));
+			if (race.ability.choose) race._fAbility.push("Player Choice");
 		} else race._fAbility = [];
 		race._fSpeed = race.speed.walk ? [race.speed.climb ? "Climb" : null, race.speed.fly ? "Fly" : null, race.speed.swim ? "Swim" : null, getSpeedRating(race.speed.walk)].filter(it => it) : getSpeedRating(race.speed);
 		race._fMisc = [
@@ -241,48 +284,12 @@ function addRaces (data) {
 			</li>`;
 
 		// populate filters
-		sourceFilter.addIfAbsent(race._fSources);
-		sizeFilter.addIfAbsent(race.size);
-		asiFilter.addIfAbsent(race._fAbility);
+		sourceFilter.addItem(race._fSources);
+		sizeFilter.addItem(race.size);
+		asiFilter.addItem(race._fAbility);
 	}
 	const lastSearch = ListUtil.getSearchTermAndReset(list);
 	racesTable.append(tempString);
-
-	// sort filters
-	sourceFilter.items.sort(SortUtil.ascSort);
-	sizeFilter.items.sort(ascSortSize);
-	asiFilter.items.sort(ascSortAsi);
-
-	function ascSortSize (a, b) {
-		return SortUtil.ascSort(toNum(a), toNum(b));
-
-		function toNum (size) {
-			switch (size) {
-				case "M":
-					return 0;
-				case "S":
-					return -1;
-				case "V":
-					return 1;
-			}
-		}
-	}
-
-	function ascSortAsi (a, b) {
-		if (a.startsWith("Any") && b.startsWith("Any")) {
-			const aAbil = a.replace("Any", "").replace("Increase", "").trim();
-			const bAbil = b.replace("Any", "").replace("Increase", "").trim();
-			return ASI_SORT_POS[aAbil] - ASI_SORT_POS[bAbil];
-		} else if (a.startsWith("Any")) {
-			return -1;
-		} else if (b.startsWith("Any")) {
-			return 1;
-		} else {
-			const [aAbil, aScore] = a.split(" ");
-			const [bAbil, bScore] = b.split(" ");
-			return (ASI_SORT_POS[aAbil] - ASI_SORT_POS[bAbil]) || (Number(bScore) - Number(aScore));
-		}
-	}
 
 	list.reIndex();
 	if (lastSearch) list.search(lastSearch);
@@ -296,16 +303,12 @@ function addRaces (data) {
 		primaryLists: [list]
 	});
 	ListUtil.bindPinButton();
-	EntryRenderer.hover.bindPopoutButton(raceList);
+	Renderer.hover.bindPopoutButton(raceList);
 	UrlUtil.bindLinkExportButton(filterBox);
 	ListUtil.bindDownloadButton();
 	ListUtil.bindUploadButton();
 
-	$(`body`).on("click", ".btn-name-pronounce", function () {
-		const audio = $(this).find(`.name-pronounce`)[0];
-		audio.currentTime = 0;
-		audio.play();
-	});
+	Renderer.utils.bindPronounceButtons();
 }
 
 function handleFilterChange () {
@@ -322,7 +325,7 @@ function handleFilterChange () {
 			r.languageTags
 		);
 	});
-	FilterBox.nextIfHidden(raceList);
+	FilterBox.selectFirstVisible(raceList);
 }
 
 function getSublistItem (race, pinId) {
@@ -338,7 +341,7 @@ function getSublistItem (race, pinId) {
 	`;
 }
 
-const renderer = EntryRenderer.getDefaultRenderer();
+const renderer = Renderer.get();
 function loadhash (id) {
 	renderer.setFirstSection(true);
 	const $pgContent = $("#pagecontent").empty();
@@ -357,38 +360,36 @@ function loadhash (id) {
 
 		$pgContent.append(`
 		<tbody>
-		${EntryRenderer.utils.getBorderTr()}
+		${Renderer.utils.getBorderTr()}
 		<tr><th class="name" colspan="6">
-		<span class="stats-name copyable" onclick="EntryRenderer.utils._pHandleNameClick(this, '${race.source.escapeQuotes()}')">${race.name}</span>
+		<span class="stats-name copyable" onclick="Renderer.utils._pHandleNameClick(this, '${race.source.escapeQuotes()}')">${race.name}</span>
 		${race.soundClip ? getPronunciationButton() : ""}
 		<span class="stats-source ${Parser.sourceJsonToColor(race.source)}" title="${Parser.sourceJsonToFull(race.source)}">${Parser.sourceJsonToAbv(race.source)}</span>
 		</th></tr>
-		<tr><td colspan="6"><b>Ability Scores:</b> ${(race.ability ? utils_getAbilityData(race.ability) : {asText: "None"}).asText}</td></tr>
+		<tr><td colspan="6"><b>Ability Scores:</b> ${(race.ability ? Renderer.getAbilityData(race.ability) : {asText: "None"}).asText}</td></tr>
 		<tr><td colspan="6"><b>Size:</b> ${Parser.sizeAbvToFull(race.size)}</td></tr>
 		<tr><td colspan="6"><b>Speed:</b> ${Parser.getSpeedString(race)}</td></tr>
 		<tr id="traits"><td class="divider" colspan="6"><div></div></td></tr>
-		${EntryRenderer.utils.getBorderTr()}
+		${Renderer.utils.getBorderTr()}
 		</tbody>
 		`);
 
 		const renderStack = [];
 		renderStack.push("<tr class='text'><td colspan='6'>");
-		renderer.recursiveEntryRender({type: "entries", entries: race.entries}, renderStack, 1);
+		renderer.recursiveRender({type: "entries", entries: race.entries}, renderStack, {depth: 1});
 		renderStack.push("</td></tr>");
 		if (race.traitTags && race.traitTags.includes("NPC Race")) {
 			renderStack.push(`<tr class="text"><td colspan="6"><section class="text-muted">`);
-			renderer.recursiveEntryRender(
-				`{@i Note: This race is listed in the {@i Dungeon Master's Guide} as an option for creating NPCs. It is not designed for use as a playable race.}`
-				, renderStack, 2);
+			renderer.recursiveRender(`{@i Note: This race is listed in the {@i Dungeon Master's Guide} as an option for creating NPCs. It is not designed for use as a playable race.}`, renderStack, {depth: 2});
 			renderStack.push(`</section></td></tr>`);
 		}
-		renderStack.push(EntryRenderer.utils.getPageTr(race));
+		renderStack.push(Renderer.utils.getPageTr(race));
 
 		$pgContent.find('tbody tr:last').before(renderStack.join(""));
 	}
 
 	function buildFluffTab (isImageTab) {
-		return EntryRenderer.utils.buildFluffTab(
+		return Renderer.utils.buildFluffTab(
 			isImageTab,
 			$pgContent,
 			race,
@@ -399,7 +400,7 @@ function loadhash (id) {
 	}
 
 	function getFluff (fluffJson) {
-		const predefined = EntryRenderer.utils.getPredefinedFluff(race, "raceFluff");
+		const predefined = Renderer.utils.getPredefinedFluff(race, "raceFluff");
 		if (predefined) return predefined;
 
 		const subFluff = race._baseName && race.name.toLowerCase() === race._baseName.toLowerCase() ? "" : fluffJson.race.find(it => it.name.toLowerCase() === race.name.toLowerCase() && it.source.toLowerCase() === race.source.toLowerCase());
@@ -442,13 +443,23 @@ function loadhash (id) {
 		if (baseFluff) addFluff(baseFluff, true);
 
 		if ((subFluff && subFluff.uncommon) || (baseFluff && baseFluff.uncommon)) {
-			fluff.entries = fluff.entries || [];
-			fluff.entries.push({type: "section", entries: [MiscUtil.copy(fluffJson.meta.uncommon)]});
+			const entryUncommon = {type: "section", entries: [MiscUtil.copy(fluffJson.meta.uncommon)]};
+			if (fluff.entries) {
+				fluff.entries.push(entryUncommon);
+			} else {
+				fluff.entries = [HTML_NO_INFO];
+				fluff.entries.push(...entryUncommon.entries)
+			}
 		}
 
 		if ((subFluff && subFluff.monstrous) || (baseFluff && baseFluff.monstrous)) {
-			fluff.entries = fluff.entries || [];
-			fluff.entries.push({type: "section", entries: [MiscUtil.copy(fluffJson.meta.monstrous)]});
+			const entryMonstrous = {type: "section", entries: [MiscUtil.copy(fluffJson.meta.monstrous)]};
+			if (fluff.entries) {
+				fluff.entries.push(entryMonstrous);
+			} else {
+				fluff.entries = [HTML_NO_INFO];
+				fluff.entries.push(...entryMonstrous.entries)
+			}
 		}
 
 		if (fluff.entries.length && fluff.entries[0].type === "section") {
@@ -459,28 +470,28 @@ function loadhash (id) {
 		return fluff;
 	}
 
-	const traitTab = EntryRenderer.utils.tabButton(
+	const traitTab = Renderer.utils.tabButton(
 		"Traits",
 		() => {},
 		buildStatsTab
 	);
-	const infoTab = EntryRenderer.utils.tabButton(
+	const infoTab = Renderer.utils.tabButton(
 		"Info",
 		() => {},
 		buildFluffTab
 	);
-	const picTab = EntryRenderer.utils.tabButton(
+	const picTab = Renderer.utils.tabButton(
 		"Images",
 		() => {},
 		buildFluffTab.bind(null, true)
 	);
 
-	EntryRenderer.utils.bindTabButtons(traitTab, infoTab, picTab);
+	Renderer.utils.bindTabButtons(traitTab, infoTab, picTab);
 
 	ListUtil.updateSelected();
 }
 
 function loadsub (sub) {
-	filterBox.setFromSubHashes(sub);
+	sub = filterBox.setFromSubHashes(sub);
 	ListUtil.setFromSubHashes(sub);
 }

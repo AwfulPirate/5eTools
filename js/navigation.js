@@ -39,7 +39,6 @@ class NavBar {
 
 		const ulPlayers = addDropdown(navBar, "Player Options");
 		addLi(ulPlayers, "classes.html", "Classes");
-		addLi(ulPlayers, "optionalfeatures.html", "Class Feature Options");
 		addLi(ulPlayers, "backgrounds.html", "Backgrounds");
 		addLi(ulPlayers, "feats.html", "Feats");
 		addLi(ulPlayers, "races.html", "Races");
@@ -73,6 +72,7 @@ class NavBar {
 		addLi(ulAdventures, "adventure.html", "Lost Laboratory of Kwalish", true, "LLK");
 		addLi(ulAdventures, "adventure.html", "Waterdeep: Dungeon of the Mad Mage", true, "WDMM");
 		addLi(ulAdventures, "adventure.html", "Krenko's Way", true, "KKW");
+		addLi(ulAdventures, "adventure.html", "Ghosts of Saltmarsh", true, "GoS");
 		addDivider(ulAdventures);
 		addLi(ulAdventures, "adventures.html", "View All/Homebrew");
 		addLi(ulDms, "cultsboons.html", "Cults & Demonic Boons");
@@ -89,15 +89,17 @@ class NavBar {
 		addLi(ulReferences, "conditionsdiseases.html", "Conditions & Diseases");
 		addLi(ulReferences, "deities.html", "Deities");
 		addLi(ulReferences, "items.html", "Items");
+		addLi(ulReferences, "optionalfeatures.html", "Other Options and Features");
 		addLi(ulReferences, "rewards.html", "Other Rewards");
 		addLi(ulReferences, "psionics.html", "Psionics");
 		addLi(ulReferences, "spells.html", "Spells");
 
 		const ulUtils = addDropdown(navBar, "Utilities");
 		addLi(ulUtils, "blacklist.html", "Content Blacklist");
+		addLi(ulUtils, "managebrew.html", "Homebrew Manager");
 		addLi(ulUtils, "inittrackerplayerview.html", "Initiative Tracker Player View");
-		addLi(ulUtils, "managebrew.html", "Manage All Homebrew");
 		addDivider(ulUtils);
+		addLi(ulUtils, "makebrew.html", "Homebrew Builder");
 		addLi(ulUtils, "demo.html", "Renderer Demo");
 		addLi(ulUtils, "converter.html", "Text Converter");
 		addDivider(ulUtils);
@@ -106,7 +108,47 @@ class NavBar {
 
 		addLi(navBar, "donate.html", "Donate");
 
-		addNightModeToggle(navBar);
+		const ulSettings = addDropdown(navBar, "Settings");
+		addButton(
+			ulSettings,
+			{
+				html: styleSwitcher.getActiveStyleSheet() === StyleSwitcher.STYLE_DAY ? "Night Mode" : "Day Mode",
+				click: (evt) => {
+					evt.preventDefault();
+					styleSwitcher.toggleActiveStyleSheet();
+				},
+				className: "nightModeToggle"
+			}
+		);
+		addButton(
+			ulSettings,
+			{
+				html: "Save State to File",
+				click: async (evt) => {
+					evt.preventDefault();
+					const sync = StorageUtil.syncGetDump();
+					const async = await StorageUtil.pGetDump();
+					const dump = {sync, async};
+					DataUtil.userDownload("5etools", dump);
+				},
+				title: "Save any locally-stored data (loaded homebrew, active blacklists, DM Screen configuration,...) to a file."
+			}
+		);
+		addButton(
+			ulSettings,
+			{
+				html: "Load State from File",
+				click: async (evt) => {
+					evt.preventDefault();
+					const dump = await DataUtil.pUserUpload();
+
+					StorageUtil.syncSetFromDump(dump.sync);
+					await StorageUtil.pSetFromDump(dump.async);
+					location.reload();
+				},
+				title: "Load previously-saved data (loaded homebrew, active blacklists, DM Screen configuration,...) from a file."
+			}
+		);
 
 		/**
 		 * Adds a new item to the navigation bar. Can be used either in root, or in a different UL.
@@ -184,17 +226,25 @@ class NavBar {
 		}
 
 		/**
-		 * Special LI for the Day/Night Switcher
+		 * Special LI for buttong
+		 * @param appendTo The element to append to.
+		 * @param options Options.
+		 * @param options.html Button text.
+		 * @param options.click Button click handler.
+		 * @param options.title Button title.
+		 * @param options.className Additional button classes.
 		 */
-		function addNightModeToggle (appendTo) {
+		function addButton (appendTo, options) {
 			const li = document.createElement("li");
 			li.setAttribute("role", "presentation");
 
 			const a = document.createElement("a");
 			a.href = "#";
-			a.className = "nightModeToggle";
-			a.onclick = function (event) { event.preventDefault(); styleSwitcher.toggleActiveStyleSheet(); };
-			a.innerHTML = styleSwitcher.getActiveStyleSheet() === StyleSwitcher.STYLE_DAY ? "Night Mode" : "Day Mode";
+			if (options.className) a.className = options.className;
+			a.onclick = options.click;
+			a.innerHTML = options.html;
+
+			if (options.title) li.setAttribute("title", options.title);
 
 			li.appendChild(a);
 			appendTo.appendChild(li);
@@ -253,7 +303,9 @@ class NavBar {
 		event.preventDefault();
 		event.stopPropagation();
 		if (isSide) return;
-		NavBar._openDropdown(ele);
+		const isOpen = ele.parentNode.classList.contains("open");
+		if (isOpen) NavBar._dropdowns.forEach(ele => ele.classList.remove("open"));
+		else NavBar._openDropdown(ele);
 	}
 
 	static _openDropdown (fromLink) {

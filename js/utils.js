@@ -2,10 +2,9 @@
 // Strict mode should not be used, as the roll20 script depends on this file //
 // Do not use classes                                                        //
 // ************************************************************************* //
-
-// in deployment, `_IS_DEPLOYED = "<version number>";` should be prepended here
-IS_DEPLOYED = typeof _IS_DEPLOYED !== "undefined" && _IS_DEPLOYED;
-VERSION_NUMBER = IS_DEPLOYED ? _IS_DEPLOYED : "-1";
+// in deployment, `IS_DEPLOYED = "<version number>";` should be set below.
+IS_DEPLOYED = undefined;
+VERSION_NUMBER = IS_DEPLOYED || "-1";
 DEPLOYED_STATIC_ROOT = ""; // "https://static.5etools.com/"; // FIXME re-enable this when we have a CDN again
 // for the roll20 script to set
 IS_ROLL20 = false;
@@ -21,9 +20,7 @@ HASH_SUBCLASS = "sub:";
 HASH_BLANK = "blankhash";
 HASH_SUB_NONE = "null";
 
-STR_EMPTY = "";
 STR_VOID_LINK = "javascript:void(0)";
-STR_SLUG_DASH = "-";
 STR_APOSTROPHE = "\u2019";
 
 HTML_NO_INFO = "<i>No information available.</i>";
@@ -31,33 +28,6 @@ HTML_NO_IMAGES = "<i>No images available.</i>";
 
 ID_SEARCH_BAR = "filter-search-input-group";
 ID_RESET_BUTTON = "reset";
-
-ELE_SPAN = "span";
-ELE_UL = "ul";
-ELE_LI = "li";
-ELE_A = "a";
-ELE_P = "p";
-ELE_DIV = "div";
-ELE_BUTTON = "button";
-ELE_INPUT = "input";
-
-EVNT_MOUSEOVER = "mouseover";
-EVNT_MOUSEOUT = "mouseout";
-EVNT_MOUSELEAVE = "mouseleave";
-EVNT_MOUSEENTER = "mouseenter";
-
-ATB_ID = "id";
-ATB_CLASS = "class";
-ATB_TITLE = "title";
-ATB_VALUE = "value";
-ATB_HREF = "href";
-ATB_STYLE = "style";
-ATB_CHECKED = "checked";
-ATB_TYPE = "type";
-ATB_ONCLICK = "onclick";
-
-STL_DISPLAY_INITIAL = "display: initial";
-STL_DISPLAY_NONE = "display: none";
 
 FLTR_ID = "filterId";
 
@@ -96,14 +66,6 @@ RNG_TOUCH = "touch";
 
 UNT_FEET = "feet";
 UNT_MILES = "miles";
-
-ABIL_STR = "Strength";
-ABIL_DEX = "Dexterity";
-ABIL_CON = "Constitution";
-ABIL_INT = "Intelligence";
-ABIL_WIS = "Wisdom";
-ABIL_CHA = "Charisma";
-ABIL_CH_ANY = "Choose Any";
 
 HOMEBREW_STORAGE = "HOMEBREW_STORAGE";
 HOMEBREW_META_STORAGE = "HOMEBREW_META_STORAGE";
@@ -275,8 +237,8 @@ Array.prototype.peek = Array.prototype.peek ||
 	};
 
 StrUtil = {
-	NAME_REGEX: /^(([A-Z0-9ota][a-z0-9'’`:]+|[aI])( \(.*\)| |-)?)+([.!])+/g,
 	COMMAS_NOT_IN_PARENTHESES_REGEX: /,\s?(?![^(]*\))/g,
+	COMMA_SPACE_NOT_IN_PARENTHESES_REGEX: /, (?![^(]*\))/g,
 
 	uppercaseFirst: function (string) {
 		return string.uppercaseFirst();
@@ -314,136 +276,6 @@ StrUtil = {
 RegExp.escape = function (string) {
 	return string.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
 };
-
-// TEXT COMBINING ======================================================================================================
-class AbilityData {
-	constructor (asText, asTextShort, asCollection, areNegative) {
-		this.asText = asText;
-		this.asTextShort = asTextShort;
-		this.asCollection = asCollection;
-		this.areNegative = areNegative;
-	}
-}
-
-function utils_getAbilityData (abObj) {
-	const ABILITIES = Parser.ABIL_ABVS.map(it => it.uppercaseFirst());
-	const mainAbs = [];
-	const asCollection = [];
-	const areNegative = [];
-	const toConvertToText = [];
-	const toConvertToShortText = [];
-	if (abObj !== undefined) {
-		handleAllAbilities(abObj);
-		handleAbilitiesChoose();
-		return new AbilityData(toConvertToText.join("; "), toConvertToShortText.join("; "), asCollection, areNegative);
-	}
-	return new AbilityData("", "", [], []);
-
-	function handleAllAbilities (abilityList, targetList) {
-		for (let a = 0; a < ABILITIES.length; ++a) {
-			handleAbility(abilityList, ABILITIES[a], targetList);
-		}
-	}
-
-	function handleAbility (parent, ab, optToConvertToTextStorage) {
-		if (parent[ab.toLowerCase()] !== undefined) {
-			const isNegMod = parent[ab.toLowerCase()] < 0;
-			const toAdd = `${ab} ${(isNegMod ? "" : "+")}${parent[ab.toLowerCase()]}`;
-
-			if (optToConvertToTextStorage) {
-				optToConvertToTextStorage.push(toAdd);
-			} else {
-				toConvertToText.push(toAdd);
-				toConvertToShortText.push(toAdd);
-			}
-
-			mainAbs.push(ab);
-			asCollection.push(ab.toLowerCase());
-			if (isNegMod) areNegative.push(ab.toLowerCase());
-		}
-	}
-
-	function handleAbilitiesChoose () {
-		if (abObj.choose !== undefined) {
-			for (let i = 0; i < abObj.choose.length; ++i) {
-				const item = abObj.choose[i];
-				let outStack = "";
-				if (item.predefined !== undefined) {
-					for (let j = 0; j < item.predefined.length; ++j) {
-						const subAbs = [];
-						handleAllAbilities(item.predefined[j], subAbs);
-						outStack += subAbs.join(", ") + (j === item.predefined.length - 1 ? "" : " or ");
-					}
-				} else if (item.weighted) {
-					const w = item.weighted;
-					const areIncreaseShort = [];
-					const areIncrease = w.weights.filter(it => it >= 0).sort(SortUtil.ascSort).reverse().map(it => {
-						areIncreaseShort.push(`+${it}`);
-						return `one ability to increase by ${it}`;
-					});
-					const areReduceShort = [];
-					const areReduce = w.weights.filter(it => it < 0).map(it => -it).sort(SortUtil.ascSort).map(it => {
-						areReduceShort.push(`-${it}`);
-						return `one ability to decrease by ${it}`;
-					});
-					const froms = w.from.map(it => it.uppercaseFirst());
-					toConvertToText.push(`From ${froms.joinConjunct(", ", " and ")} choose ${areIncrease.concat(areReduce).joinConjunct(", ", " and ")}`);
-					toConvertToShortText.push(`${areIncreaseShort.concat(areReduceShort).join("/")} from ${froms.join("/")}`);
-					continue;
-				} else {
-					const allAbilities = item.from.length === 6;
-					const allAbilitiesWithParent = isAllAbilitiesWithParent(item);
-					let amount = item.amount === undefined ? 1 : item.amount;
-					amount = (amount < 0 ? "" : "+") + amount;
-					if (allAbilities) {
-						outStack += "any ";
-					} else if (allAbilitiesWithParent) {
-						outStack += "any other ";
-					}
-					if (item.count !== undefined && item.count > 1) {
-						outStack += Parser.numberToText(item.count) + " ";
-					}
-					if (allAbilities || allAbilitiesWithParent) {
-						outStack += amount;
-					} else {
-						for (let j = 0; j < item.from.length; ++j) {
-							let suffix = "";
-							if (item.from.length > 1) {
-								if (j === item.from.length - 2) {
-									suffix = " or ";
-								} else if (j < item.from.length - 2) {
-									suffix = ", ";
-								}
-							}
-							let thsAmount = " " + amount;
-							if (item.from.length > 1) {
-								if (j !== item.from.length - 1) {
-									thsAmount = "";
-								}
-							}
-							outStack += item.from[j].uppercaseFirst() + thsAmount + suffix;
-						}
-					}
-				}
-				toConvertToText.push("Choose " + outStack);
-				toConvertToShortText.push(outStack.uppercaseFirst());
-			}
-		}
-	}
-
-	function isAllAbilitiesWithParent (chooseAbs) {
-		const tempAbilities = [];
-		for (let i = 0; i < mainAbs.length; ++i) {
-			tempAbilities.push(mainAbs[i].toLowerCase());
-		}
-		for (let i = 0; i < chooseAbs.from.length; ++i) {
-			const ab = chooseAbs.from[i].toLowerCase();
-			if (!tempAbilities.includes(ab)) tempAbilities.push(ab);
-			if (!asCollection.includes(ab.toLowerCase)) asCollection.push(ab.toLowerCase());
-		}
-		return tempAbilities.length === 6;
-	}
-}
 
 // PARSING =============================================================================================================
 Parser = {};
@@ -555,7 +387,7 @@ Parser.getSpeedString = (it) => {
 	}
 
 	function getCond (speedProp) {
-		return speedProp.condition ? ` ${EntryRenderer.getDefaultRenderer().renderEntry(speedProp.condition)}` : "";
+		return speedProp.condition ? ` ${Renderer.get().render(speedProp.condition)}` : "";
 	}
 
 	const stack = [];
@@ -581,17 +413,22 @@ Parser._addCommas = function (intNum) {
 };
 
 Parser.crToXp = function (cr) {
-	if (cr === "Unknown" || cr === undefined) return "Unknown";
-	if (cr === "0") return "0 or 10";
-	if (cr === "1/8") return "25";
-	if (cr === "1/4") return "50";
-	if (cr === "1/2") return "100";
-	return Parser._addCommas(Parser.XP_CHART[parseInt(cr) - 1]);
+	if (cr.xp) return Parser._addCommas(cr.xp);
+
+	const toConvert = cr.cr || cr;
+	if (toConvert === "Unknown" || toConvert == null) return "Unknown";
+	if (toConvert === "0") return "0 or 10";
+	if (toConvert === "1/8") return "25";
+	if (toConvert === "1/4") return "50";
+	if (toConvert === "1/2") return "100";
+	return Parser._addCommas(Parser.XP_CHART[parseInt(toConvert) - 1]);
 };
 
 Parser.crToXpNumber = function (cr) {
-	if (cr === "Unknown" || cr === undefined) return null;
-	return Parser.XP_CHART_ALT[cr];
+	if (cr.xp) return cr.xp;
+	const toConvert = cr.cr || cr;
+	if (toConvert === "Unknown" || toConvert == null) return null;
+	return Parser.XP_CHART_ALT[toConvert];
 };
 
 LEVEL_TO_XP_EASY = [0, 25, 50, 75, 125, 250, 300, 350, 450, 550, 600, 800, 1000, 1100, 1250, 1400, 1600, 2000, 2100, 2400, 2800];
@@ -623,7 +460,10 @@ Parser._greatestCommonDivisor = function (a, b) {
 	if (b < Number.EPSILON) return a;
 	return Parser._greatestCommonDivisor(b, Math.floor(a % b));
 };
-Parser.numberToCr = function (number) {
+Parser.numberToCr = function (number, safe) {
+	// avoid dying if already-converted number is passed in
+	if (safe && typeof number === "string" && Parser.CRS.includes(number)) return number;
+
 	const len = number.toString().length - 2;
 	let denominator = Math.pow(10, len);
 	let numerator = number * denominator;
@@ -692,10 +532,10 @@ Parser.skillToShort = function (skill) {
 };
 
 Parser.dragonColorToFull = function (c) {
-	return Parser._parse_aToB(DRAGON_COLOR_TO_FULL, c);
+	return Parser._parse_aToB(Parser.DRAGON_COLOR_TO_FULL, c);
 };
 
-DRAGON_COLOR_TO_FULL = {
+Parser.DRAGON_COLOR_TO_FULL = {
 	B: "black",
 	U: "blue",
 	G: "green",
@@ -711,16 +551,17 @@ DRAGON_COLOR_TO_FULL = {
 Parser.acToFull = function (ac) {
 	if (typeof ac === "string") return ac; // handle classic format
 
-	const renderer = EntryRenderer.getDefaultRenderer();
+	const renderer = Renderer.get();
 	let stack = "";
 	for (let i = 0; i < ac.length; ++i) {
 		const cur = ac[i];
 		const nxt = ac[i + 1];
 
 		if (cur.ac) {
+			if (i === 0 && cur.braces) stack += "(";
 			stack += cur.ac;
-			if (cur.from) stack += ` (${cur.from.map(it => renderer.renderEntry(it)).join(", ")})`;
-			if (cur.condition) stack += ` ${renderer.renderEntry(cur.condition)}`;
+			if (cur.from) stack += ` (${cur.from.map(it => renderer.render(it)).join(", ")})`;
+			if (cur.condition) stack += ` ${renderer.render(cur.condition)}`;
 			if (cur.braces) stack += ")";
 		} else {
 			stack += cur;
@@ -786,19 +627,25 @@ Parser.sourceJsonToColor = function (source) {
 };
 
 Parser.stringToSlug = function (str) {
-	return str.trim().toLowerCase().replace(/[^\w ]+/g, STR_EMPTY).replace(/ +/g, STR_SLUG_DASH);
+	return str.trim().toLowerCase().replace(/[^\w ]+/g, "").replace(/ +/g, "-");
 };
 
 Parser.stringToCasedSlug = function (str) {
-	return str.replace(/[^\w ]+/g, STR_EMPTY).replace(/ +/g, STR_SLUG_DASH);
+	return str.replace(/[^\w ]+/g, "").replace(/ +/g, "-");
 };
 
 Parser.itemTypeToAbv = function (type) {
 	return Parser._parse_aToB(Parser.ITEM_TYPE_JSON_TO_ABV, type);
 };
 
-Parser.itemWeightToFull = function (item) {
-	return item.weight ? item.weight + (Number(item.weight) === 1 ? " lb." : " lbs.") + (item.weightNote ? ` ${item.weightNote}` : "") : "";
+Parser.itemValueToFull = function (item, isShortForm) {
+	return item.value ? item.value : item.valueMult ? isShortForm ? `×${item.valueMult}` : `base value ×${item.valueMult}` : "";
+};
+
+Parser.itemWeightToFull = function (item, isShortForm) {
+	return item.weight
+		? `${item.weight}${(Number(item.weight) === 1 ? " lb." : " lbs.")}${(item.weightNote ? ` ${item.weightNote}` : "")}`
+		: item.weightMult ? isShortForm ? `×${item.weightMult}` : `base weight ×${item.weightMult}` : "";
 };
 
 Parser._coinValueToNumberMultipliers = {
@@ -815,7 +662,7 @@ Parser._costSplitRegexp = Parser._decimalSeparator === "." ? new RegExp(/(\d+(\.
 Parser.coinValueToNumber = function (value) {
 	if (!value) return 0;
 	// handle oddities
-	if (value === "x4" || value === "Varies") return 0;
+	if (value === "Varies") return 0;
 
 	// input e.g. "25gp", "1,000pp"
 	value = value.replace(Parser._numberCleanRegexp, "").toLowerCase();
@@ -826,8 +673,6 @@ Parser.coinValueToNumber = function (value) {
 
 Parser.weightValueToNumber = function (value) {
 	if (!value) return 0;
-	// handle oddities
-	if (/[x×]\s*\d+/i.test(value.trim())) return 0;
 
 	if (Number(value)) return Number(value);
 	else throw new Error(`Badly formatted value ${value}`);
@@ -937,7 +782,7 @@ Parser.spLevelSchoolMetaToFull = function (level, school, meta, subschools) {
 };
 
 Parser.spTimeListToFull = function (times) {
-	return times.map(t => `${Parser.getTimeToFull(t)}${t.condition ? `, ${EntryRenderer.getDefaultRenderer().renderEntry(t.condition)}` : ""}`).join(" or ");
+	return times.map(t => `${Parser.getTimeToFull(t)}${t.condition ? `, ${Renderer.get().render(t.condition)}` : ""}`).join(" or ");
 };
 
 Parser.getTimeToFull = function (time) {
@@ -1138,10 +983,10 @@ Parser.monTypeToPlural = function (type) {
 	return Parser._parse_aToB(Parser.MON_TYPE_TO_PLURAL, type);
 };
 
-Parser.monCrToFull = function (cr) {
-	if (typeof cr === "string" || !cr) return `${cr || "Unknown"} (${Parser.crToXp(cr)} XP)`;
+Parser.monCrToFull = function (cr, xp) {
+	if (typeof cr === "string" || !cr) return `${cr || "Unknown"} (${xp != null ? Parser._addCommas(xp) : Parser.crToXp(cr)} XP)`;
 	else {
-		const stack = [Parser.monCrToFull(cr.cr)];
+		const stack = [Parser.monCrToFull(cr.cr, cr.xp)];
 		if (cr.lair) stack.push(`${Parser.monCrToFull(cr.lair)} when encountered in lair`);
 		if (cr.coven) stack.push(`${Parser.monCrToFull(cr.coven)} when part of a coven`);
 		return stack.join(" or ");
@@ -1192,7 +1037,7 @@ Parser.monImmResToFull = function (toParse) {
 
 Parser.monCondImmToFull = function (condImm) {
 	function render (condition) {
-		return EntryRenderer.getDefaultRenderer().renderEntry(`{@condition ${condition}}`);
+		return Renderer.get().render(`{@condition ${condition}}`);
 	}
 	return condImm.map(it => {
 		if (it.special) return it.special;
@@ -1230,6 +1075,20 @@ Parser.monSpellcastingTagToFull = function (tag) {
 	return Parser._parse_aToB(Parser.MON_SPELLCASTING_TAG_TO_FULL, tag);
 };
 
+Parser.MON_MISC_TAG_TO_FULL = {
+	"AOE": "Has Areas of Effect",
+	"MW": "Has Melee Weapon Attacks",
+	"RW": "Has Ranged Weapon Attacks",
+	"RNG": "Has Ranged Weapons",
+	"RCH": "Has Reach Attacks",
+	"THW": "Has Thrown Weapons"
+};
+Parser.monMiscTagToFull = function (tag) {
+	return Parser._parse_aToB(Parser.MON_MISC_TAG_TO_FULL, tag);
+};
+
+Parser.ENVIRONMENTS = ["arctic", "coastal", "desert", "forest", "grassland", "hill", "mountain", "swamp", "underdark", "underwater", "urban"];
+
 // psi-prefix functions are for parsing psionic data, and shared with the roll20 script
 Parser.PSI_ABV_TYPE_TALENT = "T";
 Parser.PSI_ABV_TYPE_DISCIPLINE = "D";
@@ -1253,9 +1112,9 @@ Parser.levelToFull = function (level) {
 };
 
 Parser.prereqSpellToFull = function (spell) {
-	if (spell === "eldritch blast") return EntryRenderer.getDefaultRenderer().renderEntry(`{@spell ${spell}} cantrip`);
-	else if (spell === "hex/curse") return EntryRenderer.getDefaultRenderer().renderEntry("{@spell hex} spell or a warlock feature that curses");
-	else if (spell) return EntryRenderer.getDefaultRenderer().renderEntry(`{@spell ${spell}}`);
+	if (spell === "eldritch blast") return Renderer.get().render(`{@spell ${spell}} cantrip`);
+	else if (spell === "hex/curse") return Renderer.get().render("{@spell hex} spell or a warlock feature that curses");
+	else if (spell) return Renderer.get().render(`{@spell ${spell}}`);
 	return STR_NONE;
 };
 
@@ -1275,6 +1134,7 @@ Parser.prereqPatronToShort = function (patron) {
 
 // NOTE: These need to be reflected in omnidexer.js to be indexed
 Parser.OPT_FEATURE_TYPE_TO_FULL = {
+	AI: "Artificer Infusion",
 	ED: "Elemental Discipline",
 	EI: "Eldritch Invocation",
 	MM: "Metamagic",
@@ -1288,7 +1148,12 @@ Parser.OPT_FEATURE_TYPE_TO_FULL = {
 	"FS:B": "Fighting Style; Bard",
 	"FS:P": "Fighting Style; Paladin",
 	"FS:R": "Fighting Style; Ranger",
-	"PB": "Pact Boon"
+	"PB": "Pact Boon",
+	"SHP:H": "Ship Upgrade, Hull",
+	"SHP:M": "Ship Upgrade, Movement",
+	"SHP:W": "Ship Upgrade, Weapon",
+	"SHP:F": "Ship Upgrade, Figurehead",
+	"SHP:O": "Ship Upgrade, Miscellaneous"
 };
 
 Parser.optFeatureTypeToFull = function (type) {
@@ -1299,7 +1164,7 @@ Parser.optFeatureTypeToFull = function (type) {
 
 Parser.alignmentAbvToFull = function (alignment) {
 	if (typeof alignment === "object") {
-		if (alignment.special) {
+		if (alignment.special != null) {
 			// use in MTF Sacred Statue
 			return alignment.special;
 		} else {
@@ -1334,31 +1199,34 @@ Parser.alignmentAbvToFull = function (alignment) {
 };
 
 Parser.alignmentListToFull = function (alignList) {
-	// assume all single-length arrays can be simply parsed
-	if (alignList.length === 1) return Parser.alignmentAbvToFull(alignList[0]);
-	// two-length arrays can be:
-	// 1. "[object] or [object]"
-	// 2. a pair of abv's, e.g. "L" "G"
-	if (alignList.length === 2) {
-		if (typeof alignList[0] === "object" && typeof alignList[1] === "object") return `${Parser.alignmentAbvToFull(alignList[0])} or ${Parser.alignmentAbvToFull(alignList[1]).toLowerCase()}`;
-		else if (typeof alignList[0] === "string" && typeof alignList[1] === "string") return alignList.map(a => Parser.alignmentAbvToFull(a)).join(" ");
-		else throw new Error(`Malformed alignment pair: ${JSON.stringify(alignList)}`);
+	if (alignList.some(it => typeof it !== "string")) {
+		if (alignList.some(it => typeof it === "string")) throw new Error(`Mixed alignment types: ${JSON.stringify(alignList)}`);
+		return alignList.map(it => it.special != null || it.chance != null ? Parser.alignmentAbvToFull(it) : Parser.alignmentListToFull(it.alignment)).join(" or ");
+	} else {
+		// assume all single-length arrays can be simply parsed
+		if (alignList.length === 1) return Parser.alignmentAbvToFull(alignList[0]);
+		// a pair of abv's, e.g. "L" "G"
+		if (alignList.length === 2) {
+			return alignList.map(a => Parser.alignmentAbvToFull(a)).join(" ");
+		}
+		if (alignList.length === 3) {
+			if (alignList.includes("NX") && alignList.includes("NY") && alignList.includes("N")) return "Any Neutral Alignment";
+		}
+		// longer arrays should have a custom mapping
+		if (alignList.length === 5) {
+			if (!alignList.includes("G")) return "Any Non-Good Alignment";
+			if (!alignList.includes("E")) return "Any Non-Evil Alignment";
+			if (!alignList.includes("L")) return "Any Non-Lawful Alignment";
+			if (!alignList.includes("C")) return "Any Non-Chaotic Alignment";
+		}
+		if (alignList.length === 4) {
+			if (!alignList.includes("L") && !alignList.includes("NX")) return "Any Chaotic Alignment";
+			if (!alignList.includes("G") && !alignList.includes("NY")) return "Any Evil Alignment";
+			if (!alignList.includes("C") && !alignList.includes("NX")) return "Any Lawful Alignment";
+			if (!alignList.includes("E") && !alignList.includes("NY")) return "Any Good Alignment";
+		}
+		throw new Error(`Unmapped alignment: ${JSON.stringify(alignList)}`);
 	}
-	// longer arrays should have a custom mapping
-	// available options are:
-	// "L", "NX", "C" ("NX" = "neutral X" = neutral law/chaos axis)
-	// "G", "NY", "E" ("NY" = "neutral Y" = neutral good/evil axis)
-	if (alignList.length === 5) {
-		if (!alignList.includes("G")) return "any non-good alignment";
-		if (!alignList.includes("L")) return "any non-lawful alignment";
-	}
-	if (alignList.length === 4) {
-		if (!alignList.includes("L") && !alignList.includes("NX")) return "any chaotic alignment";
-		if (!alignList.includes("G") && !alignList.includes("NY")) return "any evil alignment";
-		if (!alignList.includes("C") && !alignList.includes("NX")) return "any lawful alignment";
-		if (!alignList.includes("E") && !alignList.includes("NY")) return "any good alignment";
-	}
-	throw new Error(`Unmapped alignment: ${JSON.stringify(alignList)}`);
 };
 
 Parser.CAT_ID_CREATURE = 1;
@@ -1394,6 +1262,8 @@ Parser.CAT_ID_CLASS_FEATURE = 30;
 Parser.CAT_ID_SHIP = 31;
 Parser.CAT_ID_PACT_BOON = 32;
 Parser.CAT_ID_ELEMENTAL_DISCIPLINE = 33;
+Parser.CAT_ID_ARTIFICER_INFUSION = 34;
+Parser.CAT_ID_SHIP_UPGRADE = 35;
 
 Parser.CAT_ID_TO_FULL = {};
 Parser.CAT_ID_TO_FULL[Parser.CAT_ID_CREATURE] = "Bestiary";
@@ -1429,6 +1299,8 @@ Parser.CAT_ID_TO_FULL[Parser.CAT_ID_CLASS_FEATURE] = "Class Feature";
 Parser.CAT_ID_TO_FULL[Parser.CAT_ID_SHIP] = "Ship";
 Parser.CAT_ID_TO_FULL[Parser.CAT_ID_PACT_BOON] = "Pact Boon";
 Parser.CAT_ID_TO_FULL[Parser.CAT_ID_ELEMENTAL_DISCIPLINE] = "Elemental Discipline";
+Parser.CAT_ID_TO_FULL[Parser.CAT_ID_ARTIFICER_INFUSION] = "Infusion";
+Parser.CAT_ID_TO_FULL[Parser.CAT_ID_SHIP_UPGRADE] = "Ship Upgrade";
 
 Parser.pageCategoryToFull = function (catId) {
 	return Parser._parse_aToB(Parser.CAT_ID_TO_FULL, catId);
@@ -1465,6 +1337,8 @@ Parser.CAT_ID_TO_PROP[Parser.CAT_ID_METAMAGIC] = "optionalfeature";
 Parser.CAT_ID_TO_PROP[Parser.CAT_ID_MANEUVER_BATTLEMASTER] = "optionalfeature";
 Parser.CAT_ID_TO_PROP[Parser.CAT_ID_PACT_BOON] = "optionalfeature";
 Parser.CAT_ID_TO_PROP[Parser.CAT_ID_ELEMENTAL_DISCIPLINE] = "optionalfeature";
+Parser.CAT_ID_TO_PROP[Parser.CAT_ID_ARTIFICER_INFUSION] = "optionalfeature";
+Parser.CAT_ID_TO_PROP[Parser.CAT_ID_SHIP_UPGRADE] = "optionalfeature";
 
 Parser.pageCategoryToProp = function (catId) {
 	return Parser._parse_aToB(Parser.CAT_ID_TO_PROP, catId);
@@ -1592,6 +1466,13 @@ Parser.bookOrdinalToAbv = (ordinal, preNoSuff) => {
 	}
 };
 
+Parser.nameToTokenName = function (name) {
+	return name
+		.normalize("NFD") // replace diactrics with their individual graphemes
+		.replace(/[\u0300-\u036f]/g, "") // remove accent graphemes
+		.replace(/"/g, "");
+};
+
 SKL_ABV_ABJ = "A";
 SKL_ABV_EVO = "V";
 SKL_ABV_ENC = "E";
@@ -1657,6 +1538,7 @@ TP_MONSTROSITY = "monstrosity";
 TP_OOZE = "ooze";
 TP_PLANT = "plant";
 TP_UNDEAD = "undead";
+Parser.MON_TYPES = [TP_ABERRATION, TP_BEAST, TP_CELESTIAL, TP_CONSTRUCT, TP_DRAGON, TP_ELEMENTAL, TP_FEY, TP_FIEND, TP_GIANT, TP_HUMANOID, TP_MONSTROSITY, TP_OOZE, TP_PLANT, TP_UNDEAD];
 Parser.MON_TYPE_TO_PLURAL = {};
 Parser.MON_TYPE_TO_PLURAL[TP_ABERRATION] = "aberrations";
 Parser.MON_TYPE_TO_PLURAL[TP_BEAST] = "beasts";
@@ -1683,6 +1565,7 @@ SZ_HUGE = "H";
 SZ_GARGANTUAN = "G";
 SZ_COLOSSAL = "C";
 SZ_VARIES = "V";
+Parser.SIZE_ABVS = [SZ_TINY, SZ_SMALL, SZ_MEDIUM, SZ_LARGE, SZ_HUGE, SZ_GARGANTUAN, SZ_VARIES];
 Parser.SIZE_ABV_TO_FULL = {};
 Parser.SIZE_ABV_TO_FULL[SZ_FINE] = "Fine";
 Parser.SIZE_ABV_TO_FULL[SZ_DIMINUTIVE] = "Diminutive";
@@ -1775,6 +1658,7 @@ SRC_WDMM = "WDMM";
 SRC_GGR = "GGR";
 SRC_KKW = "KKW";
 SRC_LLK = "LLK";
+SRC_GoS = "GoS";
 SRC_AL = "AL";
 SRC_SCREEN = "Screen";
 
@@ -1839,6 +1723,7 @@ SRC_UARoR = SRC_UA_PREFIX + "RacesOfRavnica";
 SRC_UAWGE = SRC_UA_PREFIX + "WGE";
 SRC_UAOSS = SRC_UA_PREFIX + "OfShipsAndSea";
 SRC_UASIK = SRC_UA_PREFIX + "Sidekicks";
+SRC_UAAR = SRC_UA_PREFIX + "ArtificerRevisited";
 
 SRC_3PP_SUFFIX = " 3pp";
 SRC_STREAM = "Stream";
@@ -1888,6 +1773,7 @@ Parser.SOURCE_JSON_TO_FULL[SRC_WDMM] = "Waterdeep: Dungeon of the Mad Mage";
 Parser.SOURCE_JSON_TO_FULL[SRC_GGR] = "Guildmasters' Guide to Ravnica";
 Parser.SOURCE_JSON_TO_FULL[SRC_KKW] = "Krenko's Way";
 Parser.SOURCE_JSON_TO_FULL[SRC_LLK] = "Lost Laboratory of Kwalish";
+Parser.SOURCE_JSON_TO_FULL[SRC_GoS] = "Ghosts of Saltmarsh";
 Parser.SOURCE_JSON_TO_FULL[SRC_AL] = "Adventurers' League";
 Parser.SOURCE_JSON_TO_FULL[SRC_SCREEN] = "Dungeon Master's Screen";
 Parser.SOURCE_JSON_TO_FULL[SRC_ALCoS] = AL_PREFIX + "Curse of Strahd";
@@ -1945,6 +1831,7 @@ Parser.SOURCE_JSON_TO_FULL[SRC_UARoR] = UA_PREFIX + "Races of Ravnica";
 Parser.SOURCE_JSON_TO_FULL[SRC_UAWGE] = "Wayfinder's Guide to Eberron";
 Parser.SOURCE_JSON_TO_FULL[SRC_UAOSS] = UA_PREFIX + "Of Ships and the Sea";
 Parser.SOURCE_JSON_TO_FULL[SRC_UASIK] = UA_PREFIX + "Sidekicks";
+Parser.SOURCE_JSON_TO_FULL[SRC_UAAR] = UA_PREFIX + "Artificer Revisited";
 Parser.SOURCE_JSON_TO_FULL[SRC_STREAM] = "Livestream";
 Parser.SOURCE_JSON_TO_FULL[SRC_TWITTER] = "Twitter";
 
@@ -1984,6 +1871,7 @@ Parser.SOURCE_JSON_TO_ABV[SRC_WDMM] = "WDMM";
 Parser.SOURCE_JSON_TO_ABV[SRC_GGR] = "GGR";
 Parser.SOURCE_JSON_TO_ABV[SRC_KKW] = "KKW";
 Parser.SOURCE_JSON_TO_ABV[SRC_LLK] = "LLK";
+Parser.SOURCE_JSON_TO_ABV[SRC_GoS] = "GoS";
 Parser.SOURCE_JSON_TO_ABV[SRC_AL] = "AL";
 Parser.SOURCE_JSON_TO_ABV[SRC_SCREEN] = "Screen";
 Parser.SOURCE_JSON_TO_ABV[SRC_ALCoS] = "ALCoS";
@@ -2041,6 +1929,7 @@ Parser.SOURCE_JSON_TO_ABV[SRC_UARoR] = "UARoR";
 Parser.SOURCE_JSON_TO_ABV[SRC_UAWGE] = "WGE";
 Parser.SOURCE_JSON_TO_ABV[SRC_UAOSS] = "UAOSS";
 Parser.SOURCE_JSON_TO_ABV[SRC_UASIK] = "UASIK";
+Parser.SOURCE_JSON_TO_ABV[SRC_UAAR] = "UAAR";
 Parser.SOURCE_JSON_TO_ABV[SRC_STREAM] = "Stream";
 Parser.SOURCE_JSON_TO_ABV[SRC_TWITTER] = "Twitter";
 
@@ -2070,18 +1959,30 @@ Parser.ITEM_TYPE_JSON_TO_ABV = {
 	"T": "Tool",
 	"TAH": "Tack and Harness",
 	"TG": "Trade Good",
-	"VEH": "Vehicle",
-	"SHP": "Vehicle",
+	"VEH": "Vehicle (land)",
+	"SHP": "Vehicle (water)",
+	"AIR": "Vehicle (air)",
 	"WD": "Wand"
 };
 
 Parser.DMGTYPE_JSON_TO_FULL = {
+	"A": "acid",
 	"B": "bludgeoning",
+	"C": "cold",
+	"F": "fire",
+	"O": "force",
+	"L": "lightning",
 	"N": "necrotic",
 	"P": "piercing",
+	"I": "poison",
+	"Y": "psychic",
 	"R": "radiant",
-	"S": "slashing"
+	"S": "slashing",
+	"T": "thunder"
 };
+
+Parser.DMG_TYPES = ["acid", "bludgeoning", "cold", "fire", "force", "lightning", "necrotic", "piercing", "poison", "psychic", "radiant", "slashing", "thunder"];
+Parser.CONDITIONS = ["blinded", "charmed", "deafened", "exhaustion", "frightened", "grappled", "incapacitated", "invisible", "paralyzed", "petrified", "poisoned", "prone", "restrained", "stunned", "unconscious"];
 
 Parser.SKILL_JSON_TO_FULL = {
 	"Acrobatics": [
@@ -2208,13 +2109,6 @@ Parser.NUMBERS_TEENS = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fift
 // SOURCES =============================================================================================================
 SourceUtil = {
 	hasBeenReprinted (shortName, source) {
-		/* can accept sources of the form:
-		{
-			"source": "UAExample",
-			"forceStandard": true
-		}
-		 */
-		if (source && source.source) source = source.source;
 		return (shortName !== undefined && shortName !== null && source !== undefined && source !== null) &&
 			(
 				(shortName === "Sun Soul" && source === SRC_SCAG) ||
@@ -2226,16 +2120,6 @@ SourceUtil = {
 	},
 
 	isNonstandardSource (source) {
-		/* can accept sources of the form:
-		{
-			"source": "UAExample",
-			"forceStandard": true
-		}
-		 */
-		if (source && source.forceStandard !== undefined) {
-			return !source.forceStandard;
-		}
-		if (source && source.source) source = source.source;
 		return (source !== undefined && source !== null) && !BrewUtil.hasSourceJson(source) && (SourceUtil._isNonstandardSourceWiz(source) || SourceUtil._isNonstandardSource3pp(source));
 	},
 
@@ -2248,8 +2132,8 @@ SourceUtil = {
 	},
 
 	getFilterGroup (source) {
-		if (BrewUtil.hasSourceJson(source)) return 2;
-		return Number(SourceUtil.isNonstandardSource(source));
+		if (BrewUtil.hasSourceJson(source.item)) return 2;
+		return Number(SourceUtil.isNonstandardSource(source.item));
 	}
 };
 
@@ -2320,33 +2204,42 @@ JqueryUtil = {
 	initEnhancements () {
 		JqueryUtil.addSelectors();
 
+		/**
+		 * Template strings which can contain jQuery objects.
+		 * Usage: $$`<div>Press this button: ${$btn}</div>`
+		 */
+		window.$$ = function (parts, ...args) {
+			const $eles = [];
+			let ixArg = 0;
+
+			const handleArg = (arg) => {
+				if (arg instanceof $) {
+					$eles.push(arg);
+					return `<${arg.tag()} data-r=true></${arg.tag()}>`;
+				} else if (arg instanceof HTMLElement) {
+					return handleArg($(arg));
+				} else return arg
+			};
+
+			const raw = parts.reduce((html, p) => {
+				const myIxArg = ixArg++;
+				if (args[myIxArg] == null) return `${html}${p}`;
+				if (args[myIxArg] instanceof Array) return `${html}${args[myIxArg].map(arg => handleArg(arg)).join("")}${p}`;
+				else return `${html}${handleArg(args[myIxArg])}${p}`;
+			});
+			const $res = $(raw);
+			$res.find(`[data-r=true]`).replaceWith(i => $eles[i]);
+			return $res;
+		};
+
 		$.fn.extend({
-			/**
-			 * Has two modes; either:
-			 * Takes a jQuery object and replaces elements with `data-r-<n>` with the nth position arg, e.g.
-			 * $(`<div><div>my <span>initial</span> html <div data-r="0"/> <div data-r="1"/></div>`)
-			 *
-			 * or:
-			 * Takes a jQuery object and replaces elements with `data-r-<id>` with the element at key id
-			 * $(`<div><div>my <span>initial</span> html <div data-r="foo"/> <div data-r="bar"/></div>`)
-			 */
-			swap: function (...$toSwap) {
-				if ($toSwap.length === 1 && !($toSwap[0] instanceof jQuery)) {
-					Object.entries($toSwap[0]).forEach(([k, $v]) => {
-						this.find(`[data-r="${k}"]`).replaceWith($v);
-					});
-				} else {
-					$toSwap.forEach(ts => {
-						this.find(`[data-r]`).first().replaceWith(ts);
-					});
-				}
-
-				return this;
-			},
-
 			disableSpellcheck: function () {
 				this.attr("autocomplete", "off").attr("autocapitalize", "off").attr("spellcheck", "false");
 				return this;
+			},
+
+			tag: function () {
+				return this.prop("tagName").toLowerCase();
 			}
 		});
 
@@ -2446,13 +2339,12 @@ JqueryUtil = {
 		const $btnToastDismiss = $(`<button class="btn toast__btn-close"><span class="glyphicon glyphicon-remove"/></button>`)
 			.click(() => doCleanup($toast));
 
-		const $toast = $(`
+		const $toast = $$`
 				<div class="toast alert-${options.type}">
-					<div class="toast__wrp-content"><div data-r="$content"/></div>
-					<div class="toast__wrp-control"><div data-r="$btnToastDismiss"/></div>
+					<div class="toast__wrp-content">${options.content}</div>
+					<div class="toast__wrp-control">${$btnToastDismiss}</div>
 				</div>
-			`)
-			.swap({$content: options.content, $btnToastDismiss})
+			`
 			.prependTo($(`body`))
 			.data("pos", 0);
 
@@ -2702,6 +2594,10 @@ MiscUtil = {
 			timeout = setTimeout(later, waitTime);
 			if (callNow) func.apply(context, args);
 		};
+	},
+
+	pDelay (msecs) {
+		return new Promise(resolve => setTimeout(() => resolve(), msecs));
 	}
 };
 
@@ -2736,6 +2632,9 @@ ContextUtil = {
 		return position;
 	},
 
+	_lastMenuId: 1,
+	getNextGenericMenuId () { return `contextMenu_${ContextUtil._lastMenuId++}`; },
+
 	doInitContextMenu: (menuId, clickFn, labels) => {
 		ContextUtil._ctxClick[menuId] = clickFn;
 		ContextUtil._handlePreInitContextMenu(menuId);
@@ -2753,6 +2652,13 @@ ContextUtil = {
 		tempString += `</ul>`;
 		$(`#${menuId}`).remove();
 		$("body").append(tempString);
+	},
+
+	doTeardownContextMenu (menuId) {
+		delete ContextUtil._ctxInit[menuId];
+		delete ContextUtil._ctxClick[menuId];
+		delete ContextUtil._ctxOpenRefs[menuId];
+		$(`#${menuId}`).remove();
 	},
 
 	handleOpenContextMenu: (evt, ele, menuId, closeHandler) => {
@@ -3096,7 +3002,7 @@ ListUtil = {
 			.attr("title", "Pin (Toggle)");
 	},
 
-	_genericAddButtonHandler (evt, options = {}) {
+	genericAddButtonHandler (evt, options = {}) {
 		if (evt.shiftKey) ListUtil.pDoSublistAdd(History.lastLoadedId, true, options.shiftCount || 20);
 		else ListUtil.pDoSublistAdd(History.lastLoadedId, true);
 	},
@@ -3104,10 +3010,10 @@ ListUtil = {
 		ListUtil.getOrTabRightButton(`btn-sublist-add`, `plus`)
 			.off("click")
 			.attr("title", `Add (SHIFT for ${options.shiftCount || 20})`)
-			.on("click", handlerGenerator ? handlerGenerator() : ListUtil._genericAddButtonHandler);
+			.on("click", handlerGenerator ? handlerGenerator() : ListUtil.genericAddButtonHandler);
 	},
 
-	_genericSubtractButtonHandler (evt, options = {}) {
+	genericSubtractButtonHandler (evt, options = {}) {
 		if (evt.shiftKey) ListUtil.pDoSublistSubtract(History.lastLoadedId, options.shiftCount || 20);
 		else ListUtil.pDoSublistSubtract(History.lastLoadedId);
 	},
@@ -3115,7 +3021,7 @@ ListUtil = {
 		ListUtil.getOrTabRightButton(`btn-sublist-subtract`, `minus`)
 			.off("click")
 			.attr("title", `Subtract (SHIFT for ${options.shiftCount || 20})`)
-			.on("click", handlerGenerator ? handlerGenerator() : ListUtil._genericSubtractButtonHandler);
+			.on("click", handlerGenerator ? handlerGenerator() : ListUtil.genericSubtractButtonHandler);
 	},
 
 	bindDownloadButton: () => {
@@ -3123,12 +3029,12 @@ ListUtil = {
 		$btn.off("click")
 			.on("click", async evt => {
 				if (evt.shiftKey) {
-					const toEncode = JSON.stringify(ListUtil._getExportableSublist());
-					const parts = [window.location.href, (UrlUtil.packSubHash(ListUtil.SUB_HASH_PREFIX, [toEncode], true))];
+					const toEncode = JSON.stringify(ListUtil.getExportableSublist());
+					const parts = [window.location.href, (UrlUtil.packSubHash(ListUtil.SUB_HASH_PREFIX, [toEncode], {isEncodeBoth: true}))];
 					await MiscUtil.pCopyTextToClipboard(parts.join(HASH_PART_SEP));
 					JqueryUtil.showCopiedEffect($btn);
 				} else {
-					DataUtil.userDownload(ListUtil._getDownloadName(), JSON.stringify(ListUtil._getExportableSublist(), null, "\t"));
+					DataUtil.userDownload(ListUtil._getDownloadName(), JSON.stringify(ListUtil.getExportableSublist(), null, "\t"));
 				}
 			})
 			.attr("title", "Download List (SHIFT for Link)");
@@ -3201,13 +3107,13 @@ ListUtil = {
 	_getPinnedCount (index, data) {
 		const base = ListUtil._pinned[index];
 		if (!base) return null;
-		if (data) return base[data.uid];
+		if (data && data.uid) return base[data.uid];
 		return base._;
 	},
 
 	_setPinnedCount (index, count, data) {
 		const base = ListUtil._pinned[index];
-		const key = data ? data.uid : "_";
+		const key = data && data.uid ? data.uid : "_";
 		if (base) base[key] = count;
 		else (ListUtil._pinned[index] = {})[key] = count;
 	},
@@ -3215,7 +3121,7 @@ ListUtil = {
 	_deletePinnedCount (index, data) {
 		const base = ListUtil._pinned[index];
 		if (base) {
-			if (data) delete base[data.uid];
+			if (data && data.uid) delete base[data.uid];
 			else delete base._;
 		}
 	},
@@ -3255,6 +3161,8 @@ ListUtil = {
 		if (count > subtractCount) {
 			ListUtil._setPinnedCount(index, count - subtractCount, data);
 			ListUtil._setViewCount(index, count - subtractCount, data);
+			ListUtil.sublist.reIndex();
+			await ListUtil._pSaveSublist();
 			ListUtil._handleCallUpdateFn();
 		} else if (count) await ListUtil.pDoSublistRemove(index, data);
 	},
@@ -3268,7 +3176,7 @@ ListUtil = {
 	},
 
 	_setViewCount: (index, newCount, data) => {
-		const $cnt = $(ListUtil.sublist.get(data ? "uid" : "id", data ? data.uid : index)[0].elm).find(".count");
+		const $cnt = $(ListUtil.sublist.get(data && data.uid ? "uid" : "id", data && data.uid ? data.uid : index)[0].elm).find(".count");
 		if ($cnt.find("input").length) $cnt.find("input").val(newCount);
 		else $cnt.text(newCount);
 	},
@@ -3280,7 +3188,7 @@ ListUtil = {
 		ListUtil._handleCallUpdateFn();
 	},
 
-	_getExportableSublist: () => {
+	getExportableSublist: () => {
 		const sources = new Set();
 		const toSave = ListUtil.sublist.items
 			.map(it => {
@@ -3292,7 +3200,7 @@ ListUtil = {
 	},
 
 	async _pSaveSublist () {
-		await StorageUtil.pSetForPage("sublist", ListUtil._getExportableSublist());
+		await StorageUtil.pSetForPage("sublist", ListUtil.getExportableSublist());
 	},
 
 	_updateSublistVisibility: () => {
@@ -3411,7 +3319,7 @@ ListUtil = {
 		const itId = Number($invokedOn.attr(FLTR_ID));
 		switch (Number($selectedMenu.data("ctx-id"))) {
 			case 0:
-				EntryRenderer.hover.doPopout($invokedOn, ListUtil._allItems, itId, evt.clientX);
+				Renderer.hover.doPopout($invokedOn, ListUtil._allItems, itId, evt.clientX);
 				break;
 			case 1:
 				Promise.all(ListUtil._primaryLists.map(l => Promise.all(ListUtil.mapSelected(l, (it) => ListUtil.isSublisted(it) ? Promise.resolve() : ListUtil.pDoSublistAdd(it)))))
@@ -3469,7 +3377,7 @@ ListUtil = {
 		const itId = Number($invokedOn.attr(FLTR_ID));
 		switch (Number($selectedMenu.data("ctx-id"))) {
 			case 0:
-				EntryRenderer.hover.doPopout($invokedOn, ListUtil._allItems, itId, evt.clientX);
+				Renderer.hover.doPopout($invokedOn, ListUtil._allItems, itId, evt.clientX);
 				break;
 			case 1:
 				ListUtil.pDoSublistRemove(itId);
@@ -3495,7 +3403,7 @@ ListUtil = {
 		const itId = Number($invokedOn.attr(FLTR_ID));
 		switch (Number($selectedMenu.data("ctx-id"))) {
 			case 0:
-				EntryRenderer.hover.doPopout($invokedOn, ListUtil._allItems, itId, evt.clientX);
+				Renderer.hover.doPopout($invokedOn, ListUtil._allItems, itId, evt.clientX);
 				break;
 			case 1:
 				Promise.all(ListUtil._primaryLists.map(l => Promise.all(ListUtil.mapSelected(l, (it) => ListUtil.pDoSublistAdd(it)))))
@@ -3512,7 +3420,7 @@ ListUtil = {
 		const uid = $invokedOn.find(`.uid`).text();
 		switch (Number($selectedMenu.data("ctx-id"))) {
 			case 0:
-				EntryRenderer.hover.doPopout($invokedOn, ListUtil._allItems, itId, evt.clientX);
+				Renderer.hover.doPopout($invokedOn, ListUtil._allItems, itId, evt.clientX);
 				break;
 			case 1:
 				if (uid) ListUtil.pDoSublistRemove(itId, {uid: uid});
@@ -3534,7 +3442,7 @@ ListUtil = {
 		return `${UrlUtil.getCurrentPage().replace(".html", "")}-sublist`;
 	},
 
-	_genericPinKeyMapper (pMapUid = ListUtil._pUidHandler) {
+	genericPinKeyMapper (pMapUid = ListUtil._pUidHandler) {
 		return Object.entries(ListUtil.getSublisted()).map(([id, it]) => {
 			return Object.keys(it).map(k => {
 				const it = ListUtil._allItems[id];
@@ -3545,7 +3453,7 @@ ListUtil = {
 
 	_handleJsonDownload () {
 		if (ListUtil._pUidHandler) {
-			const promises = ListUtil._genericPinKeyMapper();
+			const promises = ListUtil.genericPinKeyMapper();
 
 			Promise.all(promises).then(data => {
 				data.forEach(cpy => DataUtil.cleanJson(cpy));
@@ -3644,7 +3552,7 @@ ListUtil = {
 
 		if (typeof filter === "object" && filter.generator) filter = filter.generator();
 
-		let temp = `<table class="table-striped stats stats-book" style="width: 100%;"><thead><tr>${Object.values(colTransforms).map((c, i) => `<th class="col_${i} px-2" colspan="${c.flex || 1}">${c.name}</th>`).join("")}</tr></thead><tbody>`;
+		let temp = `<table class="table-striped stats stats-book stats-book--large" style="width: 100%;"><thead><tr>${Object.values(colTransforms).map((c, i) => `<th class="col_${i} px-2" colspan="${c.flex || 1}">${c.name}</th>`).join("")}</tr></thead><tbody>`;
 		const listCopy = JSON.parse(JSON.stringify(dataList)).filter((it, i) => filter ? filter(i) : it);
 		if (sorter) listCopy.sort(sorter);
 		listCopy.forEach(it => {
@@ -3705,7 +3613,7 @@ function getSourceFilter (options = {}) {
 		groupFn: SourceUtil.getFilterGroup
 	};
 	Object.assign(baseOptions, options);
-	return new GroupedFilter(baseOptions);
+	return new Filter(baseOptions);
 }
 
 function defaultSourceDeselFn (val) {
@@ -3738,7 +3646,7 @@ function getFilterWithMergedOptions (baseOptions, addOptions) {
 }
 
 async function pInitFilterBox (...filterList) {
-	const filterBox = new FilterBox(document.getElementById(ID_SEARCH_BAR), document.getElementById(ID_RESET_BUTTON), filterList);
+	const filterBox = new FilterBox($(`#${ID_SEARCH_BAR}`), $(`#${ID_RESET_BUTTON}`), filterList);
 	await filterBox.pDoLoadState();
 	return filterBox;
 }
@@ -3804,12 +3712,24 @@ UrlUtil = {
 		}
 	},
 
-	packSubHash (key, values, encode) {
-		if (encode) {
-			key = encodeURIComponent(key.toLowerCase());
-			values = values.map(it => encodeURIComponent(it.toLowerCase()));
-		}
+	/**
+	 * @param key The subhash key.
+	 * @param values The subhash values.
+	 * @param [opts] Options object.
+	 * @param [opts.isEncodeBoth] If both the key and values should be URl encoded.
+	 * @param [opts.isEncodeKey] If the key should be URL encoded.
+	 * @param [opts.isEncodeValues] If the values should be URL encoded.
+	 * @returns {string}
+	 */
+	packSubHash (key, values, opts) {
+		opts = opts || {};
+		if (opts.isEncodeBoth || opts.isEncodeKey) key = UrlUtil.pack(key);
+		if (opts.isEncodeBoth || opts.isEncodeValues) values = values.map(it => UrlUtil.pack(it));
 		return `${key}${HASH_SUB_KV_SEP}${values.join(HASH_SUB_LIST_SEP)}`;
+	},
+
+	pack (part) {
+		return encodeURIComponent(part.toLowerCase());
 	},
 
 	categoryToPage (category) {
@@ -3823,22 +3743,90 @@ UrlUtil = {
 			.on("click", async evt => {
 				let url = window.location.href;
 
-				const toHash = filterBox.getAsSubHashes();
-				let parts = Object.keys(toHash).map(hK => {
-					const hV = toHash[hK];
-					return UrlUtil.packSubHash(hK, hV, true);
-				});
-				if (evt.shiftKey) {
-					const toEncode = JSON.stringify(ListUtil._getExportableSublist());
-					const part2 = UrlUtil.packSubHash(ListUtil.SUB_HASH_PREFIX, [toEncode], true);
-					parts = parts.concat(part2);
-				}
+				const parts = filterBox.getSubHashes();
 				parts.unshift(url);
+
+				if (evt.shiftKey) {
+					const toEncode = JSON.stringify(ListUtil.getExportableSublist());
+					const part2 = UrlUtil.packSubHash(ListUtil.SUB_HASH_PREFIX, [toEncode], {isEncodeBoth: true});
+					parts.push(part2);
+				}
 
 				await MiscUtil.pCopyTextToClipboard(parts.join(HASH_PART_SEP));
 				JqueryUtil.showCopiedEffect($btn);
 			})
 			.attr("title", "Get Link to Filters (SHIFT adds List)")
+	},
+
+	class: {
+		getIndexedEntries (cls) {
+			const out = [];
+			let scFeatureI = 0;
+			(cls.classFeatures || []).forEach((lvlFeatureList, i) => {
+				// class features
+				lvlFeatureList
+					.filter(feature => !feature.gainSubclassFeature && feature.name !== "Ability Score Improvement") // don't add "you gain a subclass feature" or ASI's
+					.forEach(feature => {
+						const name = Renderer.findName(feature);
+						if (!name) throw new Error("No name!");
+						out.push({
+							_type: "classFeature",
+							source: cls.source.source || cls.source,
+							name,
+							hash: `${UrlUtil.URL_TO_HASH_BUILDER[UrlUtil.PG_CLASSES](cls)}${HASH_PART_SEP}${CLSS_HASH_FEATURE}${UrlUtil.encodeForHash(`${feature.name} ${i + 1}`)}`,
+							entry: feature,
+							level: i + 1
+						})
+					});
+
+				// subclass features
+				const gainSubclassFeatures = lvlFeatureList.filter(feature => feature.gainSubclassFeature);
+				if (gainSubclassFeatures.length === 1) {
+					const gainFeatureHash = `${CLSS_HASH_FEATURE}${UrlUtil.encodeForHash(`${gainSubclassFeatures[0].name} ${i + 1}`)}`;
+					cls.subclasses.forEach(sc => {
+						const features = ((sc.subclassFeatures || [])[scFeatureI] || []);
+						const tempStack = [];
+						features.forEach(feature => {
+							const baseSubclassUrl = `${UrlUtil.URL_TO_HASH_BUILDER[UrlUtil.PG_CLASSES](cls)}${HASH_PART_SEP}${HASH_SUBCLASS}${UrlUtil.encodeForHash(sc.name)}${HASH_SUB_LIST_SEP}${UrlUtil.encodeForHash(sc.source)}`;
+							const name = Renderer.findName(feature);
+							if (!name) throw new Error("No name!");
+							const subclassFeatureHash = `${baseSubclassUrl}${HASH_PART_SEP}${gainFeatureHash}`;
+							tempStack.push({
+								_type: "subclassFeature",
+								name,
+								subclassShortName: sc.shortName,
+								source: sc.source.source || sc.source,
+								hash: subclassFeatureHash,
+								entry: feature,
+								level: i + 1
+							});
+
+							if (feature.entries) {
+								const namedFeatureParts = feature.entries.filter(it => it.name);
+								namedFeatureParts.forEach(it => {
+									const lvl = i + 1;
+									if (tempStack.find(existing => it.name === existing.name && lvl === existing.level)) return;
+									tempStack.push({
+										_type: "subclassFeaturePart",
+										name: it.name,
+										subclassShortName: sc.shortName,
+										source: sc.source.source || sc.source,
+										hash: subclassFeatureHash,
+										entry: feature,
+										level: lvl
+									});
+								});
+							}
+						});
+						out.push(...tempStack);
+					});
+					scFeatureI++;
+				} else if (gainSubclassFeatures.length > 1) {
+					setTimeout(() => { throw new Error(`Multiple subclass features gained at level ${i + 1} for class "${cls.name}" from source "${cls.source}"!`) });
+				}
+			});
+			return out;
+		}
 	}
 };
 
@@ -3924,6 +3912,7 @@ UrlUtil.CAT_TO_PAGE[Parser.CAT_ID_TABLE_GROUP] = UrlUtil.PG_TABLES;
 UrlUtil.CAT_TO_PAGE[Parser.CAT_ID_SHIP] = UrlUtil.PG_SHIPS;
 UrlUtil.CAT_TO_PAGE[Parser.CAT_ID_PACT_BOON] = UrlUtil.PG_OPT_FEATURES;
 UrlUtil.CAT_TO_PAGE[Parser.CAT_ID_ELEMENTAL_DISCIPLINE] = UrlUtil.PG_OPT_FEATURES;
+UrlUtil.CAT_TO_PAGE[Parser.CAT_ID_ARTIFICER_INFUSION] = UrlUtil.PG_OPT_FEATURES;
 
 if (!IS_DEPLOYED && !IS_ROLL20 && typeof window !== "undefined") {
 	// for local testing, hotkey to get a link to the current page on the main site
@@ -3940,19 +3929,30 @@ if (!IS_DEPLOYED && !IS_ROLL20 && typeof window !== "undefined") {
 // SORTING =============================================================================================================
 SortUtil = {
 	ascSort: (a, b) => {
-		// to handle `FilterItem`s
-		if (a.hasOwnProperty("item") && b.hasOwnProperty("item")) {
-			return SortUtil._ascSort(a.item, b.item);
+		if (typeof FilterItem !== "undefined") {
+			if (a instanceof FilterItem) a = a.item;
+			if (b instanceof FilterItem) b = b.item;
 		}
+
 		return SortUtil._ascSort(a, b);
 	},
 
 	ascSortLower: (a, b) => {
+		if (typeof FilterItem !== "undefined") {
+			if (a instanceof FilterItem) a = a.item;
+			if (b instanceof FilterItem) b = b.item;
+		}
+
 		return SortUtil._ascSort(a.toLowerCase(), b.toLowerCase());
 	},
 
 	// warning: slow
 	ascSortNumericalSuffix (a, b) {
+		if (typeof FilterItem !== "undefined") {
+			if (a instanceof FilterItem) a = a.item;
+			if (b instanceof FilterItem) b = b.item;
+		}
+
 		function popEndNumber (str) {
 			const spl = str.split(" ");
 			return spl.last().isNumeric() ? [spl.slice(0, -1).join(" "), Number(spl.last().replace(Parser._numberCleanRegexp, ""))] : [spl.join(" "), 0];
@@ -4002,7 +4002,7 @@ SortUtil = {
 		if (!b) return 1;
 		if (a.toLowerCase().trim() === "special equipment") return -1;
 		if (b.toLowerCase().trim() === "special equipment") return 1;
-		return SortUtil.ascSort(a, b);
+		return SortUtil.ascSortLower(a, b);
 	},
 
 	_alignFirst: ["L", "C"],
@@ -4017,6 +4017,10 @@ SortUtil = {
 	},
 
 	ascSortCr (a, b) {
+		if (typeof FilterItem !== "undefined") {
+			if (a instanceof FilterItem) a = a.item;
+			if (b instanceof FilterItem) b = b.item;
+		}
 		// always put unknown values last
 		if (a === "Unknown" || a === undefined) a = "999";
 		if (b === "Unknown" || b === undefined) b = "999";
@@ -4073,10 +4077,10 @@ DataUtil = {
 						DataUtil._loaded[toUrl] = data;
 						resolve(data, otherData);
 					} catch (e) {
-						reject(new Error(`Could not parse JSON from ${toUrl}: ${e}`));
+						reject(new Error(`Could not parse JSON from ${toUrl}: ${e.message}`));
 					}
 				};
-				request.onerror = (e) => reject(new Error(`Error during JSON request: ${e}`));
+				request.onerror = (e) => reject(new Error(`Error during JSON request: ${e.target.status}`));
 				return request;
 			}
 
@@ -4096,25 +4100,45 @@ DataUtil = {
 	},
 
 	async pDoMetaMerge (data, options) {
-		if (data._meta && data._meta.dependencies) {
-			await Promise.all(Object.entries(data._meta.dependencies).map(async ([prop, sources]) => {
-				if (!data[prop]) return; // if e.g. monster dependencies are declared, but there are no monsters to merge with, bail out
+		if (data._meta) {
+			if (data._meta.dependencies) {
+				await Promise.all(Object.entries(data._meta.dependencies).map(async ([prop, sources]) => {
+					if (!data[prop]) return; // if e.g. monster dependencies are declared, but there are no monsters to merge with, bail out
 
-				const toLoads = await Promise.all(sources.map(async source => DataUtil.pGetLoadableByMeta(prop, source)));
-				const dependencyData = await Promise.all(toLoads.map(toLoad => DataUtil.loadJSON(toLoad)));
-				const flatDependencyData = dependencyData.map(dd => dd[prop]).flat();
-				await Promise.all(data[prop].map(async entry => {
-					if (entry._copy) {
-						switch (prop) {
-							case "monster": {
-								return EntryRenderer.monster.pMergeCopy(flatDependencyData, entry, options);
+					const toLoads = await Promise.all(sources.map(async source => DataUtil.pGetLoadableByMeta(prop, source)));
+					const dependencyData = await Promise.all(toLoads.map(toLoad => DataUtil.loadJSON(toLoad)));
+					const flatDependencyData = dependencyData.map(dd => dd[prop]).flat();
+					await Promise.all(data[prop].map(async entry => {
+						if (entry._copy) {
+							switch (prop) {
+								case "monster": {
+									return Renderer.monster.pMergeCopy(flatDependencyData, entry, options);
+								}
+								default: throw new Error(`No _copy merge strategy specified for property "${prop}"`);
 							}
-							default: throw new Error(`No _copy merge strategy specified for property "${prop}"`);
 						}
-					}
+					}));
 				}));
-			}));
-			delete data._meta.dependencies;
+				delete data._meta.dependencies;
+			}
+
+			if (data._meta.internalCopies) {
+				Promise.all(data._meta.internalCopies.map(async prop => {
+					if (!data[prop]) return;
+
+					await Promise.all(data[prop].map(async entry => {
+						if (entry._copy) {
+							switch (prop) {
+								case "monster": {
+									return Renderer.monster.pMergeCopy(data[prop], entry, options);
+								}
+								default: throw new Error(`No _copy merge strategy specified for property "${prop}"`);
+							}
+						}
+					}));
+				}));
+				delete data._meta.internalCopies;
+			}
 		}
 
 		if (data._meta && data._meta.otherSources) {
@@ -4149,10 +4173,15 @@ DataUtil = {
 
 	userDownload: function (filename, data) {
 		if (typeof data !== "string") data = JSON.stringify(data, null, "\t");
-		const $a = $(`<a href="data:text/json;charset=utf-8,${encodeURIComponent(data)}" download="${filename}.json" style="display: none;">DL</a>`);
-		$(`body`).append($a);
-		$a[0].click();
-		$a.remove();
+		const a = document.createElement('a');
+		const t = new Blob([data], {type: 'text/json'});
+		a.href = URL.createObjectURL(t);
+		a.download = `${filename}.json`;
+		a.click();
+	},
+
+	getCleanFilename (filename) {
+		return filename.replace(/[^-_a-zA-Z0-9]/g, "_");
 	},
 
 	getCsv (headers, rows) {
@@ -4174,29 +4203,42 @@ DataUtil = {
 		$a.remove();
 	},
 
-	userUpload (fnCallback) {
-		function loadSaved (event) {
-			const input = event.target;
+	pUserUpload () {
+		return new Promise(resolve => {
+			const $iptAdd = $(`<input type="file" accept=".json" style="position: fixed; top: -100px; left: -100px; display: none;">`).on("change", (evt) => {
+				const input = evt.target;
 
-			const reader = new FileReader();
-			reader.onload = () => {
-				const text = reader.result;
-				const json = JSON.parse(text);
-				fnCallback(json);
-			};
-			reader.readAsText(input.files[0]);
-		}
+				const reader = new FileReader();
+				reader.onload = () => {
+					const text = reader.result;
+					const json = JSON.parse(text);
+					resolve(json);
+				};
 
-		const $iptAdd = $(`<input type="file" accept=".json" style="position: fixed; top: -100px; left: -100px; display: none;">`).on("change", (evt) => {
-			loadSaved(evt);
-		}).appendTo($(`body`));
-		$iptAdd.click();
+				reader.readAsText(input.files[0]);
+			}).appendTo($(`body`));
+			$iptAdd.click();
+		});
 	},
 
 	cleanJson (cpy) {
 		cpy.name = cpy._displayName || cpy.name;
-		Object.keys(cpy).filter(k => k.startsWith("_") || !cpy[k] || (cpy[k] instanceof Array && !cpy[k].length)).forEach(k => delete cpy[k]);
+		DataUtil.__cleanJsonObject(cpy);
 		return cpy;
+	},
+
+	__cleanJsonObject (obj) {
+		if (obj == null) return obj;
+		if (typeof obj === "object") {
+			if (obj instanceof Array) {
+				obj.forEach(it => DataUtil.__cleanJsonObject(it));
+			} else {
+				Object.entries(obj).forEach(([k, v]) => {
+					if (k.startsWith("_") || k === "uniqueId") delete obj[k];
+					else DataUtil.__cleanJsonObject(v);
+				});
+			}
+		}
 	},
 
 	async pGetLoadableByMeta (key, value) {
@@ -4224,7 +4266,7 @@ DataUtil = {
 	},
 
 	deity: {
-		doPostLoad: function (data, callbackFn) {
+		doPostLoad: function (data) {
 			const PRINT_ORDER = [
 				SRC_PHB,
 				SRC_DMG,
@@ -4257,16 +4299,12 @@ DataUtil = {
 				laterPrinting.push(src);
 			});
 			data.deity.forEach(g => g._isEnhanced = true);
-
-			callbackFn(data);
 		},
 
-		loadJSON: function (baseUrl = "") {
-			return new Promise((resolve) => {
-				DataUtil.loadJSON(`${baseUrl}data/deities.json`).then((data) => {
-					DataUtil.deity.doPostLoad(data, resolve);
-				});
-			});
+		loadJSON: async function (baseUrl = "") {
+			const data = await DataUtil.loadJSON(`${baseUrl}data/deities.json`);
+			DataUtil.deity.doPostLoad(data);
+			return data;
 		}
 	},
 
@@ -4360,14 +4398,17 @@ RollerUtil = {
 		$(`#filter-search-input-group`).find(`#reset`).before($btnRoll);
 	},
 
-	isRollCol (string) {
-		if (typeof string !== "string") return false;
-		return !!/^({@dice )?(\d+)?d\d+(\s*[+-]\s*(\d+)?d\d+)*(\s*[-+]\s*\d+)?(})?$/.exec(string.trim());
+	isRollCol (colLabel) {
+		if (typeof colLabel !== "string") return false;
+		if (/^{@dice [^}]+}$/.test(colLabel.trim())) return true;
+		return !!Renderer.dice.parseToTree(colLabel);
 	},
 
-	_DICE_REGEX_STR: "((([1-9]\\d*)?d([1-9]\\d*)(\\s*?[-+×x*]\\s*?(\\d,\\d|\\d)+)?))+?"
+	_DICE_REGEX_STR: "((([1-9]\\d*)?d([1-9]\\d*)(\\s*?[-+×x*÷/]\\s*?(\\d,\\d|\\d)+(\\.\\d+)?)?))+?"
 };
 RollerUtil.DICE_REGEX = new RegExp(RollerUtil._DICE_REGEX_STR, "g");
+RollerUtil.REGEX_DAMAGE_DICE = /(\d+)( \((?:{@dice |{@damage ))([-+0-9d ]*)(}\) [a-z]+( \([-a-zA-Z0-9 ]+\))?( or [a-z]+( \([-a-zA-Z0-9 ]+\))?)? damage)/gi;
+RollerUtil.REGEX_DAMAGE_FLAT = /(Hit: |{@h})([0-9]+)( [a-z]+( \([-a-zA-Z0-9 ]+\))?( or [a-z]+( \([-a-zA-Z0-9 ]+\))?)? damage)/gi;
 
 // STORAGE =============================================================================================================
 // Dependency: localforage
@@ -4449,6 +4490,7 @@ StorageUtil = {
 
 	syncSet (key, value) {
 		StorageUtil.getSyncStorage().setItem(key, JSON.stringify(value));
+		StorageUtil._syncTrackKey(key)
 	},
 
 	syncSetForPage (key, value) {
@@ -4457,10 +4499,29 @@ StorageUtil = {
 
 	syncRemove (key) {
 		StorageUtil.getSyncStorage().removeItem(key);
+		StorageUtil._syncTrackKey(key, true);
 	},
 
 	isSyncFake () {
 		return !!StorageUtil.getSyncStorage().isSyncFake
+	},
+
+	_syncTrackKey (key, isRemove) {
+		const meta = StorageUtil.syncGet(StorageUtil._META_KEY) || {};
+		if (isRemove) delete meta[key];
+		else meta[key] = 1;
+		StorageUtil.getSyncStorage().setItem(StorageUtil._META_KEY, JSON.stringify(meta));
+	},
+
+	syncGetDump () {
+		const out = {};
+		const meta = StorageUtil.syncGet(StorageUtil._META_KEY) || {};
+		Object.entries(meta).filter(([key, isPresent]) => isPresent).forEach(([key]) => out[key] = StorageUtil.syncGet(key));
+		return out;
+	},
+
+	syncSetFromDump (dump) {
+		Object.entries(dump).forEach(([k, v]) => StorageUtil.syncSet(k, v));
 	},
 	// END SYNC METHODS ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -4475,6 +4536,7 @@ StorageUtil = {
 	},
 
 	async pSet (key, value) {
+		StorageUtil._pTrackKey(key);
 		const storage = await StorageUtil.getAsyncStorage();
 		return storage.setItem(key, value);
 	},
@@ -4495,10 +4557,31 @@ StorageUtil = {
 	},
 
 	async pRemove (key) {
+		StorageUtil._pTrackKey(key, true);
 		const storage = await StorageUtil.getAsyncStorage();
 		return storage.removeItem(key);
+	},
+
+	async _pTrackKey (key, isRemove) {
+		const storage = await StorageUtil.getAsyncStorage();
+		const meta = (await StorageUtil.pGet(StorageUtil._META_KEY)) || {};
+		if (isRemove) delete meta[key];
+		else meta[key] = 1;
+		storage.setItem(StorageUtil._META_KEY, meta);
+	},
+
+	async pGetDump () {
+		const out = {};
+		const meta = (await StorageUtil.pGet(StorageUtil._META_KEY)) || {};
+		await Promise.all(Object.entries(meta).filter(([key, isPresent]) => isPresent).map(async ([key]) => out[key] = await StorageUtil.pGet(key)));
+		return out;
+	},
+
+	async pSetFromDump (dump) {
+		return Promise.all(Object.entries(dump).map(([k, v]) => StorageUtil.pSet(k, v)));
 	}
 };
+StorageUtil._META_KEY = "_STORAGE_META_STORAGE";
 
 // TODO transition cookie-like storage items over to this
 SessionStorageUtil = {
@@ -4608,7 +4691,7 @@ BrewUtil = {
 
 	async pAddLocalBrewData (callbackFn = async (d, page) => BrewUtil.pDoHandleBrewJson(d, page, null)) {
 		if (!IS_ROLL20 && !IS_DEPLOYED) {
-			return DataUtil.loadJSON(`${EntryRenderer.getDefaultRenderer().baseUrl}${JSON_HOMEBREW_INDEX}`).then(async (data) => {
+			return DataUtil.loadJSON(`${Renderer.get().baseUrl}${JSON_HOMEBREW_INDEX}`).then(async (data) => {
 				// auto-load from `homebrew/`, for custom versions of the site
 				if (data.toImport.length) {
 					const page = UrlUtil.getCurrentPage();
@@ -4707,13 +4790,13 @@ BrewUtil = {
 				<div id="brewlistcontainer" class="listcontainer homebrew-window dropdown-menu">
 					<h4><span>Get Homebrew</span></h4>
 					<p><i>A list of homebrew available in the public repository. Click a name to load the homebrew, or view the source directly.<br>
-					Contributions are welcome; see the <a href="https://github.com/TheGiddyLimit/homebrew/blob/master/README.md" target="_blank" rel="noopener">README</a>, or stop by our <a href="https://discord.gg/WH6kdUn" target="_blank" rel="noopener">Discord</a>.</i></p>
+					Contributions are welcome; see the <a href="https://github.com/TheGiddyLimit/homebrew/blob/master/README.md" target="_blank" rel="noopener">README</a>, or stop by our <a href="https://discord.gg/nGvRCDs" target="_blank" rel="noopener">Discord</a>.</i></p>
 					<hr class="manbrew__hr">
 					<div class="manbrew__load_all_wrp">
 						<button class="btn btn-default btn-xs manbrew__load_all" disabled title="(Excluding samples)">Add All</button>
 					</div>
 					<input type="search" class="search manbrew__search form-control" placeholder="Find homebrew..." style="width: 100%">
-					<div class="filtertools manbrew__filtertools sortlabel btn-group">
+					<div class="filtertools manbrew__filtertools sortlabel btn-group lst__form-bottom">
 						<button class="col-4 sort btn btn-default btn-xs" data-sort="name">Name</button>
 						<button class="col-3 sort btn btn-default btn-xs" data-sort="author">Author</button>
 						<button class="col-2 sort btn btn-default btn-xs" data-sort="category">Category</button>
@@ -4897,7 +4980,7 @@ BrewUtil = {
 								out.extraInfo = ` (${Parser.psiTypeToFull(bru.type)})`;
 								break;
 							case "itemProperty": {
-								if (bru.entries) out.name = EntryRenderer.findName(bru.entries);
+								if (bru.entries) out.name = Renderer.findName(bru.entries);
 								if (!out.name) out.name = bru.abbreviation;
 								break;
 							}
@@ -4978,7 +5061,7 @@ BrewUtil = {
 				const $lst = $(`
 					<div id="outerbrewlistcontainer" class="listcontainer">
 						<input type="search" class="search manbrew__search form-control" placeholder="Search homebrew..." style="width: calc(100% - 3px)">
-						<div class="filtertools manbrew__filtertools sortlabel btn-group">
+						<div class="filtertools manbrew__filtertools sortlabel btn-group lst__form-bottom">
 							<button class="col-5 sort btn btn-default btn-xs" data-sort="source">Source</button>
 							<button class="col-4 sort btn btn-default btn-xs" data-sort="authors">Authors</button>
 							<button class="col-1 btn btn-default btn-xs" disabled>Origin</button>
@@ -5144,7 +5227,7 @@ BrewUtil = {
 			if (BrewUtil._filterBox) BrewUtil._filterBox.render();
 			await pRefreshBrewList();
 			window.location.hash = "";
-			if (BrewUtil._filterBox) BrewUtil._filterBox._fireValChangeEvent();
+			if (BrewUtil._filterBox) BrewUtil._filterBox.fireChangeEvent();
 		}
 	},
 
@@ -5256,31 +5339,61 @@ BrewUtil = {
 		BrewUtil._pRenderBrewScreen($body, $overlay, $window, true);
 	},
 
+	async pAddEntry (prop, obj) {
+		BrewUtil._mutUniqueId(obj);
+		(BrewUtil.homebrew[prop] = BrewUtil.homebrew[prop] || []).push(obj);
+		await StorageUtil.pSet(HOMEBREW_STORAGE, BrewUtil.homebrew);
+		return BrewUtil.homebrew[prop].length - 1;
+	},
+
+	async pRemoveEntry (prop, obj) {
+		const ix = (BrewUtil.homebrew[prop] = BrewUtil.homebrew[prop] || []).findIndex(it => it.uniqueId === obj.uniqueId);
+		if (~ix) {
+			BrewUtil.homebrew[prop].splice(ix, 1);
+			return StorageUtil.pSet(HOMEBREW_STORAGE, BrewUtil.homebrew);
+		} else throw new Error(`Could not find object with ID "${obj.uniqueId}" in "${prop}" list`);
+	},
+
+	getEntryIxByName (prop, obj) {
+		return (BrewUtil.homebrew[prop] = BrewUtil.homebrew[prop] || []).findIndex(it => it.name === obj.name && it.source === obj.source);
+	},
+
+	async pUpdateEntryByIx (prop, ix, obj) {
+		if (~ix && ix < BrewUtil.homebrew[prop].length) {
+			BrewUtil._mutUniqueId(obj);
+			BrewUtil.homebrew[prop].splice(ix, 1, obj);
+			return StorageUtil.pSet(HOMEBREW_STORAGE, BrewUtil.homebrew);
+		} else throw new Error(`Index "${ix}" was not valid!`);
+	},
+
+	_mutUniqueId (obj) {
+		delete obj.uniqueId; // avoid basing the hash on the previous hash
+		obj.uniqueId = CryptUtil.md5(JSON.stringify(obj));
+	},
+
 	_DIRS: ["spell", "class", "subclass", "creature", "background", "feat", "optionalfeature", "race", "object", "trap", "hazard", "deity", "item", "reward", "psionic", "variantrule", "condition", "disease", "adventure", "book", "ship", "magicvariant"],
 	_STORABLE: ["class", "subclass", "spell", "monster", "legendaryGroup", "monsterFluff", "background", "feat", "optionalfeature", "race", "deity", "item", "variant", "itemProperty", "itemType", "psionic", "reward", "object", "trap", "hazard", "variantrule", "condition", "disease", "adventure", "adventureData", "book", "bookData", "table", "tableGroup", "ship"],
 	async pDoHandleBrewJson (json, page, pFuncRefresh) {
 		function storePrep (arrName) {
 			if (json[arrName]) {
-				json[arrName].forEach(it => {
-					it.uniqueId = CryptUtil.md5(JSON.stringify(it));
-				});
+				json[arrName].forEach(it => BrewUtil._mutUniqueId(it));
 			} else json[arrName] = [];
 		}
 
 		// prepare for storage
-		if (json.race && json.race.length) json.race = EntryRenderer.race.mergeSubraces(json.race);
+		if (json.race && json.race.length) json.race = Renderer.race.mergeSubraces(json.race);
 		BrewUtil._STORABLE.forEach(storePrep);
 
 		const bookPairs = [
 			["adventure", "adventureData"],
 			["book", "bookData"]
 		];
-		bookPairs.forEach(bp => {
-			if (json[bp[0]] && json[bp[1]]) {
-				json[bp[0]].forEach(adv => {
-					const data = json[bp[1]].find(it => it.id === adv.id);
+		bookPairs.forEach(([bookMetaKey, bookDataKey]) => {
+			if (json[bookMetaKey] && json[bookDataKey]) {
+				json[bookMetaKey].forEach(book => {
+					const data = json[bookDataKey].find(it => it.id === book.id);
 					if (data) {
-						data.parentUniqueId = adv.uniqueId;
+						data.parentUniqueId = book.uniqueId;
 					}
 				});
 			}
@@ -5404,12 +5517,10 @@ BrewUtil = {
 				if (toSet._totals.yes || toSet._totals.no) {
 					if (page === UrlUtil.PG_CLASSES) toSet["Core"] = 1;
 					else sourcesToAdd.forEach(src => toSet[src.json] = 1);
-
-					const toSetValues = Object.keys(toSet).filter(k => !k.startsWith("_")).filter(k => toSet[k]).map(k => `${!~toSet[k] ? "!" : ""}${k}`.toLowerCase());
-					BrewUtil._filterBox.setFromValues({Source: toSetValues});
+					BrewUtil._filterBox.setFromValues({Source: toSet});
 				}
 			}
-			BrewUtil._filterBox._fireValChangeEvent();
+			if (BrewUtil._filterBox) BrewUtil._filterBox.fireChangeEvent();
 		}
 	},
 
@@ -5424,7 +5535,7 @@ BrewUtil = {
 	_buildSourceCache () {
 		function doBuild () {
 			if (BrewUtil.homebrewMeta && BrewUtil.homebrewMeta.sources) {
-				BrewUtil.homebrewMeta.sources.forEach(src => BrewUtil._sourceCache[src.json] = ({abbreviation: src.abbreviation, full: src.full}));
+				BrewUtil.homebrewMeta.sources.forEach(src => BrewUtil._sourceCache[src.json] = ({...src}));
 			}
 		}
 
@@ -5473,6 +5584,31 @@ BrewUtil = {
 		return BrewUtil._sourceCache[source] ? BrewUtil._sourceCache[source].abbreviation || source : source;
 	},
 
+	sourceJsonToSource (source) {
+		BrewUtil._buildSourceCache();
+		return BrewUtil._sourceCache[source] ? BrewUtil._sourceCache[source] : null;
+	},
+
+	addSource (source) {
+		BrewUtil._resetSourceCache();
+		const exists = BrewUtil.homebrewMeta.sources.some(it => it.json === source.json);
+		if (exists) throw new Error(`Source "${source.json}" already exists!`);
+		(BrewUtil.homebrewMeta.sources = BrewUtil.homebrewMeta.sources || []).push(source);
+		StorageUtil.syncSet(HOMEBREW_META_STORAGE, BrewUtil.homebrewMeta);
+	},
+
+	updateSource (source) {
+		BrewUtil._resetSourceCache();
+		const ix = BrewUtil.homebrewMeta.sources.findIndex(it => it.json === source.json);
+		if (!~ix) throw new Error(`Source "${source.json}" does not exist!`);
+		const json = BrewUtil.homebrewMeta.sources[ix].json;
+		BrewUtil.homebrewMeta.sources[ix] = {
+			...source,
+			json
+		};
+		StorageUtil.syncSet(HOMEBREW_META_STORAGE, BrewUtil.homebrewMeta);
+	},
+
 	/**
 	 * Get data in a format similar to the main search index
 	 */
@@ -5485,7 +5621,7 @@ BrewUtil = {
 			Omnidexer.TO_INDEX__FROM_INDEX_JSON.filter(ti => BrewUtil.homebrew[ti.listProp]).forEach(ti => indexer.addToIndex(ti, BrewUtil.homebrew));
 			Omnidexer.TO_INDEX.filter(ti => BrewUtil.homebrew[ti.listProp]).forEach(ti => indexer.addToIndex(ti, BrewUtil.homebrew));
 		}
-		return indexer.getIndex();
+		return Omnidexer.decompressIndex(indexer.getIndex());
 	}
 };
 
@@ -5700,7 +5836,68 @@ CollectionUtil = {
 		}
 	},
 
-	arrayEq (array1, array2) {
+	setEq (set1, set2) {
+		if (set1.size !== set2.size) return false;
+		for (const a of set1) if (!set2.has(a)) return false;
+		return true;
+	},
+
+	setDiff (set1, set2) {
+		return new Set([...set1].filter(it => !set2.has(it)));
+	},
+
+	deepEquals (obj1, obj2) {
+		if (obj1 === null && obj2 === null) return true;
+		if ((obj1 === null && obj2 !== null) || (obj1 !== null && obj2 === null)) return false;
+
+		if (isNaN(obj1) && isNaN(obj2)) return true;
+		if ((isNaN(obj1) && !isNaN(obj2)) || (!isNaN(obj1) && isNaN(obj2))) return false;
+
+		if (obj1 === undefined && obj2 === undefined) return true;
+		if ((obj1 === undefined && obj2 !== undefined) || (obj1 !== undefined && obj2 === undefined)) return false;
+
+		const to1 = typeof obj1;
+		const to2 = typeof obj2;
+
+		if (to1 !== to2) return false;
+		switch (to1) {
+			case "object": {
+				if (obj1 instanceof Array) {
+					if (!(obj2 instanceof Array)) return false;
+					return obj1.equals(obj2);
+				} else {
+					if (obj2 instanceof Array) return true;
+					const keys1 = Object.keys(obj1);
+					const keys2 = Object.keys(obj2);
+					if (!CollectionUtil.setEq(new Set(keys1), new Set(keys2))) return false;
+					return keys1.every(k => CollectionUtil.deepEquals(obj1[k], obj2[k]));
+				}
+			}
+			case "string":
+			case "number":
+			case "boolean":
+				return obj1 === obj2;
+		}
+	}
+};
+
+Array.prototype.last = Array.prototype.last ||
+	function () {
+		return this[this.length - 1];
+	};
+
+Array.prototype.filterIndex = Array.prototype.filterIndex ||
+	function (fnCheck) {
+		const out = [];
+		this.forEach((it, i) => {
+			if (fnCheck(it)) out.push(i);
+		});
+		return out;
+	};
+
+Array.prototype.equals = Array.prototype.equals ||
+	function (array2) {
+		const array1 = this;
 		if (!array1 && !array2) return true;
 		else if ((!array1 && array2) || (array1 && !array2)) return false;
 
@@ -5723,56 +5920,11 @@ CollectionUtil = {
 			} else return false;
 		}
 		return true;
-	},
-
-	setEq (set1, set2) {
-		if (set1.size !== set2.size) return false;
-		for (const a of set1) if (!set2.has(a)) return false;
-		return true;
-	},
-
-	setDiff (set1, set2) {
-		return new Set([...set1].filter(it => !set2.has(it)));
-	}
-};
-
-Array.prototype.last = Array.prototype.last ||
-	function () {
-		return this[this.length - 1];
-	};
-
-Array.prototype.filterIndex = Array.prototype.filterIndex ||
-	function (fnCheck) {
-		const out = [];
-		this.forEach((it, i) => {
-			if (fnCheck(it)) out.push(i);
-		});
-		return out;
-	};
-
-Array.prototype.equals = Array.prototype.equals ||
-	function (that) {
-		if (!that) return false;
-		const len = this.length;
-		if (len !== that.length) return false;
-		for (let i = 0; i < len; ++i) {
-			if (this[i] !== that[i]) return false;
-		}
-		return true;
 	};
 
 Array.prototype.partition = Array.prototype.partition ||
 	function (fnIsValid) {
 		return this.reduce(([pass, fail], elem) => fnIsValid(elem) ? [[...pass, elem], fail] : [pass, [...fail, elem]], [[], []]);
-	};
-
-// FIXME remove polyfill after ~March 2019
-Array.prototype.flat = Array.prototype.flat ||
-	function () {
-		function flattenDeep (arr) {
-			return arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(flattenDeep(val)) : acc.concat(val), []);
-		}
-		return flattenDeep(this);
 	};
 
 // OVERLAY VIEW ========================================================================================================
@@ -5822,7 +5974,7 @@ function BookModeView (hashKey, $openBtn, noneVisibleMsg, popTblGetNumShown, doS
 		$body.css("overflow", "hidden");
 		$body.addClass("book-mode-active");
 
-		const $bkTbl = $(`<table class="stats stats-book" style="font-size: 1.0em; font-family: inherit;"/>`);
+		const $bkTbl = $(`<table class="stats stats-book stats-book--large" style="font-size: 1.0em; font-family: inherit;"/>`);
 		const $brdTop = $(`<tr><th class="border close-border" style="width: 100%;"><div/></th></tr>`);
 		const $hdTxt = $(`<span class="spacer-name"/>`); // pass this to the content function to allow it to set a main header
 		const $btnClose = $(`<span class="delete-icon glyphicon glyphicon-remove"></span>`)
@@ -5832,7 +5984,7 @@ function BookModeView (hashKey, $openBtn, noneVisibleMsg, popTblGetNumShown, doS
 		$brdTop.find(`div`).append($hdTxt).append($btnClose);
 		$bkTbl.append($brdTop);
 
-		const $tbl = $(`<table class="stats stats-book" style="width: auto; margin: 0 auto; font-family: inherit;"/>`);
+		const $tbl = $(`<table class="stats stats-book stats-book--large" style="width: auto; margin: 0 auto; font-family: inherit;"/>`);
 
 		const numShownWrp = self.popTblGetNumShown($tbl, $hdTxt);
 
@@ -5843,7 +5995,7 @@ function BookModeView (hashKey, $openBtn, noneVisibleMsg, popTblGetNumShown, doS
 			$msgRow.find(`td`).append($(`<button class="btn btn-default">Close</button>`).on("click", () => {
 				hashTeardown();
 			}));
-			$bkTbl.append($tblRow).append($msgRow).append(EntryRenderer.utils.getBorderTr());
+			$bkTbl.append($tblRow).append($msgRow).append(Renderer.utils.getBorderTr());
 
 			$wrpBook.append($bkTbl);
 			$body.append($wrpBook);
@@ -5903,7 +6055,7 @@ ExcludeUtil = {
 
 	_excludeCount: 0,
 	isExcluded (name, category, source) {
-		if (!ExcludeUtil._excludes) return false;
+		if (!ExcludeUtil._excludes || !ExcludeUtil._excludes.length) return false;
 		source = source.source || source;
 		const out = !!ExcludeUtil._excludes.find(row => (row.source === "*" || row.source === source) && (row.category === "*" || row.category === category) && (row.name === "*" || row.name === name));
 		if (out) ++ExcludeUtil._excludeCount;
@@ -6001,9 +6153,15 @@ EncounterUtil = {
 
 	async pDoSaveState (toSave) {
 		StorageUtil.pSet(ENCOUNTER_STORAGE, toSave);
+	},
+
+	async pGetAllSaves () {
+		const saved = await StorageUtil.pGet(EncounterUtil.SAVED_ENCOUNTER_SAVE_LOCATION);
+		return saved || {};
 	}
 };
 EncounterUtil.SUB_HASH_PREFIX = "encounter";
+EncounterUtil.SAVED_ENCOUNTER_SAVE_LOCATION = "ENCOUNTER_SAVED_STORAGE";
 
 // REACTOR =============================================================================================================
 class Reactor {
@@ -6046,14 +6204,52 @@ class ReactorEvent {
 	}
 }
 
+// STATE PROXY =========================================================================================================
+ProxyUtil = {
+	decorate (obj) {
+		if (obj.__hooks) return;
+
+		obj.__hooks = {};
+
+		obj._getProxy = function (toProxy, hookProp) {
+			return new Proxy(toProxy, {
+				set: (object, prop, value) => {
+					object[prop] = value;
+					if (this.__hooks[hookProp] && this.__hooks[hookProp][prop]) this.__hooks[hookProp][prop].forEach(hook => hook(prop, value));
+					return true;
+				},
+				deleteProperty: (object, prop) => {
+					delete object[prop];
+					if (this.__hooks[hookProp] && this.__hooks[hookProp][prop]) this.__hooks[hookProp][prop].forEach(hook => hook(prop, null));
+					return true;
+				}
+			});
+		};
+
+		/**
+		 * Register a hook versus a root property on the state object. **INTERNAL CHANGES TO CHILD OBJECTS ON THE STATE
+		 *   OBJECT ARE NOT TRACKED**.
+		 * @param hookProp The state object.
+		 * @param prop The root property to track.
+		 * @param hook The hook to run. Will be called with two arguments; the property and the value of the property being
+		 *   modified.
+		 */
+		obj._registerHook = function (hookProp, prop, hook) {
+			((this.__hooks[hookProp] = this.__hooks[hookProp] || {})[prop] = (this.__hooks[hookProp][prop] || [])).push(hook);
+		};
+
+		obj._resetHooks = function (hookProp) {
+			delete this.__hooks[hookProp];
+		};
+	}
+};
+
 // LEGAL NOTICE ========================================================================================================
 if (!IS_ROLL20 && typeof window !== "undefined") {
 	// add an obnoxious banner
+	// TODO is this something we want? If so, uncomment
+	/*
 	window.addEventListener("load", async () => {
-		// FIXME is this something we want? If so, delete this
-		/* eslint-disable */
-		return;
-
 		if (!StorageUtil.isSyncFake() && await StorageUtil.pGet("seenLegal")) return;
 		const $wrpBanner = $(`<div id="legal-notice"><span>Don't go posting this shit to Reddit</span></div>`);
 		$(`<button class="btn btn-sm btn-default">Whatever, kid</button>`).on("click", () => {
@@ -6061,11 +6257,21 @@ if (!IS_ROLL20 && typeof window !== "undefined") {
 			$wrpBanner.remove();
 		}).appendTo($wrpBanner);
 		$(`body`).append($wrpBanner);
-		/* eslint-enable */
 	});
+	*/
+
+	// Hack to lock the ad space at original size--prevents the screen from shifting around once loaded
+	setTimeout(() => {
+		const $wrp = $(`.cancer__wrp-leaderboard`);
+		const w = $wrp.outerWidth();
+		const h = $wrp.outerHeight();
+		$wrp.css({width: w, height: h});
+	}, 5000);
 }
 
 _Donate = {
+	// TAG Disabled until further notice
+	/*
 	init () {
 		if (IS_DEPLOYED) {
 			DataUtil.loadJSON(`https://get.5etools.com/money.php`).then(dosh => {
@@ -6089,5 +6295,27 @@ _Donate = {
 		const isFake = await StorageUtil.pIsAsyncFake();
 		const isNotDonating = await StorageUtil.pGet("notDonating");
 		return isFake || isNotDonating;
+	},
+	*/
+
+	// region Test code, please ignore
+	cycleLeader (ele) {
+		const modes = [{width: 970, height: 90}, {width: 970, height: 250}, {width: 320, height: 50}, {width: 728, height: 90}];
+		_Donate._cycleMode(ele, modes);
+	},
+
+	cycleSide (ele) {
+		const modes = [{width: 300, height: 250}, {width: 300, height: 600}];
+		_Donate._cycleMode(ele, modes);
+	},
+
+	_cycleMode (ele, modes) {
+		const $e = $(ele);
+		const pos = $e.data("pos") || 0;
+		const mode = modes[pos];
+		$e.css(mode);
+		$e.text(`${mode.width}*${mode.height}`);
+		$e.data("pos", (pos + 1) % modes.length)
 	}
+	// endregion
 };

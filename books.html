@@ -46,16 +46,19 @@
 	</div>
 </header>
 
-<nav class="container page__nav" id="navigation"><ul class="nav nav-pills" id="navbar"></ul></nav>
+<nav class="container page__nav" id="navigation"><ul class="nav page__nav-inner" id="navbar"></ul></nav>
+
+<div class="cancer__wrp-leaderboard"><!--5ETOOLS_AD_LEADERBOARD--></div>
+<div class="cancer__wrp-sidebar-rhs"><!--5ETOOLS_AD_RIGHT_1--><div class="cancer__sidebar-rhs-inner"><!--5ETOOLS_AD_RIGHT_2--></div></div>
 
 <div class="container view-col-wrapper">
 	<div class="view-col" id="listcontainer">
-		<div class="input-group">
-			<input type="search" id="search" class="search form-control" placeholder="Find adventure...">
-			<span class="input-group-btn"><button class="btn btn-default" id="reset">Reset</button></span>
+		<div class="lst__form-top">
+			<input type="search" id="search" autocomplete="off" autocapitalize="off" spellcheck="false" class="search form-control" placeholder="Find book...">
+			<button class="btn btn-default" id="reset">Reset</button>
 		</div>
 
-		<div id="filtertools" class="sortlabel btn-group">
+		<div id="filtertools" class="sortlabel lst__form-bottom">
 			<button class="col-12 sort btn btn-default btn-xs" data-sort="name">Name <span class="caret_wrp"></span></button>
 		</div>
 
@@ -71,10 +74,11 @@
 
 <!--5ETOOLS_SCRIPT_ANCHOR-->
 <script type="text/javascript" src="js/utils.js"></script>
+<script type="text/javascript" src="js/utils-ui.js"></script>
 <script type="text/javascript" src="lib/localforage.js"></script>
 <script type="text/javascript" src="js/omnidexer.js"></script>
 <script type="text/javascript" src="js/omnisearch.js"></script>
-<script type="text/javascript" src="js/entryrender.js"></script>
+<script type="text/javascript" src="js/render.js"></script>
 <script type="text/javascript" src="js/scalecreature.js"></script>
 <script type="text/javascript" src="js/bookutils.js"></script>
 <script type="text/javascript" src="js/bookslist.js"></script>

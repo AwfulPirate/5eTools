@@ -13,7 +13,7 @@ const sourceFilter = getSourceFilter();
 let filterBox;
 async function onJsonLoad (data) {
 	list = ListUtil.search({
-		valueNames: ['name', 'source', 'ability', 'prerequisite', "uniqueid"],
+		valueNames: ["name", "source", "ability", "prerequisite", "uniqueid"],
 		listClass: "feats"
 	});
 
@@ -28,8 +28,9 @@ async function onJsonLoad (data) {
 		prereqFilter
 	);
 
+	const $outVisibleResults = $(`.lst__wrp-search-visible`);
 	list.on("updated", () => {
-		filterBox.setCount(list.visibleItems.length, list.items.length);
+		$outVisibleResults.html(`${list.visibleItems.length}/${list.items.length}`);
 	});
 
 	// filtering function
@@ -49,7 +50,7 @@ async function onJsonLoad (data) {
 	BrewUtil.pAddBrewData()
 		.then(handleBrew)
 		.then(() => BrewUtil.bind({list}))
-		.then(BrewUtil.pAddLocalBrewData)
+		.then(() => BrewUtil.pAddLocalBrewData())
 		.catch(BrewUtil.pPurgeBrew)
 		.then(async () => {
 			BrewUtil.makeBrewButton("manage-brew");
@@ -81,10 +82,10 @@ function addFeats (data) {
 		const feat = featList[ftI];
 		if (ExcludeUtil.isExcluded(feat.name, "feat", feat.source)) continue;
 		const name = feat.name;
-		const ability = utils_getAbilityData(feat.ability);
+		const ability = Renderer.getAbilityData(feat.ability);
 		if (!ability.asText) ability.asText = STR_NONE;
 		feat._fAbility = ability.asCollection.filter(a => !ability.areNegative.includes(a)); // used for filtering
-		let prereqText = EntryRenderer.feat.getPrerequisiteText(feat.prerequisite, true);
+		let prereqText = Renderer.feat.getPrerequisiteText(feat.prerequisite, true);
 		if (!prereqText) prereqText = STR_NONE;
 
 		const preSet = new Set();
@@ -107,13 +108,10 @@ function addFeats (data) {
 			</li>`;
 
 		// populate filters
-		sourceFilter.addIfAbsent(feat.source);
+		sourceFilter.addItem(feat.source);
 	}
 	const lastSearch = ListUtil.getSearchTermAndReset(list);
 	featTable.append(tempString);
-
-	// sort filters
-	sourceFilter.items.sort(SortUtil.ascSort);
 
 	list.reIndex();
 	if (lastSearch) list.search(lastSearch);
@@ -127,7 +125,7 @@ function addFeats (data) {
 		primaryLists: [list]
 	});
 	ListUtil.bindPinButton();
-	EntryRenderer.hover.bindPopoutButton(featList);
+	Renderer.hover.bindPopoutButton(featList);
 	UrlUtil.bindLinkExportButton(filterBox);
 	ListUtil.bindDownloadButton();
 	ListUtil.bindUploadButton();
@@ -145,7 +143,7 @@ function handleFilterChange () {
 			ft._fPrereq
 		);
 	});
-	FilterBox.nextIfHidden(featList);
+	FilterBox.selectFirstVisible(featList);
 }
 
 function getSublistItem (feat, pinId) {
@@ -161,7 +159,7 @@ function getSublistItem (feat, pinId) {
 	`;
 }
 
-const renderer = EntryRenderer.getDefaultRenderer();
+const renderer = Renderer.get();
 function loadhash (id) {
 	renderer.setFirstSection(true);
 
@@ -169,25 +167,25 @@ function loadhash (id) {
 
 	const feat = featList[id];
 
-	const prerequisite = EntryRenderer.feat.getPrerequisiteText(feat.prerequisite);
-	EntryRenderer.feat.mergeAbilityIncrease(feat);
+	const prerequisite = Renderer.feat.getPrerequisiteText(feat.prerequisite);
+	Renderer.feat.mergeAbilityIncrease(feat);
 	const renderStack = [];
-	renderer.recursiveEntryRender({entries: feat.entries}, renderStack, 2);
+	renderer.recursiveRender({entries: feat.entries}, renderStack, {depth: 2});
 
 	$content.append(`
-		${EntryRenderer.utils.getBorderTr()}
-		${EntryRenderer.utils.getNameTr(feat)}
+		${Renderer.utils.getBorderTr()}
+		${Renderer.utils.getNameTr(feat)}
 		${prerequisite ? `<tr><td colspan="6"><span class="prerequisite">Prerequisite: ${prerequisite}</span></td></tr>` : ""}
 		<tr><td class="divider" colspan="6"><div></div></td></tr>
 		<tr class='text'><td colspan='6'>${renderStack.join("")}</td></tr>
-		${EntryRenderer.utils.getPageTr(feat)}
-		${EntryRenderer.utils.getBorderTr()}
+		${Renderer.utils.getPageTr(feat)}
+		${Renderer.utils.getBorderTr()}
 	`);
 
 	ListUtil.updateSelected();
 }
 
 function loadsub (sub) {
-	filterBox.setFromSubHashes(sub);
+	sub = filterBox.setFromSubHashes(sub);
 	ListUtil.setFromSubHashes(sub);
 }
