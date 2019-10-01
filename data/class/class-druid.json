@@ -11,6 +11,8 @@
 				"int",
 				"wis"
 			],
+			"spellcastingAbility": "wis",
+			"casterProgression": "full",
 			"classTableGroups": [
 				{
 					"colLabels": [
@@ -355,7 +357,7 @@
 				"additionalFromBackground": true,
 				"default": [
 					"(a) a wooden {@item shield|phb} or (b) any {@filter simple weapon|items|source=phb|category=basic|type=simple weapon}",
-					"(a) a {@item scimitar|phb} or (b) any {@filter simple melee weapon|items|source=phb|category=basic|type=simple weapon;melee weapon=&}",
+					"(a) a {@item scimitar|phb} or (b) any {@filter simple melee weapon|items|source=phb|category=basic|type=simple weapon;melee weapon=sand}",
 					"{@item Leather armor|phb}, an {@item explorer's pack|phb}, and a {@item druidic focus|phb}"
 				],
 				"goldAlternative": "{@dice 2d4×10|2d4 × 10|Starting Gold}"
@@ -455,27 +457,27 @@
 									"Example"
 								],
 								"colStyles": [
-									"col-2 text-align-center",
-									"col-2 text-align-center",
+									"col-2 text-center",
+									"col-2 text-center",
 									"col-5",
 									"col-3"
 								],
 								"rows": [
 									[
-										"{@filter 2nd|bestiary|challenge rating=[&0;&1/4]|type=beast|speed type=!fly;!swim|miscellaneous=!swarm}",
-										"1/4",
+										"2nd",
+										"{@filter 1/4|bestiary|challenge rating=[&0;&1/4]|type=beast|speed type=!fly;!swim|miscellaneous=!swarm}",
 										"No flying or swimming speed",
 										"Wolf"
 									],
 									[
-										"{@filter 4th|bestiary|challenge rating=[&0;&1/2]|type=beast|speed type=!fly|miscellaneous=!swarm}",
-										"1/2",
+										"4th",
+										"{@filter 1/2|bestiary|challenge rating=[&0;&1/2]|type=beast|speed type=!fly|miscellaneous=!swarm}",
 										"No flying speed",
 										"Crocodile"
 									],
 									[
-										"{@filter 8th|bestiary|challenge rating=[&0;&1]|type=beast|miscellaneous=!swarm}",
-										"1",
+										"8th",
+										"{@filter 1|bestiary|challenge rating=[&0;&1]|type=beast|miscellaneous=!swarm}",
 										"\u2014",
 										"Giant eagle"
 									]
@@ -658,7 +660,7 @@
 													"Circle Spells"
 												],
 												"colStyles": [
-													"col-3 text-align-center",
+													"col-3 text-center",
 													"col-9"
 												],
 												"rows": [
@@ -688,7 +690,7 @@
 													"Circle Spells"
 												],
 												"colStyles": [
-													"col-3 text-align-center",
+													"col-3 text-center",
 													"col-9"
 												],
 												"rows": [
@@ -718,7 +720,7 @@
 													"Circle Spells"
 												],
 												"colStyles": [
-													"col-3 text-align-center",
+													"col-3 text-center",
 													"col-9"
 												],
 												"rows": [
@@ -748,7 +750,7 @@
 													"Circle Spells"
 												],
 												"colStyles": [
-													"col-3 text-align-center",
+													"col-3 text-center",
 													"col-9"
 												],
 												"rows": [
@@ -766,7 +768,7 @@
 													],
 													[
 														"9th",
-														"{@spell commune with nature}, {@spell insect plague}"
+														"{@spell commune with nature}, {@spell tree stride}"
 													]
 												]
 											},
@@ -778,7 +780,7 @@
 													"Circle Spells"
 												],
 												"colStyles": [
-													"col-3 text-align-center",
+													"col-3 text-center",
 													"col-9"
 												],
 												"rows": [
@@ -808,7 +810,7 @@
 													"Circle Spells"
 												],
 												"colStyles": [
-													"col-3 text-align-center",
+													"col-3 text-center",
 													"col-9"
 												],
 												"rows": [
@@ -838,7 +840,7 @@
 													"Circle Spells"
 												],
 												"colStyles": [
-													"col-3 text-align-center",
+													"col-3 text-center",
 													"col-9"
 												],
 												"rows": [
@@ -868,7 +870,7 @@
 													"Circle Spells"
 												],
 												"colStyles": [
-													"col-3 text-align-center",
+													"col-3 text-center",
 													"col-9"
 												],
 												"rows": [
@@ -972,8 +974,8 @@
 													"Limitations"
 												],
 												"colStyles": [
-													"col-2 text-align-center",
-													"col-2 text-align-center",
+													"col-2 text-center",
+													"col-2 text-center",
 													"col-8"
 												],
 												"rows": [
@@ -1621,7 +1623,7 @@
 													"Circle Spells"
 												],
 												"colStyles": [
-													"col-3 text-align-center",
+													"col-3 text-center",
 													"col-9"
 												],
 												"rows": [
@@ -1731,7 +1733,7 @@
 													"Circle Spells"
 												],
 												"colStyles": [
-													"col-3 text-align-center",
+													"col-3 text-center",
 													"col-9"
 												],
 												"rows": [
@@ -1904,7 +1906,7 @@
 										"Treasured Item"
 									],
 									"colStyles": [
-										"col-1 text-align-center",
+										"col-1 text-center",
 										"col-11"
 									],
 									"rows": [
@@ -1979,7 +1981,7 @@
 										"Guiding Aspects"
 									],
 									"colStyles": [
-										"col-1 text-align-center",
+										"col-1 text-center",
 										"col-11"
 									],
 									"rows": [
@@ -2055,7 +2057,7 @@
 										"Mentors"
 									],
 									"colStyles": [
-										"col-1 text-align-center",
+										"col-1 text-center",
 										"col-11"
 									],
 									"rows": [
@@ -2134,7 +2136,7 @@
 										"Fly/Swim"
 									],
 									"colStyles": [
-										"col-2 text-align-center",
+										"col-2 text-center",
 										"col-8",
 										"col-2"
 									],
@@ -2185,7 +2187,7 @@
 										"Fly/Swim"
 									],
 									"colStyles": [
-										"col-2 text-align-center",
+										"col-2 text-center",
 										"col-8",
 										"col-2"
 									],
@@ -2261,7 +2263,7 @@
 										"Fly/Swim"
 									],
 									"colStyles": [
-										"col-2 text-align-center",
+										"col-2 text-center",
 										"col-8",
 										"col-2"
 									],
@@ -2382,7 +2384,7 @@
 										"Fly/Swim"
 									],
 									"colStyles": [
-										"col-2 text-align-center",
+										"col-2 text-center",
 										"col-8",
 										"col-2"
 									],
@@ -2583,7 +2585,7 @@
 										"Fly/Swim"
 									],
 									"colStyles": [
-										"col-2 text-align-center",
+										"col-2 text-center",
 										"col-8",
 										"col-2"
 									],
@@ -2774,7 +2776,7 @@
 										"Fly/Swim"
 									],
 									"colStyles": [
-										"col-2 text-align-center",
+										"col-2 text-center",
 										"col-8",
 										"col-2"
 									],
@@ -2925,7 +2927,7 @@
 										"Fly/Swim"
 									],
 									"colStyles": [
-										"col-2 text-align-center",
+										"col-2 text-center",
 										"col-8",
 										"col-2"
 									],
@@ -2991,7 +2993,7 @@
 										"Fly/Swim"
 									],
 									"colStyles": [
-										"col-2 text-align-center",
+										"col-2 text-center",
 										"col-8",
 										"col-2"
 									],
@@ -3077,7 +3079,7 @@
 										"Fly/Swim"
 									],
 									"colStyles": [
-										"col-2 text-align-center",
+										"col-2 text-center",
 										"col-8",
 										"col-2"
 									],
@@ -3148,7 +3150,7 @@
 										"Fly/Swim"
 									],
 									"colStyles": [
-										"col-2 text-align-center",
+										"col-2 text-center",
 										"col-8",
 										"col-2"
 									],

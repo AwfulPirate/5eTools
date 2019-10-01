@@ -1541,6 +1541,14 @@
 			"miscTags": [
 				"MW",
 				"RCH"
+			],
+			"otherSources": [
+				{
+					"source": "DC"
+				},
+				{
+					"source": "SDW"
+				}
 			]
 		},
 		{
@@ -1722,6 +1730,14 @@
 			],
 			"miscTags": [
 				"MW"
+			],
+			"otherSources": [
+				{
+					"source": "DC"
+				},
+				{
+					"source": "SDW"
+				}
 			]
 		},
 		{
@@ -1966,6 +1982,11 @@
 			"miscTags": [
 				"MW",
 				"RCH"
+			],
+			"otherSources": [
+				{
+					"source": "SLW"
+				}
 			]
 		},
 		{
@@ -3113,6 +3134,9 @@
 			"otherSources": [
 				{
 					"source": "GoS"
+				},
+				{
+					"source": "LR"
 				}
 			],
 			"altArt": [
@@ -5187,7 +5211,8 @@
 					}
 				}
 			},
-			"page": 16
+			"page": 16,
+			"actionTags": []
 		},
 		{
 			"name": "Drevin",
@@ -5307,7 +5332,15 @@
 			"source": "TftYP",
 			"_copy": {
 				"name": "Giant Crocodile",
-				"source": "MM"
+				"source": "MM",
+				"_mod": {
+					"*": {
+						"mode": "replaceTxt",
+						"replace": "crocodile",
+						"with": "lizard",
+						"flags": "i"
+					}
+				}
 			},
 			"speed": {
 				"walk": 30,
@@ -5382,7 +5415,9 @@
 				"S",
 				"B"
 			],
-			"page": 189
+			"page": 189,
+			"traitTags": [],
+			"spellcastingTags": []
 		},
 		{
 			"name": "Estia",
@@ -5415,7 +5450,9 @@
 			],
 			"spellcasting": null,
 			"trait": null,
-			"page": 189
+			"page": 189,
+			"traitTags": [],
+			"spellcastingTags": []
 		},
 		{
 			"name": "Fire Giant Royal Headsman",
@@ -5498,7 +5535,8 @@
 				}
 			},
 			"action": null,
-			"page": 224
+			"page": 224,
+			"miscTags": []
 		},
 		{
 			"name": "Frost Giant Servant",
@@ -5959,7 +5997,8 @@
 				"source": "MM"
 			},
 			"spellcasting": null,
-			"page": 224
+			"page": 224,
+			"spellcastingTags": []
 		},
 		{
 			"name": "Lumalia",
@@ -6664,7 +6703,9 @@
 			"damageTags": [
 				"F"
 			],
-			"page": 85
+			"page": 85,
+			"miscTags": [],
+			"actionTags": []
 		},
 		{
 			"name": "Therzt",

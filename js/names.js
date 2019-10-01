@@ -6,19 +6,12 @@ let nameList;
 const renderer = Renderer.get();
 
 function makeContentsBlock (i, loc) {
-	let out =
-		"<ul>";
-
+	let out = "<ul>";
 	loc.tables.forEach((t, j) => {
 		const tableName = getTableName(loc, t);
-		out +=
-			`<li>
-				<a id="${i},${j}" href="#${UrlUtil.encodeForHash([loc.name, loc.source, t.option])}" title="${tableName}">${tableName}</a>
-			</li>`;
+		out += `<li><a id="${i},${j}" href="#${UrlUtil.encodeForHash([loc.name, loc.source, t.option])}" title="${tableName}">${tableName}</a></li>`;
 	});
-
-	out +=
-		"</ul>";
+	out += "</ul>";
 	return out;
 }
 
@@ -31,28 +24,41 @@ window.onload = function load () {
 	DataUtil.loadJSON(JSON_URL).then(onJsonLoad);
 };
 
+window.onhashchange = () => {
+	const [link] = Hist._getHashParts();
+	const $a = $(`a[href="#${link}"]`);
+	if (!$a.length || !link) {
+		window.location.hash = $(`.list.names`).find("a").attr("href");
+		return;
+	}
+	const id = $a.attr("id");
+	document.title = `${$a.attr("title")} - 5etools`;
+	loadHash(id);
+};
+
+let list;
 function onJsonLoad (data) {
 	nameList = data.name;
 
-	const namesList = $("ul.names");
-	let tempString = "";
+	list = ListUtil.initList({
+		listClass: "names"
+	});
+	ListUtil.setOptions({primaryLists: [list]});
+
 	for (let i = 0; i < nameList.length; i++) {
 		const loc = nameList[i];
 
-		tempString +=
-			`<li>
-				<span class="name" onclick="showHideList(this)" title="Source: ${Parser.sourceJsonToFull(loc.source)}">${loc.name}</span>
-				${makeContentsBlock(i, loc)}
-			</li>`;
+		const eleLi = document.createElement("li");
+
+		eleLi.innerHTML = `<span class="name" onclick="showHideList(this)" title="Source: ${Parser.sourceJsonToFull(loc.source)}">${loc.name}</span>${makeContentsBlock(i, loc)}`;
+
+		const listItem = new ListItem(i, eleLi, loc.name);
+
+		list.addItem(listItem);
 	}
-	namesList.append(tempString);
 
-	const list = ListUtil.search({
-		valueNames: ["name"],
-		listClass: "names"
-	});
-
-	History.init(true);
+	list.init();
+	window.onhashchange();
 }
 
 function showHideList (ele) {
@@ -60,7 +66,7 @@ function showHideList (ele) {
 	$ele.next(`ul`).toggle();
 }
 
-function loadhash (id) {
+function loadHash (id) {
 	renderer.setFirstSection(true);
 
 	const [iLoad, jLoad] = id.split(",").map(n => Number(n));
@@ -76,7 +82,7 @@ function loadhash (id) {
 					<caption>${tableName}</caption>
 					<thead>
 						<tr>
-							<th class="col-2 text-align-center">
+							<th class="col-2 text-center">
 								<span class="roller" onclick="rollAgainstTable('${iLoad}', '${jLoad}')">d${diceType}</span>
 							</th>
 							<th class="col-10">Name</th>
@@ -85,7 +91,7 @@ function loadhash (id) {
 
 	for (let i = 0; i < table.length; i++) {
 		const range = table[i].min === table[i].max ? pad(table[i].min) : `${pad(table[i].min)}-${pad(table[i].max)}`;
-		htmlText += `<tr><td class="text-align-center">${range}</td><td>${getRenderedText(table[i].result)}</td></tr>`;
+		htmlText += `<tr><td class="text-center">${range}</td><td>${getRenderedText(table[i].result)}</td></tr>`;
 	}
 
 	htmlText += `
@@ -93,6 +99,10 @@ function loadhash (id) {
 			</td>
 		</tr>`;
 	$("#pagecontent").html(htmlText);
+
+	// update list highlights
+	$(".list.names").find(`.list-multi-selected`).removeClass("list-multi-selected");
+	$(`a[id="${id}"]`).parent().addClass("list-multi-selected");
 }
 
 function pad (number) {

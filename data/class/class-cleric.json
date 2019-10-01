@@ -11,6 +11,8 @@
 				"wis",
 				"cha"
 			],
+			"spellcastingAbility": "wis",
+			"casterProgression": "full",
 			"classTableGroups": [
 				{
 					"colLabels": [
@@ -625,7 +627,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -671,7 +673,7 @@
 											"Starting at 2nd level, you can use your Channel Divinity to abjure otherworldly creatures",
 											"As an action, you present your holy symbol, and one celestial, elemental, fey, or fiend of your choice that is within 30 feet of you must make a Wisdom saving throw, provided that the creature can see or hear you. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage.",
 											"A turned creature must spend its turns trying to move as far away from you as it can, and it can't willingly end its move in a space within 30 feet of you. It also can't take reactions. For its action, it can use only the {@action Dash} action or try to escape from an effect that prevents it from moving. If there's nowhere to move, then the creature can use the {@action Dodge} action.",
-											"After you reach 5th level, when a creature fails its saving throw against you Arcane Abjuration feature, the creature is banished for 1 minute (as in the {@spell banishment} spell, no concentration required) if it isn't on its plane of origin, and its challenge rating is at or below a certain threshold, as shown below.",
+											"After you reach 5th level, when a creature fails its saving throw against your Arcane Abjuration feature, the creature is banished for 1 minute (as in the {@spell banishment} spell, no concentration required) if it isn't on its plane of origin, and its challenge rating is at or below a certain threshold, as shown below.",
 											{
 												"type": "table",
 												"caption": "Arcane Banishment",
@@ -680,7 +682,7 @@
 													"Banishes Creatures of CR..."
 												],
 												"colStyles": [
-													"col-3 text-align-center",
+													"col-3 text-center",
 													"col-9"
 												],
 												"rows": [
@@ -772,7 +774,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -897,7 +899,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -1014,7 +1016,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -1221,7 +1223,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -1338,7 +1340,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -1456,7 +1458,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -1573,7 +1575,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -1691,7 +1693,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -1803,7 +1805,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -1919,7 +1921,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -2046,7 +2048,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -2179,7 +2181,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -2306,7 +2308,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -2425,7 +2427,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -2543,7 +2545,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -2660,7 +2662,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -2773,7 +2775,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -2791,7 +2793,7 @@
 											],
 											[
 												"7th",
-												"{@spell fire shield|PHB|fire shield (warm shield only)}, {@spell freedom of movement}"
+												"{@spell fire shield||fire shield (warm shield only)}, {@spell freedom of movement}"
 											],
 											[
 												"9th",
@@ -2892,7 +2894,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -3014,7 +3016,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -3133,7 +3135,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -3252,7 +3254,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -3373,7 +3375,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -3497,7 +3499,7 @@
 											"Spells"
 										],
 										"colStyles": [
-											"col-3 text-align-center",
+											"col-3 text-center",
 											"col-9"
 										],
 										"rows": [
@@ -3672,7 +3674,7 @@
 										"Temple"
 									],
 									"colStyles": [
-										"col-1 text-align-center",
+										"col-1 text-center",
 										"col-11"
 									],
 									"rows": [
@@ -3745,7 +3747,7 @@
 												"Keepsake"
 											],
 											"colStyles": [
-												"col-1 text-align-center",
+												"col-1 text-center",
 												"col-11"
 											],
 											"rows": [
@@ -3821,7 +3823,7 @@
 												"Secret"
 											],
 											"colStyles": [
-												"col-1 text-align-center",
+												"col-1 text-center",
 												"col-11"
 											],
 											"rows": [

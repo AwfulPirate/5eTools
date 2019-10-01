@@ -773,6 +773,7 @@
 		},
 		{
 			"name": "Tiamat",
+			"isNpc": true,
 			"size": "G",
 			"type": "fiend",
 			"source": "RoT",
@@ -1004,6 +1005,11 @@
 				"MW",
 				"RCH",
 				"AOE"
+			],
+			"otherSources": [
+				{
+					"source": "BGDIA"
+				}
 			]
 		},
 		{
@@ -1154,7 +1160,12 @@
 				"B",
 				"D"
 			],
-			"page": 55
+			"page": 55,
+			"otherSources": [
+				{
+					"source": "DC"
+				}
+			]
 		},
 		{
 			"name": "Half-Red Dragon Gladiator",

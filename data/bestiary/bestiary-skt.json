@@ -65,7 +65,7 @@
 				{
 					"name": "Simulacra",
 					"entries": [
-						"When a simulacrum drops to 0 hit points or is sub­jected to a successful {@spell dispel magic} spell ({@dc 17}), it reverts to ice and snow and is destroyed."
+						"When a simulacrum drops to 0 hit points or is subjected to a successful {@spell dispel magic} spell ({@dc 17}), it reverts to ice and snow and is destroyed."
 					]
 				}
 			],
@@ -1185,7 +1185,7 @@
 				{
 					"ac": 21,
 					"from": [
-						"{@item plate armor +3|dmg|+3 plate armor}"
+						"{@item plate armor +3||+3 plate armor}"
 					]
 				}
 			],
@@ -2310,7 +2310,7 @@
 				{
 					"name": "Create Fire Elemental (Costs 3 Actions)",
 					"entries": [
-						"Maegera's hit points are reduced by 50 as part of it separates and becomes a fire elemental with 102 hit points. The fire element appears in an unoccupied space within 15 feet of Maegera and acts on Maegera's initiative count. Maegera can't use this action if it has 50 hit points or fewer. The fire element obeys Maegera's commands and fights until destroyed."
+						"Maegera's hit points are reduced by 50 as part of it separates and becomes a {@creature fire elemental} with 102 hit points. The fire element appears in an unoccupied space within 15 feet of Maegera and acts on Maegera's initiative count. Maegera can't use this action if it has 50 hit points or fewer. The fire element obeys Maegera's commands and fights until destroyed."
 					]
 				}
 			],
@@ -3870,7 +3870,7 @@
 				{
 					"name": "Familiar",
 					"entries": [
-						"With the DM's permission, a person who casts the find familiar spell can choose to conjure a tressym in­ stead of a normal cat."
+						"With the DM's permission, a person who casts the find familiar spell can choose to conjure a tressym in stead of a normal cat."
 					]
 				}
 			],
@@ -3957,7 +3957,7 @@
 				{
 					"name": "Roleplaying Information",
 					"entries": [
-						"A retired adventurer, Urgala owns a respectable inn, the North­ shield House, and she doesn't want to see it or her neighbors' homes destroyed. She has no tolerance for monsters or bullies.",
+						"A retired adventurer, Urgala owns a respectable inn, the North shield House, and she doesn't want to see it or her neighbors' homes destroyed. She has no tolerance for monsters or bullies.",
 						"Ideal: \"We live in a violent world, and sometimes violence is necessary for survival.\"",
 						"Bond: \"My home is my life. Threaten it, and I'll hurt you.\"",
 						"Flaw: \"I know how treacherous and greedy adventurers can be. I don't trust them\u2014any of them.\""
@@ -4936,6 +4936,7 @@
 		},
 		{
 			"name": "Claugiyliamatar",
+			"isNamedCreature": true,
 			"isNpc": true,
 			"source": "SKT",
 			"_copy": {
@@ -5011,7 +5012,18 @@
 				"I",
 				"CD"
 			],
-			"page": 96
+			"page": 96,
+			"otherSources": [
+				{
+					"source": "DC"
+				},
+				{
+					"source": "SLW"
+				},
+				{
+					"source": "SDW"
+				}
+			]
 		},
 		{
 			"name": "Clockwork Mule",
@@ -5873,7 +5885,11 @@
 			"senseTags": [
 				"D"
 			],
-			"page": 79
+			"page": 79,
+			"damageTags": [
+				"B",
+				"P"
+			]
 		},
 		{
 			"name": "Mirran",
@@ -6127,7 +6143,7 @@
 						"items": {
 							"name": "Roleplaying Information",
 							"entries": [
-								"A skilled rider of rocs and whales, Shaldoor believes that\n\nAnnam the All-Father shattered the ordning to push giants into war against the dragons. She is thrilled to be on the front lines in this great conflict!",
+								"A skilled rider of rocs and whales, Shaldoor believes that Annam the All-Father shattered the ordning to push giants into war against the dragons. She is thrilled to be on the front lines in this great conflict!",
 								"Ideal: \"Giants are made for war\u2014storm giants most of all!\"",
 								"Bond: \"Ostoria is gone, yet I long for the return of a mighty giant empire.\"",
 								"Flaw: \"I like to rain destruction down upon my enemies, and I never show them mercy.\""
@@ -6305,7 +6321,9 @@
 			"cr": "0",
 			"trait": null,
 			"action": null,
-			"page": 143
+			"page": 143,
+			"miscTags": [],
+			"traitTags": []
 		},
 		{
 			"name": "Pow Ming",
@@ -6695,7 +6713,9 @@
 				"formula": "1d6"
 			},
 			"action": null,
-			"page": 142
+			"page": 142,
+			"miscTags": [],
+			"traitTags": []
 		},
 		{
 			"name": "Shield Dwarf Guard",
@@ -6847,7 +6867,9 @@
 			"languages": null,
 			"action": null,
 			"cr": "0",
-			"page": 127
+			"page": 127,
+			"miscTags": [],
+			"actionTags": []
 		},
 		{
 			"name": "Tartha",

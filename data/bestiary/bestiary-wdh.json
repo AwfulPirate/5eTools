@@ -187,7 +187,6 @@
 				"Infernal"
 			],
 			"cr": "1/8",
-			"senses": "",
 			"action": [
 				{
 					"name": "Rapier",
@@ -940,7 +939,6 @@
 				"Common"
 			],
 			"cr": "3",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Lightfooted",
@@ -1265,7 +1263,6 @@
 				"Halfling"
 			],
 			"cr": "0",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Halfling Nimbleness",
@@ -1761,7 +1758,6 @@
 				"Elvish"
 			],
 			"cr": "6",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Special Equipment",
@@ -2157,7 +2153,6 @@
 				"Halfling"
 			],
 			"cr": "6",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Halfling Nimbleness",
@@ -2800,7 +2795,6 @@
 				"Common"
 			],
 			"cr": "1/8",
-			"senses": "",
 			"action": [
 				{
 					"name": "Rapier",
@@ -2873,7 +2867,6 @@
 				"Dwarvish"
 			],
 			"cr": "1/4",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Dwarven Resilience",
@@ -2997,7 +2990,7 @@
 				{
 					"name": "Spellcasting",
 					"headerEntries": [
-						"The apprentice is a 1st-level spellcaster. Its spellcasting ability is Intelligence. It has the following wizard spells prepared:"
+						"The gnome is a 1st-level spellcaster. Its spellcasting ability is Intelligence. It has the following wizard spells prepared:"
 					],
 					"spells": {
 						"0": {
@@ -3082,7 +3075,6 @@
 				"Draconic"
 			],
 			"cr": "2",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Reckless",
@@ -3181,7 +3173,6 @@
 				"Thieves' cant"
 			],
 			"cr": "8",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Assassinate",
@@ -3293,7 +3284,6 @@
 				"Draconic"
 			],
 			"cr": "2",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Divine Eminence",
@@ -3620,7 +3610,6 @@
 				"Common"
 			],
 			"cr": "1/4",
-			"senses": "",
 			"action": [
 				{
 					"name": "Hooves",
@@ -3763,7 +3752,6 @@
 				"Common"
 			],
 			"cr": "3",
-			"senses": "",
 			"action": [
 				{
 					"name": "Multiattack",
@@ -3940,7 +3928,6 @@
 				"Halfling"
 			],
 			"cr": "3",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Halfling Nimbleness",
@@ -4068,7 +4055,6 @@
 				"Halfling"
 			],
 			"cr": "6",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Halfling Nimbleness",
@@ -4345,7 +4331,6 @@
 				"Elvish"
 			],
 			"cr": "6",
-			"senses": "",
 			"action": [
 				{
 					"name": "Breath Weapon",
@@ -4924,7 +4909,6 @@
 				"Infernal"
 			],
 			"cr": "5",
-			"senses": "",
 			"action": [
 				{
 					"name": "Quarterstaff",
@@ -5060,7 +5044,6 @@
 				"Halfling"
 			],
 			"cr": "2",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Special Equipment",
@@ -5199,7 +5182,6 @@
 				"Thieves' cant"
 			],
 			"cr": "5",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Cunning Action",
@@ -5616,12 +5598,11 @@
 				"Dwarvish"
 			],
 			"cr": "9",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Special Equipment",
 					"entries": [
-						"Durnan wields a {@item Greatsword of Sharpness|dmg|sword of sharpness (greatsword)} called Grimvault. He wears {@item boots of striding and springing}, {@item elven chain}, and a {@item ring of spell turning}."
+						"Durnan wields a {@item Greatsword of Sharpness||sword of sharpness (greatsword)} called Grimvault. He wears {@item boots of striding and springing}, {@item elven chain}, and a {@item ring of spell turning}."
 					]
 				},
 				{
@@ -5718,7 +5699,6 @@
 				"any one language (usually Common)"
 			],
 			"cr": "2",
-			"senses": "",
 			"action": [
 				{
 					"name": "Lance",
@@ -5809,7 +5789,6 @@
 				"all spoken languages"
 			],
 			"cr": "16",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Evasion",
@@ -6287,7 +6266,6 @@
 				"Elvish"
 			],
 			"cr": "4",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Special Equipment",
@@ -6365,7 +6343,7 @@
 				{
 					"ac": 24,
 					"from": [
-						"{@item leather armor +3|dmg|+3 leather armor}",
+						"{@item leather armor +3||+3 leather armor}",
 						"Suave Defense"
 					]
 				}
@@ -6412,7 +6390,7 @@
 				{
 					"name": "Special Equipment",
 					"entries": [
-						"Jarlaxle wears {@item leather armor +3|dmg|+3 leather armor}, a {@item hat of disguise}, a {@item bracer of flying daggers|wdh}, a {@item cloak of invisibility}, a {@item knave's eye patch|wdh}, and a {@item ring of truth telling|wdh}. He wields a {@item rapier +3|dmg|+3 rapier} and carries a {@item portable hole} and a {@item wand of web}. His hat is adorned with a {@item feather of diatryma summoning|wdh}."
+						"Jarlaxle wears {@item leather armor +3||+3 leather armor}, a {@item hat of disguise}, a {@item bracer of flying daggers|wdh}, a {@item cloak of invisibility}, a {@item knave's eye patch|wdh}, and a {@item ring of truth telling|wdh}. He wields a {@item rapier +3||+3 rapier} and carries a {@item portable hole} and a {@item wand of web}. His hat is adorned with a {@item feather of diatryma summoning|wdh}."
 					]
 				},
 				{
@@ -7152,12 +7130,11 @@
 				"Dwarvish"
 			],
 			"cr": "9",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Special Equipment",
 					"entries": [
-						"Mirt wears {@item bracers of defense} and a {@item ring of regeneration}. He wields a {@item longsword +1|dmg|+1 longsword} and a {@item dagger +1|dmg|+1 dagger}."
+						"Mirt wears {@item bracers of defense} and a {@item ring of regeneration}. He wields a {@item longsword +1||+1 longsword} and a {@item dagger +1||+1 dagger}."
 					]
 				},
 				{
@@ -7426,7 +7403,7 @@
 				{
 					"name": "Special Equipment",
 					"entries": [
-						"Remallia has a {@item Figurine of Wondrous Power, Silver Raven|dmg|figurine of wondrous power (silver raven)}."
+						"Remallia has a {@item Figurine of Wondrous Power, Silver Raven||figurine of wondrous power (silver raven)}."
 					]
 				},
 				{
@@ -7744,7 +7721,6 @@
 				"Common"
 			],
 			"cr": "9",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Indomitable (2/Day)",
@@ -7860,7 +7836,6 @@
 				"Undercommon"
 			],
 			"cr": "13",
-			"senses": "",
 			"trait": [
 				{
 					"name": "Special Equipment",
@@ -8368,7 +8343,7 @@
 				{
 					"ac": 17,
 					"from": [
-						"{@item leather armor +2|dmg|+2 leather armor}"
+						"{@item leather armor +2||+2 leather armor}"
 					]
 				}
 			],
@@ -8857,7 +8832,7 @@
 				"N"
 			],
 			"hp": {
-				"special": 1
+				"special": "1"
 			},
 			"passive": 10,
 			"cr": "Unknown",
@@ -8890,7 +8865,7 @@
 				"N"
 			],
 			"hp": {
-				"special": 1
+				"special": "1"
 			},
 			"passive": 10,
 			"cr": "Unknown",
@@ -8923,7 +8898,7 @@
 				"N"
 			],
 			"hp": {
-				"special": 1
+				"special": "1"
 			},
 			"passive": 10,
 			"cr": "Unknown",
@@ -8979,7 +8954,7 @@
 				"N"
 			],
 			"hp": {
-				"special": 1
+				"special": "1"
 			},
 			"passive": 10,
 			"cr": "Unknown",
@@ -9106,6 +9081,7 @@
 		},
 		{
 			"name": "Vincent Trench",
+			"isNpc": true,
 			"source": "WDH",
 			"_copy": {
 				"name": "Rakshasa",
@@ -9123,6 +9099,7 @@
 		},
 		{
 			"name": "Willifort Crowelle",
+			"isNpc": true,
 			"source": "WDH",
 			"_copy": {
 				"name": "Doppelganger",
@@ -9140,6 +9117,7 @@
 		},
 		{
 			"name": "Xanathar",
+			"isNpc": true,
 			"source": "WDH",
 			"_copy": {
 				"name": "Beholder",
@@ -9156,7 +9134,7 @@
 						"items": {
 							"name": "Special Equipment",
 							"entries": [
-								"Xanathar wears a {@item ring of invisibility}, a {@item ring of mind shielding}, and a {@item ring of force resistance|DMG|ring of resistance (force)}."
+								"Xanathar wears a {@item ring of invisibility}, a {@item ring of mind shielding}, and a {@item ring of force resistance||ring of resistance (force)}."
 							]
 						}
 					}
