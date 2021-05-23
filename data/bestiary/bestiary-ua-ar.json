@@ -1,8 +1,9 @@
 {
 	"monster": [
 		{
-			"source": "UAArtificerRevisited",
 			"name": "Alchemical Homunculus",
+			"source": "UAArtificerRevisited",
+			"page": 6,
 			"size": "T",
 			"type": "construct",
 			"alignment": [
@@ -33,6 +34,10 @@
 				"perception": "+4",
 				"stealth": "+4"
 			},
+			"senses": [
+				"darkvision 60 ft."
+			],
+			"passive": 10,
 			"immune": [
 				"acid",
 				"poison"
@@ -41,10 +46,6 @@
 				"charmed",
 				"exhaustion",
 				"poisoned"
-			],
-			"passive": 10,
-			"senses": [
-				"darkvision 60 ft."
 			],
 			"languages": [
 				"understands the languages you speak"
@@ -57,11 +58,12 @@
 					]
 				}
 			],
+			"actionNote": "Requires Your Bonus Action",
 			"action": [
 				{
 					"name": "Acidic Spittle",
 					"entries": [
-						"{@atk rw} {@hit 4} to hit, range 30 ft., one target you can see. {@h}{@dice 1d6 + 2} acid damage."
+						"{@atk rw} {@hit 4} to hit, range 30 ft., one target you can see. {@h}{@damage 1d6 + 2} acid damage."
 					]
 				},
 				{
@@ -92,18 +94,21 @@
 					]
 				}
 			],
+			"hasToken": true,
 			"senseTags": [
 				"D"
 			],
+			"damageTags": [
+				"A"
+			],
 			"miscTags": [
 				"RW"
-			],
-			"page": 6
+			]
 		},
 		{
+			"name": "Iron Defender",
 			"source": "UAArtificerRevisited",
 			"page": 11,
-			"name": "Iron Defender",
 			"size": "M",
 			"type": "construct",
 			"alignment": [
@@ -132,6 +137,10 @@
 			"skill": {
 				"perception": "+4"
 			},
+			"senses": [
+				"darkvision 60 ft."
+			],
+			"passive": 10,
 			"immune": [
 				"poison"
 			],
@@ -139,10 +148,6 @@
 				"charmed",
 				"exhaustion",
 				"poisoned"
-			],
-			"passive": 10,
-			"senses": [
-				"darkvision 60 ft."
 			],
 			"languages": [
 				"understands the languages you speak"
@@ -161,11 +166,12 @@
 					]
 				}
 			],
+			"actionNote": "Requires Your Bonus Action",
 			"action": [
 				{
 					"name": "Bite",
 					"entries": [
-						"{@atk mw} {@hit 4} to hit, reach 5 ft., one target you can see. {@h}{@dice 1d8 + 2} piercing damage."
+						"{@atk mw} {@hit 4} to hit, reach 5 ft., one target you can see. {@h}{@damage 1d8 + 2} piercing damage."
 					]
 				},
 				{
@@ -183,8 +189,12 @@
 					]
 				}
 			],
+			"hasToken": true,
 			"senseTags": [
 				"D"
+			],
+			"damageTags": [
+				"P"
 			],
 			"miscTags": [
 				"MW"

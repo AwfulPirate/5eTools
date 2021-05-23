@@ -1165,7 +1165,7 @@
 											"name": "Treasure",
 											"id": "06b",
 											"entries": [
-												"The treasures gathered here comprise 14,000 gp, 1,750 pp, ten jet gemstones worth 100 gp each, two {@item Potion of Supreme Healing||potions of supreme healing}, a {@item potion of storm giant strength} , and a {@item circlet of blasting}."
+												"The treasures gathered here comprise 14,000 gp, 1,750 pp, ten jet gemstones worth 100 gp each, two {@item Potion of Supreme Healing||potions of supreme healing}, a {@item potion of storm giant strength}, and a {@item circlet of blasting}."
 											]
 										}
 									]
@@ -2596,7 +2596,8 @@
 											"name": "Treasure",
 											"entries": [
 												"A large roc's nest is nestled at the back of the main deck. Characters who search through the bones strewn throughout the nest discover a battered {@item helm of telepathy} and five black pearls worth 500 gp each."
-											]
+											],
+											"id": "043"
 										}
 									]
 								},
@@ -3183,7 +3184,7 @@
 				{
 					"type": "list",
 					"items": [
-						"{@creature Air Elemental Myrmidon|PotA}",
+						"{@creature Air Elemental Myrmidon|mtf}",
 						"{@creature Anchorite of Talos|DIP}",
 						"{@creature Boneclaw|MTF}",
 						"{@creature Sacred Statue|MTF}",
@@ -3239,7 +3240,7 @@
 											"entries": [
 												"{@i Human Spellcaster}",
 												"Donnabella is a young magic-user who wears a papier-mâché unicorn mask because it makes her feel more magical.",
-												"Use the {@creature Spellcaster|DIP} sidekick stat block to represent her."
+												"Use the {@creature Spellcaster|ESK} sidekick stat block to represent her."
 											]
 										},
 										{
@@ -3303,7 +3304,7 @@
 											"entries": [
 												"{@i Human Expert}",
 												"Galandro's most treasured possession is a fiddle that he tunes and plucks constantly.",
-												"Use the {@creature Expert|DIP} sidekick stat block to represent him."
+												"Use the {@creature Expert|ESK} sidekick stat block to represent him."
 											]
 										},
 										{
@@ -3367,7 +3368,7 @@
 											"entries": [
 												"{@i Moon Elf Warrior}",
 												"Inverna has a scar on her cheek where she was grazed by an orc's javelin. She is cautious by nature and suspicious of strangers.",
-												"Use the {@creature Warrior|DIP} sidekick stat block to represent her."
+												"Use the {@creature Warrior|ESK} sidekick stat block to represent her."
 											]
 										},
 										{
@@ -3431,7 +3432,7 @@
 											"entries": [
 												"{@i Lightfoot Halfling Spellcaster}",
 												"Nib is a happy-go-lucky gambler who keeps a deck of Three-Dragon Ante cards in her vest pocket. She also has a goldfinch named Lil.",
-												"Use the {@creature Spellcaster|DIP} sidekick stat block to represent her."
+												"Use the {@creature Spellcaster|ESK} sidekick stat block to represent her."
 											]
 										},
 										{
@@ -3495,7 +3496,7 @@
 											"entries": [
 												"{@i Human Expert}",
 												"Pete likes ale and tends to function better while tipsy. At his best, he's quite the handyman and comes up with all sorts of crazy ways to get things done.",
-												"Use the {@creature Expert|DIP} sidekick stat block to represent him."
+												"Use the {@creature Expert|ESK} sidekick stat block to represent him."
 											]
 										},
 										{
@@ -3559,7 +3560,7 @@
 											"entries": [
 												"{@i Lightfoot Halfling Warrior}",
 												"Quinn is a happy little scrapper who likes to punch people in the groin.",
-												"Use the {@creature Warrior|DIP} sidekick stat block to represent him."
+												"Use the {@creature Warrior|ESK} sidekick stat block to represent him."
 											]
 										},
 										{
@@ -3623,7 +3624,7 @@
 											"entries": [
 												"{@i Shield Dwarf Warrior}",
 												"Ruby lacks the customary dwarven stoicism and greets every day with a warm smile and a renewed sense of optimism.",
-												"Use the {@creature Warrior|DIP} sidekick stat block to represent her."
+												"Use the {@creature Warrior|ESK} sidekick stat block to represent her."
 											]
 										},
 										{
@@ -3687,7 +3688,7 @@
 											"entries": [
 												"{@i Human Spellcaster}",
 												"Kwan died and was raised from the dead as an infant, whereupon a tiny black glyph\u2014the symbol of necromancy\u2014appeared on his forehead.",
-												"Use the {@creature Spellcaster|DIP} sidekick stat block to represent him."
+												"Use the {@creature Spellcaster|ESK} sidekick stat block to represent him."
 											]
 										},
 										{
@@ -3751,7 +3752,7 @@
 											"entries": [
 												"{@i Human Expert}",
 												"Talon loves gold and adventure, and dreams of being a famous gold prospector.",
-												"Use the {@creature Expert|DIP} sidekick stat block to represent them."
+												"Use the {@creature Expert|ESK} sidekick stat block to represent them."
 											]
 										},
 										{
@@ -3801,9 +3802,9 @@
 						{
 							"type": "list",
 							"items": [
-								"{@creature Expert|DIP}",
-								"{@creature Spellcaster|DIP}",
-								"{@creature Warrior|DIP}"
+								"{@creature Expert|ESK}",
+								"{@creature Spellcaster|ESK}",
+								"{@creature Warrior|ESK}"
 							],
 							"columns": 3
 						}
@@ -3850,7 +3851,8 @@
 												"name": "Ability Score Improvement",
 												"entries": [
 													"The expert's Cha. score increases by 2, raising the modifier by 1, so increase the following numbers by 1: the Cha. saving throw bonus; the {@skill Performance}, and {@skill Persuasion} bonuses."
-												]
+												],
+												"id": "04f"
 											}
 										]
 									]
@@ -3883,7 +3885,8 @@
 												"name": "Ability Score Improvement",
 												"entries": [
 													"The spellcaster's Int. (mage) or Wis. (healer) score increases by 2, raising the modifier by 1, so increase the following numbers by 1: the spellcaster's spell save DC and the bonus to hit of spell attacks, the bonuses in the Skills entry of the mage, the Wisdom saving throw of the healer, and the passive Perception of the healer."
-												]
+												],
+												"id": "12d"
 											}
 										]
 									]
@@ -3916,7 +3919,8 @@
 												"name": "Ability Score Improvement",
 												"entries": [
 													"The warrior's Str. score increases by 2, raising the modifier by 1, so increase the following numbers by 1: the {@skill Athletics} bonus; and the bonuses to hit and damage of the warrior's weapon attacks."
-												]
+												],
+												"id": "12e"
 											}
 										]
 									]

@@ -2677,7 +2677,7 @@
 											"entries": [
 												"{@i Human Spellcaster}",
 												"Donnabella is a young magic-user who wears a papier-mâché unicorn mask because it makes her feel more magical.",
-												"Use the {@creature Spellcaster|DIP} sidekick stat block to represent her."
+												"Use the {@creature Spellcaster (Healer)|SLW} or {@creature Spellcaster (Mage)|SLW} sidekick stat block to represent her."
 											]
 										},
 										{
@@ -2741,7 +2741,7 @@
 											"entries": [
 												"{@i Human Expert}",
 												"Galandro's most treasured possession is a fiddle that he tunes and plucks constantly.",
-												"Use the {@creature Expert|DIP} sidekick stat block to represent him."
+												"Use the {@creature Expert|SLW} sidekick stat block to represent him."
 											]
 										},
 										{
@@ -2805,7 +2805,7 @@
 											"entries": [
 												"{@i Moon Elf Warrior}",
 												"Inverna has a scar on her cheek where she was grazed by an orc's javelin. She is cautious by nature and suspicious of strangers.",
-												"Use the {@creature Warrior|DIP} sidekick stat block to represent her."
+												"Use the {@creature Warrior|SLW} sidekick stat block to represent her."
 											]
 										},
 										{
@@ -2869,7 +2869,7 @@
 											"entries": [
 												"{@i Lightfoot Halfling Spellcaster}",
 												"Nib is a happy-go-lucky gambler who keeps a deck of Three-Dragon Ante cards in her vest pocket. She also has a goldfinch named Lil.",
-												"Use the {@creature Spellcaster|DIP} sidekick stat block to represent her."
+												"Use the {@creature Spellcaster (Healer)|SLW} or {@creature Spellcaster (Mage)|SLW} sidekick stat block to represent her."
 											]
 										},
 										{
@@ -2933,7 +2933,7 @@
 											"entries": [
 												"{@i Human Expert}",
 												"Pete likes ale and tends to function better while tipsy. At his best, he's quite the handyman and comes up with all sorts of crazy ways to get things done.",
-												"Use the {@creature Expert|DIP} sidekick stat block to represent him."
+												"Use the {@creature Expert|SLW} sidekick stat block to represent him."
 											]
 										},
 										{
@@ -2997,7 +2997,7 @@
 											"entries": [
 												"{@i Lightfoot Halfling Warrior}",
 												"Quinn is a happy little scrapper who likes to punch people in the groin.",
-												"Use the {@creature Warrior|DIP} sidekick stat block to represent him."
+												"Use the {@creature Warrior|SLW} sidekick stat block to represent him."
 											]
 										},
 										{
@@ -3061,7 +3061,7 @@
 											"entries": [
 												"{@i Shield Dwarf Warrior}",
 												"Ruby lacks the customary dwarven stoicism and greets every day with a warm smile and a renewed sense of optimism.",
-												"Use the {@creature Warrior|DIP} sidekick stat block to represent her."
+												"Use the {@creature Warrior|SLW} sidekick stat block to represent her."
 											]
 										},
 										{
@@ -3125,7 +3125,7 @@
 											"entries": [
 												"{@i Human Spellcaster}",
 												"Kwan died and was raised from the dead as an infant, whereupon a tiny black glyph\u2014the symbol of necromancy\u2014appeared on his forehead.",
-												"Use the {@creature Spellcaster|DIP} sidekick stat block to represent him."
+												"Use the {@creature Spellcaster (Healer)|SLW} or {@creature Spellcaster (Mage)|SLW} sidekick stat block to represent him."
 											]
 										},
 										{
@@ -3189,7 +3189,7 @@
 											"entries": [
 												"{@i Human Expert}",
 												"Talon loves gold and adventure, and dreams of being a famous gold prospector.",
-												"Use the {@creature Expert|DIP} sidekick stat block to represent them."
+												"Use the {@creature Expert|SLW} sidekick stat block to represent them."
 											]
 										},
 										{
@@ -3239,9 +3239,10 @@
 						{
 							"type": "list",
 							"items": [
-								"{@creature Expert|DIP}",
-								"{@creature Spellcaster|DIP}",
-								"{@creature Warrior|DIP}"
+								"{@creature Expert|SLW}",
+								"{@creature Spellcaster (Healer)|SLW}",
+								"{@creature Spellcaster (mage)|SLW}",
+								"{@creature Warrior|SLW}"
 							],
 							"columns": 3
 						}
@@ -3288,7 +3289,8 @@
 												"name": "Ability Score Improvement",
 												"entries": [
 													"The expert's Dex. score increases by 2, raising the modifier by 1, so increase the following numbers by 1: the Dex. saving throw bonus; the Armor Class; the {@skill Acrobatics}, {@skill Sleight of Hand}, and {@skill Stealth} bonuses; and the bonuses to hit and damage of the expert's weapon attacks."
-												]
+												],
+												"id": "0f7"
 											}
 										],
 										[
@@ -3326,7 +3328,8 @@
 												"name": "Ability Score Improvement",
 												"entries": [
 													"The spellcaster's Int. (mage) or Wis. (healer) score increases by 2, raising the modifier by 1, so increase the following numbers by 1: the Int. or Wis. saving throw bonus; Int. or Wis. based skill bonuses; and the bonuses to hit and to saving throw DCs with spells. Spellcasting. The caster gains one 4th-level spell slot and learns one new 4th-level spell: {@spell banishment} (healer) or {@spell polymorph} (mage)."
-												]
+												],
+												"id": "0f8"
 											}
 										],
 										[
@@ -3337,7 +3340,8 @@
 												"name": "Spellcasting",
 												"entries": [
 													"The spellcaster gains one 4th-level and one 5th-level spell slot and learns one new 5th-level spell: {@spell greater restoration} (healer) or {@spell cone of cold} (mage)."
-												]
+												],
+												"id": "0f9"
 											}
 										]
 									]
@@ -3370,7 +3374,8 @@
 												"name": "Ability Score Improvement",
 												"entries": [
 													"The warrior's Str. score increases by 2, raising the modifier by 1, so increase the following numbers by 1: the Str. saving throw bonus; the {@skill Athletics} bonuses; and the bonuses to hit and damage of the warrior's longsword attacks."
-												]
+												],
+												"id": "0fa"
 											}
 										],
 										[
@@ -3381,7 +3386,8 @@
 												"name": "Indomitable (1/Day)",
 												"entries": [
 													"The warrior can reroll a saving throw that it fails but must use the new result."
-												]
+												],
+												"id": "0fb"
 											}
 										]
 									]

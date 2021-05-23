@@ -2,63 +2,42 @@
 
 class FeatsPage extends ListPage {
 	constructor () {
-		const sourceFilter = getSourceFilter();
-		const asiFilter = getAsiFilter();
-		const prereqFilter = new Filter({
-			header: "Prerequisite",
-			items: ["Ability", "Race", "Proficiency", "Spellcasting"]
-		});
-
+		const pageFilter = new PageFilterFeats();
 		super({
 			dataSource: "data/feats.json",
 
-			filters: [
-				sourceFilter,
-				asiFilter,
-				prereqFilter
-			],
-			filterSource: sourceFilter,
+			pageFilter,
 
 			listClass: "feats",
 
 			sublistClass: "subfeats",
 
-			dataProps: ["feat"]
-		});
+			dataProps: ["feat"],
 
-		this._sourceFilter = sourceFilter;
+			isPreviewable: true,
+		});
 	}
 
-	getListItem (feat, ftI) {
-		const name = feat.name;
-		const ability = Renderer.getAbilityData(feat.ability);
-		if (!ability.asText) ability.asText = STR_NONE;
-		feat._fAbility = ability.asCollection.filter(a => !ability.areNegative.includes(a)); // used for filtering
-		let prereqText = Renderer.feat.getPrerequisiteText(feat.prerequisite, true);
-		if (!prereqText) prereqText = STR_NONE;
+	getListItem (feat, ftI, isExcluded) {
+		this._pageFilter.mutateAndAddToFilters(feat, isExcluded);
 
-		const preSet = new Set();
-		(feat.prerequisite || []).forEach(it => preSet.add(...Object.keys(it)));
-		feat._fPrereq = [...preSet].map(it => it.uppercaseFirst());
-
-		feat._slAbility = ability.asText;
-		feat._slPrereq = prereqText;
-
-		// populate filters
-		this._sourceFilter.addItem(feat.source);
-
-		const eleLi = document.createElement("li");
-		eleLi.className = "row";
+		const eleLi = document.createElement("div");
+		eleLi.className = `lst__row flex-col ${isExcluded ? "lst__row--blacklisted" : ""}`;
 
 		const source = Parser.sourceJsonToAbv(feat.source);
 		const hash = UrlUtil.autoEncodeHash(feat);
 
-		eleLi.innerHTML = `<a href="#${hash}">
-			<span class="bold col-3-8 pl-0">${name}</span>
-			<span class="col-3-5 ${ability.asText === STR_NONE ? "list-entry-none " : ""}">${ability.asText}</span>
-			<span class="col-3 ${(prereqText === STR_NONE ? "list-entry-none " : "")}">${prereqText}</span>
+		eleLi.innerHTML = `<a href="#${hash}" class="lst--border lst__row-inner">
+			<span class="col-0-3 px-0 flex-vh-center lst__btn-toggle-expand self-flex-stretch">[+]</span>
+			<span class="bold col-3-5">${feat.name}</span>
+			<span class="col-3-5 ${feat._slAbility === VeCt.STR_NONE ? "list-entry-none " : ""}">${feat._slAbility}</span>
+			<span class="col-3 ${feat._slPrereq === VeCt.STR_NONE ? "list-entry-none " : ""}">${feat._slPrereq}</span>
 			<span class="source col-1-7 text-center ${Parser.sourceJsonToColor(feat.source)} pr-0" title="${Parser.sourceJsonToFull(feat.source)}" ${BrewUtil.sourceJsonToStyle(feat.source)}>${source}</span>
-		</a>`;
+		</a>
+		<div class="flex ve-hidden relative lst__wrp-preview">
+			<div class="vr-0 absolute lst__vr-preview"></div>
+			<div class="flex-col py-3 ml-4 lst__wrp-preview-inner"></div>
+		</div>`;
 
 		const listItem = new ListItem(
 			ftI,
@@ -67,10 +46,13 @@ class FeatsPage extends ListPage {
 			{
 				hash,
 				source,
-				ability: ability.asText,
-				prerequisite: prereqText,
-				uniqueid: feat.uniqueId ? feat.uniqueId : ftI
-			}
+				ability: feat._slAbility,
+				prerequisite: feat._slPrereq,
+			},
+			{
+				uniqueId: feat.uniqueId ? feat.uniqueId : ftI,
+				isExcluded,
+			},
 		);
 
 		eleLi.addEventListener("click", (evt) => this._list.doSelect(listItem, evt));
@@ -81,29 +63,22 @@ class FeatsPage extends ListPage {
 
 	handleFilterChange () {
 		const f = this._filterBox.getValues();
-		this._list.filter((item) => {
-			const ft = this._dataList[item.ix];
-			return this._filterBox.toDisplay(
-				f,
-				ft.source,
-				ft._fAbility,
-				ft._fPrereq
-			);
-		});
+		this._list.filter(item => this._pageFilter.toDisplay(f, this._dataList[item.ix]));
 		FilterBox.selectFirstVisible(this._dataList);
 	}
 
 	getSublistItem (feat, pinId) {
 		const hash = UrlUtil.autoEncodeHash(feat);
 
-		const $ele = $(`<li class="row">
-			<a href="#${hash}">
+		const $ele = $(`<div class="lst__row lst__row--sublist flex-col">
+			<a href="#${hash}" class="lst--border lst__row-inner">
 				<span class="bold col-4 pl-0">${feat.name}</span>
-				<span class="col-4 ${feat._slAbility === STR_NONE ? "list-entry-none" : ""}">${feat._slAbility}</span>
-				<span class="col-4 ${feat._slPrereq === STR_NONE ? "list-entry-none" : ""} pr-0">${feat._slPrereq}</span>
+				<span class="col-4 ${feat._slAbility === VeCt.STR_NONE ? "list-entry-none" : ""}">${feat._slAbility}</span>
+				<span class="col-4 ${feat._slPrereq === VeCt.STR_NONE ? "list-entry-none" : ""} pr-0">${feat._slPrereq}</span>
 			</a>
-		</li>`)
-			.contextmenu(evt => ListUtil.openSubContextMenu(evt, listItem));
+		</div>`)
+			.contextmenu(evt => ListUtil.openSubContextMenu(evt, listItem))
+			.click(evt => ListUtil.sublist.doSelect(listItem, evt));
 
 		const listItem = new ListItem(
 			pinId,
@@ -112,8 +87,8 @@ class FeatsPage extends ListPage {
 			{
 				hash,
 				ability: feat._slAbility,
-				prerequisite: feat._slPrereq
-			}
+				prerequisite: feat._slPrereq,
+			},
 		);
 		return listItem;
 	}
@@ -126,9 +101,9 @@ class FeatsPage extends ListPage {
 		ListUtil.updateSelected();
 	}
 
-	doLoadSubHash (sub) {
+	async pDoLoadSubHash (sub) {
 		sub = this._filterBox.setFromSubHashes(sub);
-		ListUtil.setFromSubHashes(sub);
+		await ListUtil.pSetFromSubHashes(sub);
 	}
 }
 

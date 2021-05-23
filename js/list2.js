@@ -3,8 +3,8 @@ class ListItem {
 	 * @param ix External ID information (e.g. the location of the entry this ListItem represents in a list of entries)
 	 * @param ele An element, or jQuery element if the list is in jQuery mode.
 	 * @param name A name for this item.
-	 * @param values A dictionary of values for this item (not indexed).
-	 * @param [data] An optional dictionary of additional data to store with the item.
+	 * @param values A dictionary of indexed values for this item.
+	 * @param [data] An optional dictionary of additional data to store with the item (not indexed).
 	 */
 	constructor (ix, ele, name, values, data) {
 		this.ix = ix;
@@ -13,7 +13,13 @@ class ListItem {
 		this.values = values || {};
 		this.data = data || {};
 
-		this.searchText = `${this.name} - ${Object.values(this.values).join(" - ")}`.toLowerCase();
+		let searchText = `${this.name} - `;
+		for (const k in this.values) {
+			const v = this.values[k]; // unsafe for performance
+			if (!v) continue;
+			searchText += `${v} - `;
+		}
+		this.searchText = searchText.toAscii().toLowerCase();
 
 		this._isSelected = false;
 	}
@@ -37,23 +43,29 @@ class ListItem {
 class List {
 	/**
 	 * @param [opts] Options object.
-	 * @param [opts.fnSort] Sort function. Should accept `(a, b, o)` where `o` is an options object.
+	 * @param [opts.fnSort] Sort function. Should accept `(a, b, o)` where `o` is an options object. Pass `null` to
+	 * disable sorting.
+	 * @param [opts.fnSearch] Search function. Should accept `(li, searchTerm)` where `li` is a list item.
 	 * @param [opts.$iptSearch] Search input.
 	 * @param opts.$wrpList List wrapper.
 	 * @param [opts.isUseJquery] If the list items are using jQuery elements. Significantly slower for large lists.
 	 * @param [opts.sortByInitial] Initial sortBy.
+	 * @param [opts.sortDirInitial] Initial sortDir.
+	 * @param [opts.syntax] A dictionary of search syntax prefixes, each with an item "to display" checker function.
 	 */
 	constructor (opts) {
 		this._$iptSearch = opts.$iptSearch;
 		this._$wrpList = opts.$wrpList;
-		this._fnSort = opts.fnSort || SortUtil.listSort;
+		this._fnSort = opts.fnSort === undefined ? SortUtil.listSort : opts.fnSort;
+		this._fnSearch = opts.fnSearch;
+		this._syntax = opts.syntax;
 
 		this._items = [];
 		this._eventHandlers = {};
 
 		this._searchTerm = List._DEFAULTS.searchTerm;
 		this._sortBy = opts.sortByInitial || List._DEFAULTS.sortBy;
-		this._sortDir = List._DEFAULTS.sortDir;
+		this._sortDir = opts.sortDirInitial || List._DEFAULTS.sortDir;
 		this._fnFilter = null;
 		this._isUseJquery = opts.isUseJquery;
 
@@ -68,12 +80,13 @@ class List {
 		this._nextList = null;
 		this._lastSelection = null;
 		this._isMultiSelection = false;
-		this._selectedItems = [];
 		// endregion
 	}
 
 	get items () { return this._items; }
 	get visibleItems () { return this._filteredSortedItems; }
+	get sortBy () { return this._sortBy; }
+	get sortDir () { return this._sortDir; }
 	set nextList (list) { this._nextList = list; }
 	set prevList (list) { this._prevList = list; }
 
@@ -82,14 +95,51 @@ class List {
 
 		// This should only be run after all the elements are ready from page load
 		if (this._$iptSearch) {
-			UiUtil.bindTypingEnd(this._$iptSearch, () => this.search(this._$iptSearch.val()));
-			this._searchTerm = List._getCleanSearchTerm(this._$iptSearch.val());
+			UiUtil.bindTypingEnd({$ipt: this._$iptSearch, fnKeyup: () => this.search(this._$iptSearch.val())});
+			this._searchTerm = List.getCleanSearchTerm(this._$iptSearch.val());
+			this._init_bindKeydowns();
 		}
 		this._doSearch();
 		this._isInit = true;
 	}
 
-	// TODO call this whenever we add more stuff to the list
+	_init_bindKeydowns () {
+		this._$iptSearch
+			.on("keydown", evt => {
+				// Avoid handling the same event multiple times, if there are multiple lists bound to one input
+				if (evt._List__isHandled) return;
+
+				switch (evt.key) {
+					case "Escape": return this._handleKeydown_escape(evt);
+					case "Enter": return this._handleKeydown_enter(evt);
+				}
+			});
+	}
+
+	_handleKeydown_escape (evt) {
+		evt._List__isHandled = true;
+
+		if (!this._$iptSearch.val()) {
+			$(document.activeElement).blur();
+			return;
+		}
+
+		this._$iptSearch.val("");
+		this.search("");
+	}
+
+	_handleKeydown_enter (evt) {
+		if (IS_VTT) return;
+
+		const firstVisibleItem = this.visibleItems[0];
+		if (!firstVisibleItem) return;
+
+		evt._List__isHandled = true;
+
+		$(firstVisibleItem.ele).click();
+		if (firstVisibleItem.values.hash) window.location.hash = firstVisibleItem.values.hash;
+	}
+
 	update () {
 		if (this._isInit && this._isDirty) {
 			this._doSearch();
@@ -97,10 +147,29 @@ class List {
 	}
 
 	_doSearch () {
-		if (this._searchTerm) this._searchedItems = this._items.filter(it => it.searchText.includes(this._searchTerm));
-		else this._searchedItems = [...this._items];
+		this._doSearch_doSearchTerm();
+
+		// Never show excluded items
+		this._searchedItems = this._searchedItems.filter(it => !it.data.isExcluded);
 
 		this._doFilter();
+	}
+
+	_doSearch_doSearchTerm () {
+		if (!this._searchTerm) return this._searchedItems = [...this._items];
+
+		if (this._syntax) {
+			const [command, term] = this._searchTerm.split(/^([a-z]+):/).filter(Boolean);
+			if (command && term && this._syntax[command]) {
+				const fnCommand = this._syntax[command].fn;
+				this._searchedItems = this._items.filter(it => fnCommand(it, term));
+				return;
+			}
+		}
+
+		if (this._fnSearch) return this._searchedItems = this._items.filter(it => this._fnSearch(it, this._searchTerm));
+
+		this._searchedItems = this._items.filter(it => it.searchText.includes(this._searchTerm));
 	}
 
 	_doFilter () {
@@ -110,8 +179,13 @@ class List {
 	}
 
 	_doSort () {
-		const opts = {sortBy: this._sortBy};
-		this._filteredSortedItems.sort((a, b) => this._fnSort(a, b, opts));
+		const opts = {
+			sortBy: this._sortBy,
+			// The sort function should generally ignore this, as we do the reversing here. We expose it in case there
+			//   is specific functionality that requires it.
+			sortDir: this._sortDir,
+		};
+		if (this._fnSort) this._filteredSortedItems.sort((a, b) => this._fnSort(a, b, opts));
 		if (this._sortDir === "desc") this._filteredSortedItems.reverse();
 
 		this._doRender();
@@ -124,7 +198,7 @@ class List {
 			this._$wrpList.children().detach();
 			for (let i = 0; i < len; ++i) this._$wrpList.append(this._filteredSortedItems[i].ele);
 		} else {
-			this._$wrpList.empty();
+			this._$wrpList[0].innerHTML = "";
 			const frag = document.createDocumentFragment();
 			for (let i = 0; i < len; ++i) frag.appendChild(this._filteredSortedItems[i].ele);
 			this._$wrpList[0].appendChild(frag);
@@ -135,7 +209,7 @@ class List {
 	}
 
 	search (searchTerm) {
-		const nextTerm = List._getCleanSearchTerm(searchTerm);
+		const nextTerm = List.getCleanSearchTerm(searchTerm);
 		if (nextTerm !== this._searchTerm) {
 			this._searchTerm = nextTerm;
 			this._doSearch();
@@ -176,12 +250,8 @@ class List {
 		const ixItem = this._items.findIndex(it => it.ix === ix);
 		if (~ixItem) {
 			this._isDirty = true;
-			this._items.splice(ixItem, 1);
-
-			if (this._selectedItems.length) {
-				const ixSelectedItem = this._selectedItems.findIndex(it => it.ix === ix);
-				this._selectedItems.splice(ixSelectedItem, 1);
-			}
+			const removed = this._items.splice(ixItem, 1);
+			return removed[0];
 		}
 	}
 
@@ -189,19 +259,23 @@ class List {
 		const ixItem = this._items.findIndex(it => it.values[valueName] === value);
 		if (~ixItem) {
 			this._isDirty = true;
-			this._items.splice(ixItem, 1);
+			const removed = this._items.splice(ixItem, 1);
+			return removed[0];
+		}
+	}
 
-			if (this._selectedItems.length) {
-				const ixSelectedItem = this._selectedItems.findIndex(it => it.values[valueName] === value);
-				this._selectedItems.splice(ixSelectedItem, 1);
-			}
+	removeItemByData (dataName, value) {
+		const ixItem = this._items.findIndex(it => it.data[dataName] === value);
+		if (~ixItem) {
+			this._isDirty = true;
+			const removed = this._items.splice(ixItem, 1);
+			return removed[0];
 		}
 	}
 
 	removeAllItems () {
 		this._isDirty = true;
 		this._items = [];
-		this._selectedItems = [];
 	}
 
 	on (eventName, handler) { (this._eventHandlers[eventName] = this._eventHandlers[eventName] || []).push(handler); }
@@ -217,6 +291,7 @@ class List {
 	 * @param opts Options object.
 	 * @param opts.fnGetName Function which gets the name from a dataSource item.
 	 * @param opts.fnGetValues Function which gets list values from a dataSource item.
+	 * @param opts.fnGetData Function which gets list data from a listItem and dataSource item.
 	 * @param [opts.fnBindListeners] Function which binds event listeners to the list.
 	 */
 	doAbsorbItems (dataArr, opts) {
@@ -235,9 +310,11 @@ class List {
 				i,
 				node,
 				opts.fnGetName(dataItem),
-				opts.fnGetValues ? opts.fnGetValues(dataItem) : {}
+				opts.fnGetValues ? opts.fnGetValues(dataItem) : {},
+				{},
 			);
-			if (opts.fnBindListeners) opts.fnBindListeners(this, listItem, dataItem);
+			if (opts.fnGetData) listItem.data = opts.fnGetData(listItem, dataItem);
+			if (opts.fnBindListeners) opts.fnBindListeners(listItem, dataItem);
 			this.addItem(listItem);
 		}
 	}
@@ -332,18 +409,12 @@ class List {
 
 	updateSelected (item) {
 		if (this.visibleItems.includes(item)) {
-			if (this._isMultiSelection) {
-				this.deselectAll(true);
-			} else if (this._lastSelection) {
-				if (this._lastSelection !== item) {
-					this._lastSelection.isSelected = false;
-					item.isSelected = true;
-					this._lastSelection = item;
-				}
-			} else {
-				item.isSelected = true;
-				this._lastSelection = item;
-			}
+			if (this._isMultiSelection) this.deselectAll(true);
+
+			if (this._lastSelection && this._lastSelection !== item) this._lastSelection.isSelected = false;
+
+			item.isSelected = true;
+			this._lastSelection = item;
 		} else this.deselectAll();
 	}
 
@@ -352,15 +423,15 @@ class List {
 	}
 	// endregion
 
-	static _getCleanSearchTerm (str) {
-		return str.trim().toLowerCase().split(/\s+/g).join(" ");
+	static getCleanSearchTerm (str) {
+		return (str || "").toAscii().trim().toLowerCase().split(/\s+/g).join(" ");
 	}
 }
 List._DEFAULTS = {
 	searchTerm: "",
 	sortBy: "name",
 	sortDir: "asc",
-	fnFilter: null
+	fnFilter: null,
 };
 
 if (typeof module !== "undefined") module.exports = {List, ListItem};

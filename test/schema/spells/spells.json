@@ -1,12 +1,13 @@
 {
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"$id": "spells.json",
-	"version": "1.4.2",
+	"version": "1.6.5",
 	"title": "Spells",
 	"type": "object",
 
 	"definitions": {
-		"spell": {
+		"spellData": {
+			"type": "object",
 			"properties": {
 				"name": {
 					"type": "string"
@@ -135,10 +136,19 @@
 											"type": "string"
 										},
 										"cost": {
-											"type": "integer"
+											"description": "In copper pieces.",
+											"type": "number"
 										},
 										"consume": {
-											"type": "boolean"
+											"oneOf": [
+												{
+													"type": "boolean"
+												},
+												{
+													"type": "string",
+													"const": "optional"
+												}
+											]
 										}
 									},
 									"required": [
@@ -184,6 +194,12 @@
 								"$ref": "#/definitions/class"
 							}
 						},
+						"fromClassListVariant": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/class"
+							}
+						},
 						"fromSubclass": {
 							"type": "array",
 							"items": {
@@ -220,9 +236,6 @@
 							}
 						}
 					},
-					"required": [
-						"fromClassList"
-					],
 					"additionalProperties": false
 				},
 				"races": {
@@ -261,6 +274,21 @@
 						"required": ["name", "source"]
 					}
 				},
+				"eldritchInvocations": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"name": {
+								"type": "string"
+							},
+							"source": {
+								"type": "string"
+							}
+						},
+						"required": ["name", "source"]
+					}
+				},
 				"source": {
 					"type": "string"
 				},
@@ -272,6 +300,7 @@
 				},
 				"damageInflict": {
 					"type": "array",
+					"uniqueItems": true,
 					"items": {
 						"type": "string",
 						"enum": [
@@ -281,6 +310,7 @@
 				},
 				"damageResist": {
 					"type": "array",
+					"uniqueItems": true,
 					"items": {
 						"type": "string",
 						"enum": [
@@ -290,6 +320,7 @@
 				},
 				"damageImmune": {
 					"type": "array",
+					"uniqueItems": true,
 					"items": {
 						"type": "string",
 						"enum": [
@@ -299,6 +330,7 @@
 				},
 				"damageVulnerable": {
 					"type": "array",
+					"uniqueItems": true,
 					"items": {
 						"type": "string",
 						"enum": [
@@ -307,16 +339,11 @@
 					}
 				},
 				"conditionInflict": {
-					"type": "array",
-					"items": {
-						"type": "string",
-						"enum": [
-							"blinded", "charmed", "deafened", "exhaustion", "frightened", "grappled", "incapacitated", "invisible", "paralyzed", "petrified", "poisoned", "prone", "restrained", "stunned", "unconscious"
-						]
-					}
+					"$ref": "util.json#/definitions/tagsConditions"
 				},
 				"savingThrow": {
 					"type": "array",
+					"uniqueItems": true,
 					"items": {
 						"type": "string",
 						"enum": [
@@ -324,8 +351,9 @@
 						]
 					}
 				},
-				"opposedCheck": {
+				"abilityCheck": {
 					"type": "array",
+					"uniqueItems": true,
 					"items": {
 						"type": "string",
 						"enum": [
@@ -335,6 +363,7 @@
 				},
 				"spellAttack": {
 					"type": "array",
+					"uniqueItems": true,
 					"items": {
 						"type": "string",
 						"enum": [
@@ -343,7 +372,9 @@
 					}
 				},
 				"areaTags": {
+					"description": "By convention, only the effects of the spell cast at its base level are considered when populating these.",
 					"type": "array",
+					"uniqueItems": true,
 					"items": {
 						"type": "string",
 						"enum": ["ST", "MT", "R", "N", "C","Y", "H", "L", "S", "Q", "W"]
@@ -351,28 +382,73 @@
 				},
 				"miscTags": {
 					"type": "array",
-					"description": "PRM = permanentEffects = 'Used to flag spells that can/will have permanent effects, but are not listed as having permanent duration'; SCL = scalingEffects; HL = isHeal; SMN = isSummon; SGT = requiresSight",
+					"description": "PRM = permanentEffects = 'Used to flag spells that can/will have permanent effects, but are not listed as having permanent duration'; SCL = scalingEffects; HL = isHeal; SMN = isSummon; SGT = requiresSight; THP = isTempHp; MAC = isModifiesAc; TP = isTeleport; FMV = isForcedMovement",
+					"uniqueItems": true,
 					"items": {
 						"type": "string",
-						"enum": ["PRM", "SCL", "HL", "SMN", "SGT"]
+						"enum": ["PRM", "SCL", "HL", "SMN", "SGT", "THP", "MAC", "TP", "FMV"]
 					}
-				}
+				},
+				"srd": {
+					"$ref": "util.json#/definitions/srd"
+				},
+				"scalingLevelDice": {
+					"oneOf": [
+						{
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/scalingLevelDiceItem"
+							}
+						},
+						{
+							"$ref": "#/definitions/scalingLevelDiceItem"
+						}
+					]
+				},
+				"hasFluff": {"type": "boolean"},
+				"hasFluffImages": {"type": "boolean"}
 			},
-			"required": [
-				"name",
-				"level",
-				"school",
-				"time",
-				"range",
-				"duration",
-				"classes",
-				"entries",
-				"source"
-			],
 			"additionalProperties": false
 		},
 
+		"spell": {
+			"anyOf": [
+				{
+					"type": "object",
+					"$$merge": [
+						{
+							"$ref": "#/definitions/spellData"
+						},
+						{
+							"required": [
+								"name",
+								"level",
+								"school",
+								"time",
+								"range",
+								"duration",
+								"entries",
+								"source"
+							]
+						}
+					]
+				},
+				{
+					"type": "object",
+					"$$merge": [
+						{
+							"$ref": "#/definitions/spellData"
+						},
+						{
+							"$ref": "util.json#/definitions/copyBlock"
+						}
+					]
+				}
+			]
+		},
+
 		"time": {
+			"type": "object",
 			"properties": {
 				"number": {
 					"type": "integer"
@@ -391,6 +467,7 @@
 		},
 
 		"duration": {
+			"type": "object",
 			"properties": {
 				"type": {
 					"type": "string",
@@ -449,11 +526,15 @@
 		},
 
 		"class": {
+			"type": "object",
 			"properties": {
 				"name": {
 					"type": "string"
 				},
 				"source": {
+					"type": "string"
+				},
+				"definedInSource": {
 					"type": "string"
 				}
 			},
@@ -462,6 +543,25 @@
 				"source"
 			],
 			"additionalProperties": false
+		},
+
+		"scalingLevelDiceItem": {
+			"type": "object",
+			"properties": {
+				"label": {
+					"type": "string"
+				},
+				"scaling": {
+					"type": "object",
+					"patternProperties": {
+						"\\d+": {
+							"type": "string"
+						}
+					},
+					"additionalProperties": false
+				}
+			},
+			"additionalProperties": false
 		}
 	},
 
@@ -469,6 +569,13 @@
 		"spell": {
 			"type": "array",
 			"items": {"$ref": "#/definitions/spell"}
+		},
+		"_meta": {
+			"$ref": "util.json#/definitions/metaBlock"
 		}
-	}
+	},
+	"required": [
+		"spell"
+	],
+	"additionalProperties": false
 }

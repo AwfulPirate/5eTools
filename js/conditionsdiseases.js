@@ -2,48 +2,42 @@
 
 class ConditionsDiseasesPage extends ListPage {
 	constructor () {
-		const sourceFilter = getSourceFilter();
-		const typeFilter = new Filter({
-			header: "Type",
-			items: ["condition", "disease"],
-			displayFn: StrUtil.uppercaseFirst,
-			deselFn: (it) => it === "disease"
-		});
+		const pageFilter = new PageFilterConditionsDiseases();
 
 		super({
 			dataSource: "data/conditionsdiseases.json",
 
-			filters: [
-				sourceFilter,
-				typeFilter
-			],
-			filterSource: sourceFilter,
+			pageFilter,
 
 			listClass: "conditions",
 
 			sublistClass: "subconditions",
 
-			dataProps: ["condition", "disease"]
-		});
+			dataProps: ["condition", "disease", "status"],
 
-		this._sourceFilter = sourceFilter;
+			isPreviewable: true,
+		});
 	}
 
-	getListItem (it, cdI) {
-		// populate filters
-		this._sourceFilter.addItem(it.source);
+	getListItem (it, cdI, isExcluded) {
+		this._pageFilter.mutateAndAddToFilters(it, isExcluded);
 
-		const eleLi = document.createElement("li");
-		eleLi.className = "row";
+		const eleLi = document.createElement("div");
+		eleLi.className = `lst__row flex-col ${isExcluded ? "lst__row--blacklisted" : ""}`;
 
 		const source = Parser.sourceJsonToAbv(it.source);
 		const hash = UrlUtil.autoEncodeHash(it);
 
-		eleLi.innerHTML = `<a href="#${hash}">
-			<span class="col-3 text-center pl-0">${StrUtil.uppercaseFirst(it.__prop)}</span>
-			<span class="bold col-7">${it.name}</span>
-			<span class="source col-2 text-center ${Parser.sourceJsonToColor(it.source)} pr-0" title="${Parser.sourceJsonToFull(it.source)}" ${BrewUtil.sourceJsonToStyle(it.source)}>${source}</span>
-		</a>`;
+		eleLi.innerHTML = `<a href="#${hash}" class="lst--border lst__row-inner">
+			<span class="col-0-3 px-0 flex-vh-center lst__btn-toggle-expand self-flex-stretch">[+]</span>
+			<span class="col-3 text-center pl-0">${PageFilterConditionsDiseases.getDisplayProp(it.__prop)}</span>
+			<span class="bold col-6-7">${it.name}</span>
+			<span class="col-2 text-center ${Parser.sourceJsonToColor(it.source)} pr-0" title="${Parser.sourceJsonToFull(it.source)}" ${BrewUtil.sourceJsonToStyle(it.source)}>${source}</span>
+		</a>
+		<div class="flex ve-hidden relative lst__wrp-preview">
+			<div class="vr-0 absolute lst__vr-preview"></div>
+			<div class="flex-col py-3 ml-4 lst__wrp-preview-inner"></div>
+		</div>`;
 
 		const listItem = new ListItem(
 			cdI,
@@ -53,8 +47,11 @@ class ConditionsDiseasesPage extends ListPage {
 				hash,
 				source,
 				type: it.__prop,
-				uniqueid: it.uniqueId ? it.uniqueId : cdI
-			}
+			},
+			{
+				uniqueId: it.uniqueId ? it.uniqueId : cdI,
+				isExcluded,
+			},
 		);
 
 		eleLi.addEventListener("click", (evt) => this._list.doSelect(listItem, evt));
@@ -65,34 +62,30 @@ class ConditionsDiseasesPage extends ListPage {
 
 	handleFilterChange () {
 		const f = this._filterBox.getValues();
-		this._list.filter(li => {
-			const it = this._dataList[li.ix];
-			return this._filterBox.toDisplay(
-				f,
-				it.source,
-				it.__prop
-			);
-		});
+		this._list.filter(item => this._pageFilter.toDisplay(f, this._dataList[item.ix]));
 		FilterBox.selectFirstVisible(this._dataList);
 	}
 
 	getSublistItem (it, pinId) {
 		const hash = UrlUtil.autoEncodeHash(it);
 
-		const $ele = $(`<li class="row">
-			<a href="#${hash}">
-				<span class="bold col-12 px-0">${it.name}</span>
+		const $ele = $(`<div class="lst__row lst__row--sublist flex-col">
+			<a href="#${hash}" class="lst--border lst__row-inner">
+				<span class="col-2 pl-0 text-center">${PageFilterConditionsDiseases.getDisplayProp(it.__prop)}</span>
+				<span class="bold col-10 pr-0">${it.name}</span>
 			</a>
-		</li>`)
-			.contextmenu(evt => ListUtil.openSubContextMenu(evt, listItem));
+		</div>`)
+			.contextmenu(evt => ListUtil.openSubContextMenu(evt, listItem))
+			.click(evt => ListUtil.sublist.doSelect(listItem, evt));
 
 		const listItem = new ListItem(
 			pinId,
 			$ele,
 			it.name,
 			{
-				hash
-			}
+				hash,
+				type: it.__prop,
+			},
 		);
 		return listItem;
 	}
@@ -100,13 +93,49 @@ class ConditionsDiseasesPage extends ListPage {
 	doLoadHash (id) {
 		const $content = $("#pagecontent").empty();
 		const it = this._dataList[id];
-		$content.append(RenderConditionDiseases.$getRenderedConditionDisease(it));
+
+		function buildStatsTab () {
+			$content.append(RenderConditionDiseases.$getRenderedConditionDisease(it));
+		}
+
+		function buildFluffTab (isImageTab) {
+			return Renderer.utils.pBuildFluffTab({
+				isImageTab,
+				$content,
+				entity: it,
+				pFnGetFluff: Renderer.condition.pGetFluff,
+			});
+		}
+
+		const tabMetas = [
+			new Renderer.utils.TabButton({
+				label: "Traits",
+				fnPopulate: buildStatsTab,
+				isVisible: true,
+			}),
+			new Renderer.utils.TabButton({
+				label: "Info",
+				fnPopulate: buildFluffTab,
+				isVisible: Renderer.utils.hasFluffText(it),
+			}),
+			new Renderer.utils.TabButton({
+				label: "Images",
+				fnPopulate: buildFluffTab.bind(null, true),
+				isVisible: Renderer.utils.hasFluffImages(it),
+			}),
+		];
+
+		Renderer.utils.bindTabButtons({
+			tabButtons: tabMetas.filter(it => it.isVisible),
+			tabLabelReference: tabMetas.map(it => it.label),
+		});
+
 		ListUtil.updateSelected();
 	}
 
-	doLoadSubHash (sub) {
+	async pDoLoadSubHash (sub) {
 		sub = this._filterBox.setFromSubHashes(sub);
-		ListUtil.setFromSubHashes(sub);
+		await ListUtil.pSetFromSubHashes(sub);
 	}
 }
 
